@@ -10,4 +10,8 @@ Week 1:
 
 \
 
-* [Download R and RStudio](https://www.youtube.com/watch?v=M8e-ZgrCVIA&t)
+* [Download R and RStudio (MacOS)](https://www.youtube.com/watch?v=M8e-ZgrCVIA&t)
+
+* [Download R and RStudio (Windows)](https://www.youtube.com/watch?v=H9EBlFDGG4k)
+
+
