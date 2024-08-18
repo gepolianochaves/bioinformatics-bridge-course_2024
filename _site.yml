@@ -41,12 +41,7 @@ navbar:
           href: "notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html"
     - text: "Videos"
       icon: fa-solid fa-video
-      menu:
-        - text: "Videos 2"
-        - text: "a. Introduction to R"
-          href: "https://www.youtube.com/watch?v=k5zEFV6T2zI&t=1988s"
-        - text: "b. Data Download and Processing"
-          href: "https://www.youtube.com/watch?v=h9QRf83-3lc&t=10s"
+      href: "videos.html"
     - text: "Final Projects"
       icon: fa-address-book-o
       menu:

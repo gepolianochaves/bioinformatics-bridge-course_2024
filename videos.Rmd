@@ -1,0 +1,10 @@
+---
+title: "Videos"
+---
+
+\
+
+\
+
+
+* [Download R and RStudio](https://www.youtube.com/watch?v=M8e-ZgrCVIA&t=9s)
