@@ -1,0 +1,75 @@
+name: "bioinformatics-bridge-course-website"
+navbar:
+  title: "ReComBio: Research with Computational Biology"
+  type: "inverse"
+  left:
+    - text: "Home"
+      icon: "fa-home"
+      href: "index.html"
+    - text: "About"  
+      icon: fa-info
+      href: "about.html"
+    - text: "Code Notebooks"
+      icon: fa-book
+      menu:
+        - text: "Week 1"
+        - text: "a. Introduction to R"
+          href: "notebooks/Introduction-to-R-and-Terminal.html"
+        - text: "b. Data Download and Processing"
+          href: "notebooks/01-neuroblastoma-r2-GSE62564.html"
+        - text: "c. Data Visualization"
+          href: "notebooks/02-neuroblastoma-r2-plots-GSE62564.html"
+        - text: "---------"
+        - text: "Week 2"
+        - text: "a. Introduction to the terminal"
+          href: "notebooks/Introduction-to-the-Terminal.html"
+        - text: "b. Variant Call Pipeline"
+          href: "notebooks/2-Variant-Call-Pipeline.html"
+        - text: "c. Survival Analysis"
+          href: "notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html"
+        - text: "---------"
+        - text: "Week 3"
+        - text: "a. Introduction to Python"
+          href: "notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html"
+        - text: "b. Logistic Regression for Classification"
+          href: "notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html"
+        - text: "---------"
+        - text: "Final Project"
+        - text: "Project 1"
+          href: "notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html"
+        - text: "Project 2"
+          href: "notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html"
+    - text: "Videos"
+      icon: fa-solid fa-video
+      menu:
+        - text: "Videos 2"
+        - text: "a. Introduction to R"
+          href: "https://www.youtube.com/watch?v=k5zEFV6T2zI&t=1988s"
+        - text: "b. Data Download and Processing"
+          href: "https://www.youtube.com/watch?v=h9QRf83-3lc&t=10s"
+    - text: "Final Projects"
+      icon: fa-address-book-o
+      menu:
+        - text: "Final Projects"
+        - text: "Project 1: SARS-CoV-2 Web Application"
+          href: "notebooks/sars-cov-2-web-application.html"
+        - text: "Project 2: Survival Analysis of Neuroblastoma"
+          href: "notebooks/neuroblastoma-survival.html"
+output:
+  html_document:
+    theme: spacelab
+  # right:
+  #   - icon: fa-question fa-lg
+  #     href: https://example.com
+        
+  # left:
+  #   - text: "Home"
+  #   href: index.html
+# right:
+  # - icon: fa-envelope fa-lg
+# href: mailto:<cats@catemail.com>
+#   - icon: fa-github fa-lg
+# href: http://github.com/<YOUR_GH_NAME>/
+#   output:
+#   html_document:
+#   theme: darkly
