@@ -6,5 +6,8 @@ title: "Videos"
 
 \
 
+Week 1:
+
+\
 
 * [Download R and RStudio](https://www.youtube.com/watch?v=M8e-ZgrCVIA&t)

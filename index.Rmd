@@ -18,7 +18,7 @@ An introduction to computational programming using the R, Bash (terminal) and Py
 
 \
 
-Syllabus, past materials and lectures are in the following links:
+Syllabus, past materials and lectures:
 
 1) [ReComBio Slides](https://docs.google.com/presentation/d/12SRZvPIyyqakpi4PASBkZc0hAlBhHBzw/edit#slide=id.g27b02d68e23_5_0)
 2) [Handbook](https://docs.google.com/document/d/1XHYrNRx9sr5xK36HkWd4VQZsryg02nmjvFdPoCT46eA/edit?usp=sharing)
