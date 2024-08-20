@@ -2827,8 +2827,14 @@ object</h3>
 <p><br />
 </p>
 <ul>
-<li><p>r2_gse62564.rds loaded needs to be the correct one. If it was
-loaded from the first chunk above, R throws an error.</p></li>
+<li><p>r2_gse62564.rds loaded needs to be the correct one.</p></li>
+<li><p>If it was loaded from the first chunk above, R throws an
+error.</p></li>
+<li><p>Object r2_gse62564.rds is stored in the data folder of the
+BBC-2024 Google Drive:</p>
+<ul>
+<li><a href="https://drive.google.com/drive/folders/1fr7SkOqMqOqQIW5ttjblGkPHCJY2HDJv?usp=sharing" class="uri">https://drive.google.com/drive/folders/1fr7SkOqMqOqQIW5ttjblGkPHCJY2HDJv?usp=sharing</a></li>
+</ul></li>
 <li><p>This code allows calculation of the time R takes to load the
 dataframe into the R environment:</p></li>
 </ul>
@@ -2836,7 +2842,7 @@ dataframe into the R environment:</p></li>
 r2_gse62564 &lt;- readRDS(&quot;../data/r2_gse62564.rds&quot;)
 end_time &lt;- Sys.time()
 end_time - start_time</code></pre>
-<pre><code>## Time difference of 2.078798 secs</code></pre>
+<pre><code>## Time difference of 2.080227 secs</code></pre>
 <p><br />
 </p>
 </div>
@@ -2944,7 +2950,7 @@ head(r2_gse62564, n = 20)</code></pre>
 <h3>Removing repeated rows</h3>
 <pre class="r"><code>library(maditr)</code></pre>
 <pre><code>## 
-## To select columns from data: columns(mtcars, mpg, vs:carb)</code></pre>
+## To select rows from data: rows(mtcars, am==0)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;maditr&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
