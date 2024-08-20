@@ -6,12 +6,18 @@ title: "Videos"
 
 \
 
-Week 1:
+**Week 1:**
 
-\
+R and RStudio download:
 
-* [Download R and RStudio (MacOS)](https://www.youtube.com/watch?v=M8e-ZgrCVIA&t)
+* [MacOS](https://www.youtube.com/watch?v=M8e-ZgrCVIA&t)
 
-* [Download R and RStudio (Windows)](https://www.youtube.com/watch?v=H9EBlFDGG4k)
+* [Windows](https://www.youtube.com/watch?v=H9EBlFDGG4k)
+
+Data download, processing and visualization:
+
+* [Download from the R2 platform](https://www.youtube.com/watch?v=OUK26r7PEeA&list=PL4_eptrjUz7kLq2AYCVCktXh1T9RxvLDY&index=3)
+
+* [Phenotype score calculation](https://www.youtube.com/watch?v=hH5vq3ZgJlM&list=PL4_eptrjUz7kLq2AYCVCktXh1T9RxvLDY&index=1)
 
 
