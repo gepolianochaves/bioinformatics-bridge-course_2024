@@ -14,10 +14,14 @@ R and RStudio download:
 
 * [Windows](https://www.youtube.com/watch?v=H9EBlFDGG4k)
 
+Introduction to R:
+
+* [GWAS visualization](https://www.youtube.com/watch?v=M8e-ZgrCVIA&t)
+
 Data download, processing and visualization:
 
-* [Download dataframe from the R2 platform](https://www.youtube.com/watch?v=OUK26r7PEeA&list=PL4_eptrjUz7kLq2AYCVCktXh1T9RxvLDY&index=3)
+* [Download dataframe from the R2 platform](https://www.youtube.com/watch?v=OUK26r7PEeA)
 
-* [Phenotype score calculation](https://www.youtube.com/watch?v=hH5vq3ZgJlM&list=PL4_eptrjUz7kLq2AYCVCktXh1T9RxvLDY&index=1)
+* [Phenotype score calculation](https://www.youtube.com/watch?v=hH5vq3ZgJlM)
 
 
