@@ -16,7 +16,7 @@ R and RStudio download:
 
 Introduction to R:
 
-* [GWAS visualization](https://www.youtube.com/watch?v=M8e-ZgrCVIA&t)
+* [GWAS visualization](https://www.youtube.com/watch?v=IOJtV9kyYzU)
 
 Data download, processing and visualization:
 
