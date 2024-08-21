@@ -2780,7 +2780,7 @@ Data-Frame from R2 Database</h1>
 
 
 <div id="r2-data-base" class="section level1">
-<h1>1) R2 data-base</h1>
+<h1>1. R2 data-base</h1>
 <p><br />
 </p>
 <ul>
@@ -2800,7 +2800,7 @@ datasets.</p></li>
 </p>
 </div>
 <div id="loading-the-neuroblastoma-data-frame" class="section level1">
-<h1>2) Loading the neuroblastoma data-frame</h1>
+<h1>2. Loading the neuroblastoma data-frame</h1>
 <p><br />
 </p>
 <div id="downloaded-data-from-the-r2-website-in-the-data-folder" class="section level3">
@@ -2842,7 +2842,7 @@ dataframe into the R environment:</p></li>
 r2_gse62564 &lt;- readRDS(&quot;../data/r2_gse62564.rds&quot;)
 end_time &lt;- Sys.time()
 end_time - start_time</code></pre>
-<pre><code>## Time difference of 2.080227 secs</code></pre>
+<pre><code>## Time difference of 2.061233 secs</code></pre>
 <p><br />
 </p>
 </div>
@@ -2867,7 +2867,7 @@ end_time - start_time</code></pre>
 </div>
 </div>
 <div id="processing-the-neuroblastoma-dataframe" class="section level1">
-<h1>3) Processing the neuroblastoma dataframe</h1>
+<h1>3. Processing the neuroblastoma dataframe</h1>
 <p><br />
 </p>
 <div id="understanding-the-metadata-part-of-the-dataframe" class="section level3">
@@ -2950,7 +2950,8 @@ head(r2_gse62564, n = 20)</code></pre>
 <h3>Removing repeated rows</h3>
 <pre class="r"><code>library(maditr)</code></pre>
 <pre><code>## 
-## To select rows from data: rows(mtcars, am==0)</code></pre>
+## To modify variables or add new variables:
+##              let(mtcars, new_var = 42, new_var2 = new_var*hp) %&gt;% head()</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;maditr&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
@@ -3014,7 +3015,7 @@ r2_gse62564_df                 &lt;- as.data.frame(r2_gse62564_matrix)</code></p
 </div>
 </div>
 <div id="phenotype-score-calculation" class="section level1">
-<h1>4) Phenotype Score Calculation</h1>
+<h1>4. Phenotype Score Calculation</h1>
 <p><br />
 </p>
 <p>In this part, we construct the dataframe to include phenotype scoring
@@ -3086,6 +3087,11 @@ gp1
 gsva_gp1 &lt;- gsva(gp1, verbose=TRUE)</code></pre>
 <p><br />
 </p>
+</div>
+<div id="estimating-gsva-enrichment-scores" class="section level3">
+<h3>Estimating GSVA enrichment scores</h3>
+<p><br />
+</p>
 <p>build GSVA parameter object, according to documentation. In the
 examples of the gsvaParam class documentation of the leukemia and
 c2BroadSets, only the ses and gsc objects were used, not the maxDiff set
@@ -3094,9 +3100,6 @@ to TRUE.</p>
 gsvapar_gse62564 &lt;- gsvaParam(r2_gse62564_matrix, cfDNA_PCA_gene_list)</code></pre>
 <p><br />
 </p>
-</div>
-<div id="estimating-gsva-enrichment-scores" class="section level3">
-<h3>Estimating GSVA enrichment scores</h3>
 <pre class="r"><code>## estimate GSVA enrichment scores for the three sets
 # gsva_es        &lt;- gsva(gsvapar)
 gsva_es_gse62564 &lt;- gsva(gsvapar_gse62564)</code></pre>
@@ -3119,8 +3122,18 @@ gsva_es_gse62564 &lt;- gsva(gsvapar_gse62564)</code></pre>
 gsva_es_gse62564_genes   &lt;- rbind(gsva_es_gse62564, r2_gse62564_matrix)</code></pre>
 </div>
 </div>
-<div id="include-metadata-based-on-r2-information" class="section level1">
-<h1>4.1.3) Include Metadata Based on R2 information</h1>
+<div id="save-dataframe-old-dataframe" class="section level1">
+<h1>5. Save dataframe (old dataframe)</h1>
+<p><br />
+</p>
+<div id="save-the-new-dataframe" class="section level3">
+<h3>Save the new dataframe</h3>
+<pre class="r"><code># r2_gse62564_GSVA_genes &lt;- rbind(r2_gse62564_GSVA, r2_gse62564_matrix)
+gsva_es_gse62564_genes   &lt;- rbind(gsva_es_gse62564, r2_gse62564_matrix)
+saveRDS(gsva_es_gse62564_genes, file = &quot;../data/gsva_es_gse62564_genes.rds&quot;)</code></pre>
+</div>
+<div id="save-dataframe-old-dataframe-1" class="section level3">
+<h3>Save dataframe (old dataframe)</h3>
 <pre class="r"><code>gse62564_metadata &lt;- metadata_gse62564
 # Repeat row with IDs to confirm matching later
 gse62564_metadata[18,] &lt;- gse62564_metadata[1,]
@@ -3140,8 +3153,9 @@ r2_gse62564_GSVA_Metadata &lt;- t(r2_gse62564_GSVA_Metadata)
 r2_gse62564_GSVA_Metadata &lt;- as.data.frame(r2_gse62564_GSVA_Metadata)
 saveRDS(r2_gse62564_GSVA_Metadata, file = &quot;../results/r2_gse62564_GSVA_Metadata.rds&quot;)</code></pre>
 </div>
+</div>
 <div id="references" class="section level1">
-<h1>7) References</h1>
+<h1>References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-R2" class="csl-entry">
 R2. 2023. <em>R2: Genomics Analysis and Visualization Platform</em>. <a href="http://r2.amc.nl">http://r2.amc.nl</a>.
@@ -3153,7 +3167,7 @@ Platform – AMC</em>. <a href="https://www.dtls.nl/technology-hotels/list/r2-ge
 </div>
 </div>
 <div id="session-info" class="section level1">
-<h1>8) Session Info</h1>
+<h1>Session Info</h1>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 4.4.1 (2024-06-14)
 ## Platform: aarch64-apple-darwin20
