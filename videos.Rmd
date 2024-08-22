@@ -18,7 +18,9 @@ Introduction to R:
 
 * [GWAS visualization](https://www.youtube.com/watch?v=IOJtV9kyYzU)
 
-Data download, processing and visualization:
+Data download, processing and visualization (The link "Lecture on neuroblastoma" is private for publication reasons):
+
+* [Lecture on neuroblastoma](https://www.youtube.com/watch?v=8HpCwlZT0TU)
 
 * [Download dataframe from the R2 platform](https://www.youtube.com/watch?v=OUK26r7PEeA)
 
