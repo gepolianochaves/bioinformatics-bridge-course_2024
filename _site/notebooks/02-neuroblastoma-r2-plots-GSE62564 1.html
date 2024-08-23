@@ -2807,7 +2807,8 @@ references</p>
 </p>
 <pre class="r"><code>library(maditr)</code></pre>
 <pre><code>## 
-## To drop variable use NULL: let(mtcars, am = NULL) %&gt;% head()</code></pre>
+## To modify variables or add new variables:
+##              let(mtcars, new_var = 42, new_var2 = new_var*hp) %&gt;% head()</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;maditr&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:base&#39;:
@@ -3308,17 +3309,17 @@ ggplot(r2_gse62564_GSVA_Metadata, aes(x=high_risk, y=HALLMARK_INFLAMMATORY_RESPO
 <p>Construct the HIF1A quantile variable:</p>
 <pre class="r"><code>library(tidyverse)
 
-r2_gse62564_GSVA_Metadata &lt;- r2_gse62564_GSVA_Metadata %&gt;%
+r2_gse62564_GSVA_Metadata_survival &lt;- r2_gse62564_GSVA_Metadata %&gt;%
     mutate(quantile = ntile(HIF1A, 2))</code></pre>
 <p><br />
 </p>
 <p>Make the HIF1A quantile variable a factor</p>
-<pre class="r"><code>r2_gse62564_GSVA_Metadata$quantile &lt;- as.factor(r2_gse62564_GSVA_Metadata$quantile )</code></pre>
+<pre class="r"><code>r2_gse62564_GSVA_Metadata_survival$quantile &lt;- as.factor(r2_gse62564_GSVA_Metadata_survival$quantile )</code></pre>
 <p><br />
 </p>
 <p>Scaterplot HALLMARK_HYPOXIA vs. HIF1A</p>
 <pre class="r"><code>qplot(HALLMARK_HYPOXIA, HIF1A, 
-      data = r2_gse62564_GSVA_Metadata,
+      data = r2_gse62564_GSVA_Metadata_survival,
       colour=quantile,
       ylab = &quot;HIF1A&quot;,
       xlab = &quot;Hallmark Hypoxia&quot;)</code></pre>
@@ -3327,14 +3328,14 @@ r2_gse62564_GSVA_Metadata &lt;- r2_gse62564_GSVA_Metadata %&gt;%
 </p>
 <p>Construct survival object with HIF1A quantile variable</p>
 <pre class="r"><code>library(survival)
-fit_os_HIF1A &lt;- survfit(Surv(as.numeric(os_day), os_bin_numeric) ~ r2_gse62564_GSVA_Metadata$quantile,
-                   data = r2_gse62564_GSVA_Metadata)</code></pre>
+fit_os_HIF1A &lt;- survfit(Surv(as.numeric(os_day), os_bin_numeric) ~ r2_gse62564_GSVA_Metadata_survival$quantile,
+                   data = r2_gse62564_GSVA_Metadata_survival)</code></pre>
 <p><br />
 </p>
 <p>Plot survival curve OS</p>
 <pre class="r"><code>library(survminer)
 ggsurvplot(fit_os_HIF1A, 
-           data = r2_gse62564_GSVA_Metadata, 
+           data = r2_gse62564_GSVA_Metadata_survival, 
            risk.table = TRUE,
            # risk.table = &quot;abs_pct&quot;,
            pval = TRUE, 
@@ -3351,20 +3352,20 @@ ggsurvplot(fit_os_HIF1A,
 <p>Construct the HIF1A quantile variable:</p>
 <pre class="r"><code>library(tidyverse)
 
-r2_gse62564_GSVA_Metadata &lt;- r2_gse62564_GSVA_Metadata %&gt;%
+r2_gse62564_GSVA_Metadata_survival &lt;- r2_gse62564_GSVA_Metadata %&gt;%
     mutate(quantile = ntile(HIF1A, 2))</code></pre>
 <p><br />
 </p>
 <p>Construct survival object EFS</p>
 <pre class="r"><code>library(survival)
-fit_efs_HIF1A &lt;- survfit(Surv(as.numeric(efs_day), efs_bin_numeric) ~ r2_gse62564_GSVA_Metadata$quantile,
-                   data = r2_gse62564_GSVA_Metadata)</code></pre>
+fit_efs_HIF1A &lt;- survfit(Surv(as.numeric(efs_day), efs_bin_numeric) ~ r2_gse62564_GSVA_Metadata_survival$quantile,
+                   data = r2_gse62564_GSVA_Metadata_survival)</code></pre>
 <p><br />
 </p>
 <p>Plot survival curve EFS</p>
 <pre class="r"><code>library(survminer)
 ggsurvplot(fit_efs_HIF1A, 
-           data = r2_gse62564_GSVA_Metadata, 
+           data = r2_gse62564_GSVA_Metadata_survival, 
            risk.table = TRUE,
            # risk.table = &quot;abs_pct&quot;,
            pval = TRUE, 
@@ -3472,7 +3473,8 @@ increases</h5>
 </div>
 <div id="how-does-this-affect-hif1a-activity-in-younger-children" class="section level5">
 <h5>How does this affect HIF1A activity in younger children?</h5>
-<pre class="r"><code>saveRDS(r2_gse62564_GSVA_Metadata, file = &quot;~/Desktop/r2_gse62564_GSVA_Metadata.rds&quot;)</code></pre>
+<p><br />
+</p>
 </div>
 </div>
 </div>

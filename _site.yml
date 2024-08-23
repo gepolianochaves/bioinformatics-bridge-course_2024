@@ -1,6 +1,6 @@
 name: "bioinformatics-bridge-course-website"
 navbar:
-  title: "ReComBio: Research with Computational Biology"
+  title: "Research w/ Computational Biology"
   type: "inverse"
   left:
     - text: "Home"
@@ -44,6 +44,12 @@ navbar:
     - text: "Videos"
       icon: fa-solid fa-video
       href: "videos.html"
+    - text: "Mini Project"
+      icon: fa-address-book-o
+      href: "pdf/miniproject-slides.pdf"
+    - text: "Exercises"
+      icon: fa-address-book-o
+      href: "pdf/exercise-slides.pdf"
     - text: "Final Presentations"
       icon: fa-address-book-o
       menu:
