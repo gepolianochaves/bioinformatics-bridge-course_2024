@@ -18,12 +18,22 @@ Introduction to R:
 
 * [GWAS visualization](https://www.youtube.com/watch?v=IOJtV9kyYzU)
 
-Data download, processing and visualization. The link "Lecture on neuroblastoma" is private for publication reasons:
+Data download and processing. The link "Lecture on neuroblastoma" is private for publication reasons:
 
 * [Lecture on neuroblastoma](https://www.youtube.com/watch?v=8HpCwlZT0TU)
 
 * [Download dataframe from the R2 platform](https://www.youtube.com/watch?v=OUK26r7PEeA)
 
 * [Phenotype score calculation](https://www.youtube.com/watch?v=hH5vq3ZgJlM)
+
+Data visualization
+
+* [Hypoxia and HIF1A](https://www.youtube.com/watch?v=TAUPryNAQHA)
+
+* [Survival analysis](https://youtu.be/f-1sddnE_XU)
+
+* [Age at diagnosis, high risk and HIF1A expression](https://youtu.be/LuJ4fMubUb8)
+
+
 
 
