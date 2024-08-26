@@ -6,7 +6,7 @@ title: "2024 Bioinformatics Bridge Course"
 
 \
 
-Research in Computational Biology using the R, Bash (terminal) and Python languages.
+Research in Computational Biology (ReComBio) using the R, Bash (terminal) and Python languages.
 
 \
 
