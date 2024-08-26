@@ -1,6 +1,6 @@
 name: "bioinformatics-bridge-course-website"
 navbar:
-  title: "Research w/ Computational Biology"
+  title: "ReComBio"
   type: "inverse"
   left:
     - text: "Home"
