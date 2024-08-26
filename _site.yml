@@ -49,7 +49,7 @@ navbar:
       href: "pdf/miniproject-slides.pdf"
     - text: "Exercises"
       icon: fa-address-book-o
-      href: "pdf/exercise-slides.pdf"
+      href: "exercises/exercises.pdf"
     - text: "Final Presentations"
       icon: fa-address-book-o
       menu:
