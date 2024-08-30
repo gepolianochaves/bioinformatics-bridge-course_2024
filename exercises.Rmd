@@ -257,7 +257,84 @@ Mark TRUE or FALSE.
 
 \
 
+\
+
+\
+
 # Part 2: Machine Learning
+
+\
+
+\
+
+## Chapter 1: Classification
+
+\
+
+\
+
+## P2 Question 1
+
+\
+
+How can you predict what label a new patient will have using the logistic regression model constructed in R? 
+
+\
+
+- [ ]  I can build a vector to provide as input to R so that the model can use the parameters it calculated to make the prediction
+
+- [ ]  If I have more than 2 patients to predict, I can build a dataframe to input to R
+
+- [ ]  It is not possible to know if a patient has high risk neuroblastoma disease without doing a FISH and understanding if the person has MYCN amplification
+
+\
+
+\
+
+\
+
+## P2 Question 2
+
+\
+
+How can you know if a model represents a good indicator for the high risk status of a patient? 
+
+\
+
+- [ ]  If the model has high accuracy
+
+- [ ]  If the model has medium accuracy
+
+- [ ]  If the model has low accuracy
+
+\
+
+\
+
+\
+
+
+## P2 Question 3
+
+\
+
+Write the command to input the patient information to R. This can be done in groups.
+
+
+\
+
+\
+
+\
+
+## P2 Question 4
+
+\
+
+Write the command to predict the high risk label for the patient based in the patient's gene expression pattern. This can be done in groups.
+
+
+\
 
 \
 
