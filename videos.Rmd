@@ -6,7 +6,9 @@ title: "Videos"
 
 \
 
-**Week 1:**
+**Week 1 - The R Syntax:**
+
+\
 
 R and RStudio download:
 
@@ -34,6 +36,16 @@ Data visualization
 
 * [Age at diagnosis, high risk and HIF1A expression](https://youtu.be/LuJ4fMubUb8)
 
+\
 
+\
+
+**Week 3 - DNA Sequencing and the Command Line:**
+
+\
+
+Progress in DNA Sequencing Technologies
+
+* [DNA Sequencing](https://www.youtube.com/watch?v=lU8ztLZRrvI)
 
 
