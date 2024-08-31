@@ -318,7 +318,7 @@ How can you know if a model represents a good indicator for the high risk status
 
 \
 
-Write a command to input information about the predictor variables of a patient into R. In order to force your brain to come up with a solution, please discuss the strategy to solve this problem in groups.
+Write a command to input information about the predictor variables of a patient into R. To come up with a solution, please discuss the strategy to solve this problem in groups.
 
 
 \
@@ -331,14 +331,7 @@ Write a command to input information about the predictor variables of a patient 
 
 \
 
-Write a command to predict the high risk label for the patient based in the patient's gene expression pattern. In order to force your brain to come up with a solution, please discuss the strategy to solve this problem in groups.
-
-
-\
-
-\
-
-\
+Write a command to predict the high risk label for the patient based in the patient's gene expression pattern. To come up with a solution, please discuss the strategy to solve this problem in groups.
 
 
 
