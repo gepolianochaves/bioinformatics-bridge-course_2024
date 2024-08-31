@@ -285,7 +285,7 @@ How can you predict what label a new patient will have using the logistic regres
 
 - [ ]  If I have more than 2 patients to predict, I can build a dataframe to input to R
 
-- [ ]  It is not possible to know if a patient has high risk neuroblastoma disease without doing a FISH and understanding if the person has MYCN amplification
+- [ ]  It is not possible to know if a patient has high risk neuroblastoma disease without doing a FISH (Fluorescence *in situ* hybridization) and understanding if the person has MYCN amplification
 
 \
 
@@ -318,7 +318,7 @@ How can you know if a model represents a good indicator for the high risk status
 
 \
 
-Write the command to input the patient information to R. This can be done in groups.
+Write a command to input information about the predictor variables of a patient into R. In order to force your brain to come up with a solution, please discuss the strategy to solve this problem in groups.
 
 
 \
@@ -331,7 +331,7 @@ Write the command to input the patient information to R. This can be done in gro
 
 \
 
-Write the command to predict the high risk label for the patient based in the patient's gene expression pattern. This can be done in groups.
+Write a command to predict the high risk label for the patient based in the patient's gene expression pattern. In order to force your brain to come up with a solution, please discuss the strategy to solve this problem in groups.
 
 
 \
