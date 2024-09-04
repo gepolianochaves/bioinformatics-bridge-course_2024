@@ -367,6 +367,6 @@ Write a command to predict the high risk label for the patient based in the pati
 
 * Hint 1: Which data structures can you use to input the data into the R environment? A dataframe? A vector? A character?
 
-* Please describe the solution in a command or algorithm (**computer language**)
+* Please present the solution in a command or algorithm (**computer language**)
 
 
