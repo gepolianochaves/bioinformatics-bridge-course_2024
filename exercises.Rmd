@@ -277,7 +277,7 @@ Mark TRUE or FALSE.
 
 \
 
-How can you predict what label a new patient will have using the logistic regression model constructed in R? 
+How can you predict what label a new patient that was sequenced using the UCSC nanopore technology will have using the logistic regression model constructed in R? 
 
 \
 
@@ -318,7 +318,17 @@ How can you know if a model represents a good indicator for the high risk status
 
 \
 
-Write a command to input information about the predictor variables of a patient into R. To come up with a solution, please discuss the strategy to solve this problem in groups.
+Write a command to input information about the predictor variables of a patient into R. To come up with a solution, please discuss the strategy to solve this problem in groups in breakout rooms. Please use 10-15 min to discuss a solution.
+
+\
+
+
+* Hint: Use notebook "Classification Using a Logistic Regression Model"
+
+\
+
+
+* Please describe a solution in words (**human language**)
 
 
 \
@@ -331,7 +341,32 @@ Write a command to input information about the predictor variables of a patient 
 
 \
 
-Write a command to predict the high risk label for the patient based in the patient's gene expression pattern. To come up with a solution, please discuss the strategy to solve this problem in groups.
+Write a command to predict the high risk label for the patient based in the patient's gene expression pattern. To come up with a solution, please discuss the strategy to solve this problem in groups in breakout rooms. Please use 10-15 min to discuss a solution.
 
+\
+
+* Hint 1: Which chunks in the notebook help to explain a possible solution?
+
+* Hint 2: Look at the functions that can possibly present a solution?
+
+* Please describe the solution in pseudocode (**human language + computer language merged**)
+
+\
+
+\
+
+\
+
+## P2 Question 5
+
+\
+
+Write a command to predict the high risk label for the patient based in the patient's gene expression pattern. To come up with a solution, please discuss the strategy to solve this problem in groups. Please use 10-15 min to discuss a solution.
+
+\
+
+* Hint 1: Which data structures can you use to input the data into the R environment? A dataframe? A vector? A character?
+
+* Please describe the solution in a command or algorithm (**computer language**)
 
 
