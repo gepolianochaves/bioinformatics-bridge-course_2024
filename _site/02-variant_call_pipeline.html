@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Gepoliano Chaves" />
+
+
+<title>Variant Call Pipeline</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ReComBio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-info"></span>
+     
+    About
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Code Notebooks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Week 1: The R Syntax</li>
+    <li>
+      <a href="notebooks/Introduction-to-R-and-Terminal.html">1.1. Introduction to R</a>
+    </li>
+    <li>
+      <a href="notebooks/01-neuroblastoma-r2-GSE62564.html">1.2. Data Download and Processing</a>
+    </li>
+    <li>
+      <a href="notebooks/02-neuroblastoma-r2-plots-GSE62564.html">1.3. Data Visualization</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Week 2: Machine Learning</li>
+    <li>
+      <a href="notebooks/02-neuroblastoma-r2-plots-GSE62564.html">2.1. Data Visualization</a>
+    </li>
+    <li>
+      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.2. Introduction to Machine Learning</a>
+    </li>
+    <li>
+      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.3. Classification using Logistic Regression</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Week 3: DNA Sequencing and the Command Line</li>
+    <li>
+      <a href="notebooks/Introduction-to-the-Terminal.html">3.1. Command Line or Terminal</a>
+    </li>
+    <li>
+      <a href="02-variant_call_pipeline.html">3.2. Variant Call Pipeline using Sequenced DNA</a>
+    </li>
+    <li>
+      <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">3.3. Survival Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Week 4</li>
+    <li>
+      <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">4.1.</a>
+    </li>
+    <li>
+      <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">4.2.</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="videos.html">
+    <span class="fa fa-solid fa-video"></span>
+     
+    Videos
+  </a>
+</li>
+<li>
+  <a href="pdf/miniproject-slides.pdf">
+    <span class="fa fa-address-book-o"></span>
+     
+    Mini Project
+  </a>
+</li>
+<li>
+  <a href="exercises.html">
+    <span class="fa fa-address-book-o"></span>
+     
+    Exercises
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-address-book-o"></span>
+     
+    Final Presentations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Final Projects</li>
+    <li>
+      <a href="notebooks/sars-cov-2-web-application.html">Project 1: SARS-CoV-2 Web Application</a>
+    </li>
+    <li>
+      <a href="notebooks/neuroblastoma-survival.html">Project 2: Survival Analysis of Neuroblastoma</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Variant Call Pipeline</h1>
+<h4 class="author">Gepoliano Chaves</h4>
+<h4 class="date">Septemer 4th, 2024</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#summary" id="toc-summary">Summary</a></li>
+<li><a href="#process-fasta-sequence" id="toc-process-fasta-sequence">1.
+Process FASTA sequence</a>
+<ul>
+<li><a href="#multiple-fasta-with-capital-letters-and-spaces-removed"
+id="toc-multiple-fasta-with-capital-letters-and-spaces-removed">Multiple
+fasta with capital letters and spaces removed</a></li>
+<li><a href="#split-and-rename-each-fasta-file"
+id="toc-split-and-rename-each-fasta-file">Split and rename each fasta
+file</a></li>
+</ul></li>
+<li><a href="#ucsc-hummingbird-server-script"
+id="toc-ucsc-hummingbird-server-script">2. UCSC Hummingbird Server
+Script</a>
+<ul>
+<li><a href="#index-the-fasta-file-with-bwa"
+id="toc-index-the-fasta-file-with-bwa">2.1. Index the fasta file with
+bwa</a></li>
+<li><a href="#chunk-of-practice" id="toc-chunk-of-practice">Chunk of
+practice</a></li>
+<li><a href="#variant-call-pipeline-using-a-for-loop-strategy"
+id="toc-variant-call-pipeline-using-a-for-loop-strategy">2.2. Variant
+Call Pipeline using a for loop strategy</a></li>
+<li><a href="#example-output-of-the-variant-call-pipeline"
+id="toc-example-output-of-the-variant-call-pipeline">2.3. Example output
+of the Variant Call Pipeline:</a></li>
+<li><a href="#fix-the-bcftools-error"
+id="toc-fix-the-bcftools-error">Fix the bcftools error</a></li>
+</ul></li>
+<li><a href="#references" id="toc-references">3. References</a></li>
+</ul>
+</div>
+
+<p><br />
+</p>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p><br />
+</p>
+<p>In this activity we process mitochondrial DNA FASTA sequences from
+self-declared white Brazilian individuals, downloaded from the GenBank.
+We process the FASTA sequences and then align them to the hg19 UCSC
+reference genome. The end results are VCF files that we need to do
+further processing to feed machine learning algorithms that will use the
+mitochondrial genetic variants to classify the individuals into their
+haplorgroups.</p>
+<p><br />
+</p>
+</div>
+<div id="process-fasta-sequence" class="section level2">
+<h2>1. Process FASTA sequence</h2>
+<p><br />
+</p>
+<p>The mitochondrial sequences contained spaces in between as well as
+were lower case. In the first day of writing this notebook, I was not
+able to run those raw FASTA sequences into the first step of the variant
+call pipeline: alignment with BWA. This is one example of a fasta
+sequence that I started with:</p>
+<p><br />
+</p>
+<pre class="bash"><code>&gt;AF243780
+tattgactca cccatcaaca accgctatgt atttcgtaca ttactgccag ccaccatgaa
+tattgtacgg taccataaat acttgaccac ctgtagtaca taaaaaccca atccacatca
+aaaccccctc cccatgctta caagcaagta cagcaatcaa ccctcaacta tcacacatca
+actgcaactc caaagccacc cctcacccac taggatacca acaaacctac ccacccttaa
+cagcacatag tacataaagc catttaccgt acatagcaca ttacagtcaa atcccttctc
+gt</code></pre>
+<p><br />
+</p>
+<p>To fix the sequences formatting, I searched for Bash commands to
+remove spaces and make the letters uppercase. These were satisfying
+solutions I came up with:</p>
+<p><br />
+</p>
+<pre class="bash"><code>cd ~/Desktop
+string=&#39;tattgactca cccatcaaca accgctatgt atttcgtaca ttactgccag ccaccatgaa
+tattgtacgg taccataaat acttgaccac ctgtagtaca taaaaaccca atccacatca
+aaaccccctc cccatgctta caagcaagta cagcaatcaa ccctcaacta tcacacatca
+actgcaactc caaagccacc cctcacccac taggatacca acaaacctac ccacccttaa
+cagcacatag tacataaagc catttaccgt acatagcaca ttacagtcaa atcccttctc
+gt&#39;
+## Remove spaces
+trimmed_string=$(echo $string | tr -d &#39; &#39;)
+## Make uppercase
+echo  $trimmed_string| tr &#39;[:lower:]&#39; &#39;[:upper:]&#39; &gt; AF243780.fasta
+## Print to the first line
+awk &#39;BEGIN { print &quot;&gt;AF243780&quot; } { print }&#39; AF243780.fasta &gt; temp &amp;&amp; mv temp AF243780.fasta</code></pre>
+<p>Reference for the AWK command: <a
+href="https://linuxconfig.org/how-to-insert-line-to-the-beginning-of-file-on-linux"
+class="uri">https://linuxconfig.org/how-to-insert-line-to-the-beginning-of-file-on-linux</a></p>
+<p><br />
+</p>
+<div id="multiple-fasta-with-capital-letters-and-spaces-removed"
+class="section level3">
+<h3>Multiple fasta with capital letters and spaces removed</h3>
+<p><br />
+</p>
+<p>Finally, this chunk allows us to transform the mitochondrial FASTA
+files downloaded from the GenBank using R. The paths are from my local
+machine but I transfer the capital fasta file to the appropriate folder
+in the hummingbird server:</p>
+<p><br />
+</p>
+<pre class="bash"><code>## Change directory to the folder in my local machine, where I stored the GenBank mitochondrial sequences.
+cd ../geraldo/data/
+## Open file, remove spaces and make letters uppercase
+cat mt_brazilian.fasta | tr -d &#39; &#39; |  tr &#39;[:lower:]&#39; &#39;[:upper:]&#39; &gt; mt_brazilian_capital.fasta</code></pre>
+<p><br />
+</p>
+</div>
+<div id="split-and-rename-each-fasta-file" class="section level3">
+<h3>Split and rename each fasta file</h3>
+<p><br />
+</p>
+<pre class="bash"><code>## Change directory to the fasta folder
+cd /hb/home/gchaves/results/geraldo/mitochondria/fasta
+## splitfasta breaks multi-fasta file
+/hb/home/gchaves/.local/bin/splitfasta mt_brazilian_capital.fasta 
+## Change directory to the folder containing all fasta files
+cd mt_brazilian_capital_split_files
+## for loop
+for file in mt_brazilian_capital_*; do 
+  echo $file; 
+  ## create variable fileName using the first line of fasta and removing the &#39;&gt;&#39;
+  fileName=$(head -n 1 $file | sed &#39;s/&gt;//g&#39;)
+  ## change the splitfasta name to the header name
+  mv $file $fileName&quot;.fasta&quot;
+  echo &quot;this is the new file now:&quot; $fileName&quot;.fasta&quot;
+  ## move the file to the directory above.
+  mv $fileName&quot;.fasta&quot; ../
+done
+## After everything is done, change directory to the directory above
+cd ..
+## Remove the filder that splitfasta created.
+rm -r mt_brazilian_capital_split_files</code></pre>
+<p><br />
+</p>
+</div>
+</div>
+<div id="ucsc-hummingbird-server-script" class="section level2">
+<h2>2. UCSC Hummingbird Server Script</h2>
+<p><br />
+</p>
+<div id="index-the-fasta-file-with-bwa" class="section level3">
+<h3>2.1. Index the fasta file with bwa</h3>
+<p><br />
+</p>
+<p>Example of alignment with bwa. In the references folder, run:</p>
+<pre class="bash"><code>bwa index -a bwtsw AF243627.fasta</code></pre>
+<p><br />
+</p>
+<p>Example of output:</p>
+<pre class="bash"><code>(base) dcuser@ip-172-31-90-246:~/variant_call/references$ bwa index -a bwtsw AF243627.fasta
+[bwa_index] Pack FASTA... 0.00 sec
+[bwa_index] Construct BWT for the packed sequence...
+[BWTIncCreate] textLength=604, availableWord=65536
+[bwt_gen] Finished constructing BWT in 2 iterations.
+[bwa_index] 0.00 seconds elapse.
+[bwa_index] Update BWT... 0.00 sec
+[bwa_index] Pack forward-only FASTA... 0.00 sec
+[bwa_index] Construct SA from BWT and Occ... 0.00 sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa index -a bwtsw AF243627.fasta
+[main] Real time: 0.029 sec; CPU: 0.005 sec
+(base) dcuser@ip-172-31-90-246:~/variant_call/references$ pwd
+/home/dcuser/variant_call/references
+(base) dcuser@ip-172-31-90-246:~/variant_call/references$ ls</code></pre>
+<p><br />
+</p>
+<div id="align-reads-to-the-index-perform-for-each-experiment"
+class="section level4">
+<h4>Align reads to the index (perform for each experiment):</h4>
+<p><br />
+</p>
+<p>To move to the sam folder, run:</p>
+<pre class="bash"><code>cd ../sam/</code></pre>
+<p><br />
+</p>
+<p>Check what exists in the sam folder:</p>
+<pre class="bash"><code>ls ../sam/</code></pre>
+<p><br />
+</p>
+<p>In the sam folder, align the fasta file:</p>
+<pre class="bash"><code>bwa mem -t 4 ../references/AF243627.fasta ../fasta/AF243628.fasta   &gt; AF243628.sam</code></pre>
+<p><br />
+</p>
+<p>Now check what exists in the sam folder:</p>
+<pre class="bash"><code>ls ../sam/</code></pre>
+<p><br />
+</p>
+<p>There should be a result similar to this now, indicating that we have
+a sam (sequence alignment/map) file in the sam folder:</p>
+<p><br />
+</p>
+<pre class="bash"><code>(base) dcuser@ip-172-31-90-246:~/variant_call/sam$ ls ../sam/
+AF243628.sam</code></pre>
+<p><br />
+</p>
+<p>This variant call pipeline was recorded on document
+Lin2016/pipeline_192. In the second day of writing this notebook, I
+decided to run the multi-fasta file in the BWA alignment step. In the
+humminbird server, I store the mt_brazilian_capital.fasta in the
+~/results/geraldo/mitochondria/fasta folder to run the variant call in
+the Scrip in Part 2: Hummingbird Script. I deleted
+mt_brazilian_capital.fasta in geraldo/data in my local machine because I
+did not want the mt_brazilian_capital.fasta to be uploaded to GitHub
+when publishing the geraldo website.</p>
+<p>In this chunk I will reuse the for loop from above to run the variant
+call for all fasta files.</p>
+<p><br />
+</p>
+</div>
+<div id="chunk-of-server" class="section level4">
+<h4>Chunk of server</h4>
+<p><br />
+</p>
+<p>This chunk is not included on purpose</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+<div id="chunk-of-practice" class="section level3">
+<h3>Chunk of practice</h3>
+<p><br />
+</p>
+<p>In this part we assume to be inside the fasta folder.</p>
+<p><br />
+</p>
+<pre class="bash"><code>echo &quot;This is the task in the for loop&quot;
+REFERENCE=../references/AF243627.fasta</code></pre>
+<p><br />
+</p>
+<ul>
+<li><p>In this part we change directory to the fasta folder using the
+absolute path on purpose</p></li>
+<li><p>We must make sure with 100% probability that we are changing the
+directory to the correct fasta folder</p></li>
+<li><p>That is the reason why we must start with the <em>absolute
+path</em> to the fasta folder:</p></li>
+</ul>
+<p><br />
+</p>
+<pre class="bash"><code>cd /home/dcuser/variant_call_gepoliano/fasta</code></pre>
+<p><br />
+</p>
+</div>
+<div id="variant-call-pipeline-using-a-for-loop-strategy"
+class="section level3">
+<h3>2.2. Variant Call Pipeline using a for loop strategy</h3>
+<p><br />
+</p>
+<ul>
+<li>Then we execute the Variant Call Pipeline Using a for loop
+Strategy:</li>
+</ul>
+<p><br />
+</p>
+<pre class="bash"><code>
+cd /home/dcuser/variant_call_gepoliano/fasta
+
+## for loop specific to the individual fasta files
+for fastaFile in AF*.fasta; do
+  
+  ## Pick just the eight firt letters of the string
+  fastaFileName=${fastaFile:0:8}
+  echo &quot;started sample $fastaFileName&quot;
+  
+  ## Align
+  bwa mem -t 4 $REFERENCE $fastaFile &gt; ../sam/$fastaFileName&quot;.sam&quot;
+  echo &quot;Just finished aligning sample $fastaFileName&quot;
+  
+  ## SAM to BAM
+  samtools view -S -b ../sam/$fastaFileName&quot;.sam&quot; &gt; \
+  ../bam/$fastaFileName&quot;.bam&quot;
+  echo &quot;Finished SAM to BAM of sample $fastaFileName&quot;
+  
+  ## Samtools uses reference FASTA to detect &quot;piles&quot; in the alignment
+  bcftools mpileup -f $REFERENCE ../bam/$fastaFileName&quot;.bam&quot; &gt; \
+  ../bcf/$fastaFileName&quot;.bcf&quot;
+  
+  ## Bcftools extracts SNPs
+  echo &quot;started Bcftools SNPs for sample $fastaFileName&quot;
+  bcftools view -v snps ../bcf/$fastaFileName&quot;.bcf&quot; &gt; ../snps_vcf/$fastaFileName&quot;_snps.vcf&quot;
+
+done
+
+echo &quot;Finished the entire for loop&quot;
+</code></pre>
+<p><br />
+</p>
+</div>
+<div id="example-output-of-the-variant-call-pipeline"
+class="section level3">
+<h3>2.3. Example output of the Variant Call Pipeline:</h3>
+<p><br />
+</p>
+<pre class="bash"><code>(base) dcuser@ip-172-31-90-246:~/variant_call_gepoliano/fasta$ cd /home/dcuser/variant_call_gepoliano/fasta
+(base) dcuser@ip-172-31-90-246:~/variant_call_gepoliano/fasta$ 
+(base) dcuser@ip-172-31-90-246:~/variant_call_gepoliano/fasta$ ## for loop specific to the individual fasta files
+(base) dcuser@ip-172-31-90-246:~/variant_call_gepoliano/fasta$ for fastaFile in AF*.fasta; do
+&gt;   
+&gt;   ## Pick just the eight firt letters of the string
+&gt;   fastaFileName=${fastaFile:0:8}
+&gt;   echo &quot;started sample $fastaFileName&quot;
+&gt;   
+&gt;   ## Align
+&gt;   bwa mem -t 4 $REFERENCE $fastaFile &gt; ../sam/$fastaFileName&quot;.sam&quot;
+&gt;   echo &quot;Just finished aligning sample $fastaFileName&quot;
+&gt;   
+&gt;   ## SAM to BAM
+&gt;   samtools view -S -b ../sam/$fastaFileName&quot;.sam&quot; &gt; \
+&gt;   ../bam/$fastaFileName&quot;.bam&quot;
+&gt;   echo &quot;Finished SAM to BAM of sample $fastaFileName&quot;
+&gt;   
+&gt;   ## Samtools uses reference FASTA to detect &quot;piles&quot; in the alignment
+&gt;   bcftools mpileup -f $REFERENCE ../bam/$fastaFileName&quot;.bam&quot; &gt; \
+&gt;   ../bcf/$fastaFileName&quot;.bcf&quot;
+&gt;   
+&gt;   ## Bcftools extracts SNPs
+&gt;   echo &quot;started Bcftools SNPs for sample $fastaFileName&quot;
+&gt;   bcftools view -v snps ../bcf/$fastaFileName&quot;.bcf&quot; &gt; ../snps_vcf/$fastaFileName&quot;_snps.vcf&quot;
+&gt; 
+&gt; done
+started sample AF243628
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243628.fasta
+[main] Real time: 0.005 sec; CPU: 0.002 sec
+Just finished aligning sample AF243628
+Finished SAM to BAM of sample AF243628
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243628
+started sample AF243629
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243629.fasta
+[main] Real time: 0.005 sec; CPU: 0.002 sec
+Just finished aligning sample AF243629
+Finished SAM to BAM of sample AF243629
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243629
+started sample AF243630
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243630.fasta
+[main] Real time: 0.005 sec; CPU: 0.002 sec
+Just finished aligning sample AF243630
+Finished SAM to BAM of sample AF243630
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243630
+started sample AF243631
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243631.fasta
+[main] Real time: 0.007 sec; CPU: 0.003 sec
+Just finished aligning sample AF243631
+Finished SAM to BAM of sample AF243631
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243631
+started sample AF243632
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243632.fasta
+[main] Real time: 0.004 sec; CPU: 0.002 sec
+Just finished aligning sample AF243632
+Finished SAM to BAM of sample AF243632
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243632
+started sample AF243633
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.002 CPU sec, 0.002 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243633.fasta
+[main] Real time: 0.008 sec; CPU: 0.004 sec
+Just finished aligning sample AF243633
+Finished SAM to BAM of sample AF243633
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243633
+started sample AF243700
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243700.fasta
+[main] Real time: 0.007 sec; CPU: 0.003 sec
+Just finished aligning sample AF243700
+Finished SAM to BAM of sample AF243700
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243700
+started sample AF243701
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243701.fasta
+[main] Real time: 0.005 sec; CPU: 0.003 sec
+Just finished aligning sample AF243701
+Finished SAM to BAM of sample AF243701
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243701
+started sample AF243702
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.002 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243702.fasta
+[main] Real time: 0.006 sec; CPU: 0.003 sec
+Just finished aligning sample AF243702
+Finished SAM to BAM of sample AF243702
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243702
+started sample AF243703
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243703.fasta
+[main] Real time: 0.005 sec; CPU: 0.003 sec
+Just finished aligning sample AF243703
+Finished SAM to BAM of sample AF243703
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243703
+started sample AF243704
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.002 CPU sec, 0.002 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243704.fasta
+[main] Real time: 0.006 sec; CPU: 0.004 sec
+Just finished aligning sample AF243704
+Finished SAM to BAM of sample AF243704
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243704
+started sample AF243705
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243705.fasta
+[main] Real time: 0.006 sec; CPU: 0.003 sec
+Just finished aligning sample AF243705
+Finished SAM to BAM of sample AF243705
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243705
+started sample AF243706
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243706.fasta
+[main] Real time: 0.004 sec; CPU: 0.002 sec
+Just finished aligning sample AF243706
+Finished SAM to BAM of sample AF243706
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243706
+started sample AF243707
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.002 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243707.fasta
+[main] Real time: 0.005 sec; CPU: 0.004 sec
+Just finished aligning sample AF243707
+Finished SAM to BAM of sample AF243707
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243707
+started sample AF243708
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243708.fasta
+[main] Real time: 0.006 sec; CPU: 0.003 sec
+Just finished aligning sample AF243708
+Finished SAM to BAM of sample AF243708
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243708
+started sample AF243709
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (301 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.002 CPU sec, 0.002 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243709.fasta
+[main] Real time: 0.007 sec; CPU: 0.003 sec
+Just finished aligning sample AF243709
+Finished SAM to BAM of sample AF243709
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243709
+started sample AF243780
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243780.fasta
+[main] Real time: 0.006 sec; CPU: 0.003 sec
+Just finished aligning sample AF243780
+Finished SAM to BAM of sample AF243780
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243780
+started sample AF243781
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243781.fasta
+[main] Real time: 0.005 sec; CPU: 0.002 sec
+Just finished aligning sample AF243781
+Finished SAM to BAM of sample AF243781
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243781
+started sample AF243782
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243782.fasta
+[main] Real time: 0.005 sec; CPU: 0.003 sec
+Just finished aligning sample AF243782
+Finished SAM to BAM of sample AF243782
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243782
+started sample AF243783
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243783.fasta
+[main] Real time: 0.006 sec; CPU: 0.002 sec
+Just finished aligning sample AF243783
+Finished SAM to BAM of sample AF243783
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243783
+started sample AF243784
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243784.fasta
+[main] Real time: 0.003 sec; CPU: 0.002 sec
+Just finished aligning sample AF243784
+Finished SAM to BAM of sample AF243784
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243784
+started sample AF243785
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.000 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243785.fasta
+[main] Real time: 0.005 sec; CPU: 0.002 sec
+Just finished aligning sample AF243785
+Finished SAM to BAM of sample AF243785
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243785
+started sample AF243786
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243786.fasta
+[main] Real time: 0.005 sec; CPU: 0.002 sec
+Just finished aligning sample AF243786
+Finished SAM to BAM of sample AF243786
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243786
+started sample AF243787
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243787.fasta
+[main] Real time: 0.005 sec; CPU: 0.003 sec
+Just finished aligning sample AF243787
+Finished SAM to BAM of sample AF243787
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243787
+started sample AF243788
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (301 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243788.fasta
+[main] Real time: 0.003 sec; CPU: 0.002 sec
+Just finished aligning sample AF243788
+Finished SAM to BAM of sample AF243788
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243788
+started sample AF243789
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.000 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243789.fasta
+[main] Real time: 0.005 sec; CPU: 0.002 sec
+Just finished aligning sample AF243789
+Finished SAM to BAM of sample AF243789
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243789
+started sample AF243790
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243790.fasta
+[main] Real time: 0.005 sec; CPU: 0.003 sec
+Just finished aligning sample AF243790
+Finished SAM to BAM of sample AF243790
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243790
+started sample AF243791
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243791.fasta
+[main] Real time: 0.004 sec; CPU: 0.003 sec
+Just finished aligning sample AF243791
+Finished SAM to BAM of sample AF243791
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243791
+started sample AF243792
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.002 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243792.fasta
+[main] Real time: 0.005 sec; CPU: 0.003 sec
+Just finished aligning sample AF243792
+Finished SAM to BAM of sample AF243792
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243792
+started sample AF243793
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.002 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243793.fasta
+[main] Real time: 0.004 sec; CPU: 0.003 sec
+Just finished aligning sample AF243793
+Finished SAM to BAM of sample AF243793
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243793
+started sample AF243794
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.002 CPU sec, 0.002 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243794.fasta
+[main] Real time: 0.007 sec; CPU: 0.004 sec
+Just finished aligning sample AF243794
+Finished SAM to BAM of sample AF243794
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243794
+started sample AF243795
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243795.fasta
+[main] Real time: 0.005 sec; CPU: 0.002 sec
+Just finished aligning sample AF243795
+Finished SAM to BAM of sample AF243795
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243795
+started sample AF243796
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1 sequences (302 bp)...
+[M::mem_process_seqs] Processed 1 reads in 0.001 CPU sec, 0.001 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 ../references/AF243627.fasta AF243796.fasta
+[main] Real time: 0.006 sec; CPU: 0.003 sec
+Just finished aligning sample AF243796
+Finished SAM to BAM of sample AF243796
+[mpileup] 1 samples in 1 input files
+started Bcftools SNPs for sample AF243796
+(base) dcuser@ip-172-31-90-246:~/variant_call_gepoliano/fasta$ 
+(base) dcuser@ip-172-31-90-246:~/variant_call_gepoliano/fasta$ echo &quot;Finished the entire for loop&quot;
+Finished the entire for loop</code></pre>
+<p><br />
+</p>
+</div>
+<div id="fix-the-bcftools-error" class="section level3">
+<h3>Fix the bcftools error</h3>
+<p><br />
+</p>
+<p>After a couple hours dealing with this error:</p>
+<p>Failed to read from
+/hb/home/gchaves/results/geraldo/mitochondria/bcf/AF243782.bcf: unknown
+file type</p>
+<p>I noticed this part in the error message:</p>
+<p><br />
+</p>
+<pre class="bash"><code>Note that using &quot;samtools mpileup&quot; to generate BCF or VCF files has been
+removed.  To output these formats, please use &quot;bcftools mpileup&quot; instead.</code></pre>
+<p><br />
+</p>
+<p>I then replaced the line in the code above, to</p>
+<p><br />
+</p>
+<pre class="bash"><code>bcftools mpileup -f ~/references/hg19/GRCh37.p13.genome.fa ~/results/geraldo/mitochondria/bam/AF243780.bam  &gt;   ~/results/geraldo/mitochondria/bcf/AF243780.bcf</code></pre>
+<p><br />
+</p>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>3. References</h2>
+<p><br />
+</p>
+<p><a
+href="https://stackoverflow.com/questions/2439579/how-to-get-the-first-line-of-a-file-in-a-bash-script"
+class="uri">https://stackoverflow.com/questions/2439579/how-to-get-the-first-line-of-a-file-in-a-bash-script</a>
+<a
+href="https://unix.stackexchange.com/questions/104881/remove-particular-characters-from-a-variable-using-bash"
+class="uri">https://unix.stackexchange.com/questions/104881/remove-particular-characters-from-a-variable-using-bash</a>
+<a
+href="https://linuxsimply.com/bash-scripting-tutorial/string/substring/"
+class="uri">https://linuxsimply.com/bash-scripting-tutorial/string/substring/</a></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

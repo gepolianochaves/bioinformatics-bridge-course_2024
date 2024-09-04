@@ -32,7 +32,7 @@ navbar:
         - text: "3.1. Command Line or Terminal"
           href: "notebooks/Introduction-to-the-Terminal.html"
         - text: "3.2. Variant Call Pipeline using Sequenced DNA"
-          href: "notebooks/2-Variant-Call-Pipeline.html"
+          href: "02-variant_call_pipeline.html"
         - text: "3.3. Survival Analysis"
           href: "notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html"
         - text: "---------"
