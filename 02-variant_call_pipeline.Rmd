@@ -3,7 +3,7 @@ title: "Variant Call Pipeline"
 
 author: "Gepoliano Chaves"
 
-date: "Septemer 4th, 2024"
+date: "September 4th, 2024"
 
 output:
   html_document:
