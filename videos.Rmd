@@ -49,3 +49,12 @@ Progress in DNA Sequencing Technologies
 * [DNA Sequencing](https://www.youtube.com/watch?v=lU8ztLZRrvI)
 
 
+Variant Call Pipeline using Sequenced DNA
+
+* [For loop strategy using mtDNA sequeces in FASTA file format](https://youtu.be/AhrgAFdbU6Y)
+
+
+
+
+
+

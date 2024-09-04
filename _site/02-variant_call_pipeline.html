@@ -400,14 +400,18 @@ of the Variant Call Pipeline:</a></li>
 <li><a href="#fix-the-bcftools-error"
 id="toc-fix-the-bcftools-error">Fix the bcftools error</a></li>
 </ul></li>
-<li><a href="#references" id="toc-references">3. References</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </div>
 
 <p><br />
 </p>
+<p><br />
+</p>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
+<p><br />
+</p>
 <p><br />
 </p>
 <p>In this activity we process mitochondrial DNA FASTA sequences from
@@ -417,6 +421,18 @@ reference genome. The end results are VCF files that we need to do
 further processing to feed machine learning algorithms that will use the
 mitochondrial genetic variants to classify the individuals into their
 haplorgroups.</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<div class="float">
+<img src="images/pipeline.png" style="width:45.0%"
+alt="A variant call pipeline schematic. This figure is from the Harvard Chen Bioinformatics Core" />
+<div class="figcaption">A variant call pipeline schematic. This figure
+is from the Harvard Chen Bioinformatics Core</div>
+</div>
+<p><br />
+</p>
 <p><br />
 </p>
 </div>
@@ -508,6 +524,10 @@ cd ..
 rm -r mt_brazilian_capital_split_files</code></pre>
 <p><br />
 </p>
+<p><br />
+</p>
+<p><br />
+</p>
 </div>
 </div>
 <div id="ucsc-hummingbird-server-script" class="section level2">
@@ -539,10 +559,23 @@ rm -r mt_brazilian_capital_split_files</code></pre>
 /home/dcuser/variant_call/references
 (base) dcuser@ip-172-31-90-246:~/variant_call/references$ ls</code></pre>
 <p><br />
+<br />
 </p>
 <div id="align-reads-to-the-index-perform-for-each-experiment"
 class="section level4">
 <h4>Align reads to the index (perform for each experiment):</h4>
+<p><br />
+</p>
+<p><br />
+</p>
+<div class="float">
+<img src="images/alignment.png" style="width:60.0%"
+alt="In the alignment part, DNA sequenced reads are compared to the reference genome DNA sequence. IN the case of the reference human genome sequence, UCSC has played a historical participation in the Human Genome Project." />
+<div class="figcaption">In the alignment part, DNA sequenced reads are
+compared to the reference genome DNA sequence. IN the case of the
+reference human genome sequence, UCSC has played a historical
+participation in the Human Genome Project.</div>
+</div>
 <p><br />
 </p>
 <p>To move to the sam folder, run:</p>
@@ -1064,6 +1097,24 @@ started Bcftools SNPs for sample AF243796
 Finished the entire for loop</code></pre>
 <p><br />
 </p>
+<p><br />
+</p>
+<p><br />
+</p>
+<div class="float">
+<img src="images/SNPs.png" style="width:60.0%"
+alt="In the alignment part, DNA sequenced reads are compared to the reference genome DNA sequence. IN the case of the reference human genome sequence, UCSC has played a historical participation in the Human Genome Project." />
+<div class="figcaption">In the alignment part, DNA sequenced reads are
+compared to the reference genome DNA sequence. IN the case of the
+reference human genome sequence, UCSC has played a historical
+participation in the Human Genome Project.</div>
+</div>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
 </div>
 <div id="fix-the-bcftools-error" class="section level3">
 <h3>Fix the bcftools error</h3>
@@ -1089,10 +1140,13 @@ removed.  To output these formats, please use &quot;bcftools mpileup&quot; inste
 </div>
 </div>
 <div id="references" class="section level2">
-<h2>3. References</h2>
+<h2>References</h2>
 <p><br />
 </p>
 <p><a
+href="https://hbctraining.github.io/variant_analysis/lessons/00_intro_to_variant_calling.html"
+class="uri">https://hbctraining.github.io/variant_analysis/lessons/00_intro_to_variant_calling.html</a>
+<a
 href="https://stackoverflow.com/questions/2439579/how-to-get-the-first-line-of-a-file-in-a-bash-script"
 class="uri">https://stackoverflow.com/questions/2439579/how-to-get-the-first-line-of-a-file-in-a-bash-script</a>
 <a

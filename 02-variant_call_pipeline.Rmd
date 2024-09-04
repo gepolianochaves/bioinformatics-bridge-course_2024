@@ -13,11 +13,23 @@ output:
 
 \
 
+\
+
 ## Summary
 
 \
 
+\
+
 In this activity we process mitochondrial DNA FASTA sequences from self-declared white Brazilian individuals, downloaded from the GenBank. We process the FASTA sequences and then align them to the hg19 UCSC reference genome. The end results are VCF files that we need to do further processing to feed machine learning algorithms that will use the mitochondrial genetic variants to classify the individuals into their haplorgroups.
+
+\
+
+\
+
+![A variant call pipeline schematic. This figure is from the Harvard Chen Bioinformatics Core](images/pipeline.png){width=45%}
+
+\
 
 \
 
@@ -113,6 +125,10 @@ rm -r mt_brazilian_capital_split_files
 
 \
 
+\
+
+\
+
 ## 2. UCSC Hummingbird Server Script
 
 \
@@ -149,9 +165,17 @@ Example of output:
 (base) dcuser@ip-172-31-90-246:~/variant_call/references$ ls
 ```
 
+
+\
 \
 
 #### Align reads to the index (perform for each experiment):
+
+\
+
+\
+
+![In the alignment part, DNA sequenced reads are compared to the reference genome DNA sequence. IN the case of the reference human genome sequence, UCSC has played a historical participation in the Human Genome Project.](images/alignment.png){width=60%}
 
 \
 
@@ -754,7 +778,18 @@ started Bcftools SNPs for sample AF243796
 Finished the entire for loop
 ```
 
+\
 
+\
+
+\
+
+![In the alignment part, DNA sequenced reads are compared to the reference genome DNA sequence. IN the case of the reference human genome sequence, UCSC has played a historical participation in the Human Genome Project.](images/SNPs.png){width=60%}
+
+
+\
+
+\
 
 \
 
@@ -787,10 +822,11 @@ bcftools mpileup -f ~/references/hg19/GRCh37.p13.genome.fa ~/results/geraldo/mit
 
 \
 
-## 3. References
+## References
 
 \
 
+https://hbctraining.github.io/variant_analysis/lessons/00_intro_to_variant_calling.html
 https://stackoverflow.com/questions/2439579/how-to-get-the-first-line-of-a-file-in-a-bash-script
 https://unix.stackexchange.com/questions/104881/remove-particular-characters-from-a-variable-using-bash
 https://linuxsimply.com/bash-scripting-tutorial/string/substring/
