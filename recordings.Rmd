@@ -33,5 +33,12 @@ Classification using Logistic Regression
 
 * [Lecture Recording 6: Classification Algorithm](https://youtu.be/-qjRjEo94Es)
 
+\
+
+Exercised on Classification
+
+* [Lecture Recording 7: Classification Algorithm Exercises](https://youtu.be/lFe-Lw9Glzk)
+
+
 
 
