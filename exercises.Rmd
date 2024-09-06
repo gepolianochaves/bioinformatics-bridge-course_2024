@@ -369,4 +369,67 @@ Write a command to predict the high risk label for the patient based in the pati
 
 * Please present the solution in a command or algorithm (**computer language**)
 
+\
+
+
+# Part 3: Terminal
+
+\
+
+\
+
+## Chapter 1: DNA Sequencing
+
+\
+
+\
+
+## P3 Question 1
+
+\
+
+According to Shendure, how many and what are the names of the DNA sequencing technologies?
+
+\
+
+\
+
+\
+
+## P3 Question 2
+
+\
+
+According to Shendure, what is the main clinical application the DNA sequencing technologies?
+
+\
+
+\
+
+\
+
+## P3 Question 3
+
+\
+
+According to Shendure, please identify at least one chemical event in the machanics of DNA sequencing.
+
+\
+
+\
+
+\
+
+## P3 Question 4
+
+\
+
+According to Shendure, please identify at least one significant event in history of DNA sequencing.
+
+\
+
+\
+
+\
+
 
