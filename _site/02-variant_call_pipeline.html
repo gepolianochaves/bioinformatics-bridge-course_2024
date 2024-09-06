@@ -294,13 +294,22 @@ $(document).ready(function () {
     <li class="divider"></li>
     <li class="dropdown-header">Week 3: DNA Sequencing and the Command Line</li>
     <li>
-      <a href="notebooks/Introduction-to-the-Terminal.html">3.1. Command Line or Terminal</a>
+      <a href="download_sequences.html">3.1A. Download mtDNA fasta sequences</a>
     </li>
     <li>
-      <a href="02-variant_call_pipeline.html">3.2. Variant Call Pipeline using Sequenced DNA</a>
+      <a href="notebooks/07-Phylogenetic-Analyisis_mt_BR.html">3.1B. Phylogenetic Analysis</a>
     </li>
     <li>
-      <a href="download_sequences.html">3.3. Survival Analysis</a>
+      <a href="notebooks/haplogroups.html">3.1C. Haplogroups</a>
+    </li>
+    <li>
+      <a href="https://haplogrep.readthedocs.io/en/latest/annotations/#clusters-and-population-frequencies">3.1D. Haplogroups Annotations</a>
+    </li>
+    <li>
+      <a href="notebooks/Introduction-to-the-Terminal.html">3.2. Command Line or Terminal</a>
+    </li>
+    <li>
+      <a href="02-variant_call_pipeline.html">3.3. Variant Call Pipeline using Sequenced DNA</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Week 4</li>
@@ -309,6 +318,9 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">4.2.</a>
+    </li>
+    <li>
+      <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">4.3.</a>
     </li>
   </ul>
 </li>
@@ -484,16 +496,20 @@ class="section level3">
 <h3>Multiple fasta with capital letters and spaces removed</h3>
 <p><br />
 </p>
-<p>Finally, this chunk allows us to transform the mitochondrial FASTA
-files downloaded from the GenBank using R. The paths are from my local
-machine but I transfer the capital fasta file to the appropriate folder
-in the hummingbird server:</p>
-<p><br />
-</p>
-<pre class="bash"><code>## Change directory to the folder in my local machine, where I stored the GenBank mitochondrial sequences.
-cd ../geraldo/data/
-## Open file, remove spaces and make letters uppercase
-cat mt_brazilian.fasta | tr -d &#39; &#39; |  tr &#39;[:lower:]&#39; &#39;[:upper:]&#39; &gt; mt_brazilian_capital.fasta</code></pre>
+<ul>
+<li><p>Finally, this part allows us to transform the mitochondrial FASTA
+files downloaded from the GenBank using R.</p></li>
+<li><p>The paths are from my local machine but I transfer the capital
+fasta file to the appropriate folder in the hummingbird server:</p></li>
+<li><p>After renaming the fasta sequences, they can be
+concatenated:</p></li>
+</ul>
+<pre class="bash"><code>fastaDir=./data
+## Change directory to the fasta folder
+cd $fastaDir
+## Concatenate the fasta files into one single multiple fasta sequences file.
+cat AF* &gt; mt_brazilian_exercise_multiple.fasta
+cat mt_brazilian_exercise_multiple.fasta | tr -d &#39; &#39; |  tr &#39;[:lower:]&#39; &#39;[:upper:]&#39; &gt; mt_brazilian_exercise_multiple_capital.fasta</code></pre>
 <p><br />
 </p>
 </div>
@@ -501,14 +517,17 @@ cat mt_brazilian.fasta | tr -d &#39; &#39; |  tr &#39;[:lower:]&#39; &#39;[:uppe
 <h3>Split and rename each fasta file</h3>
 <p><br />
 </p>
-<pre class="bash"><code>## Change directory to the fasta folder
-cd /hb/home/gchaves/results/geraldo/mitochondria/fasta
+<p>Renaming the fasta sequences is necessary so the sequence names are
+consistent with GenBank nomenclature.</p>
+<pre class="bash"><code>fastaDir=./data
+## Change directory to the fasta folder
+cd $fastaDir
 ## splitfasta breaks multi-fasta file
-/hb/home/gchaves/.local/bin/splitfasta mt_brazilian_capital.fasta 
+splitfasta mt_brazilian_exercise.fasta 
 ## Change directory to the folder containing all fasta files
-cd mt_brazilian_capital_split_files
+cd mt_brazilian_exercise_split_files
 ## for loop
-for file in mt_brazilian_capital_*; do 
+for file in mt_brazilian_exercise*; do 
   echo $file; 
   ## create variable fileName using the first line of fasta and removing the &#39;&gt;&#39;
   fileName=$(head -n 1 $file | sed &#39;s/&gt;//g&#39;)
@@ -521,7 +540,7 @@ done
 ## After everything is done, change directory to the directory above
 cd ..
 ## Remove the filder that splitfasta created.
-rm -r mt_brazilian_capital_split_files</code></pre>
+rm -r mt_brazilian_exercise_split_files</code></pre>
 <p><br />
 </p>
 <p><br />
@@ -532,6 +551,20 @@ rm -r mt_brazilian_capital_split_files</code></pre>
 </div>
 <div id="ucsc-hummingbird-server-script" class="section level2">
 <h2>2. UCSC Hummingbird Server Script</h2>
+<p><br />
+</p>
+<p>Processed fasta files are transfered to the AIM with this
+command:</p>
+<pre class="bash"><code>rsync -avz /hb/home/gchaves/results/geraldo/mitochondria/fasta dcuser@ec2-3-93-220-76.compute-1.amazonaws.com:/home/dcuser/fasta</code></pre>
+<p><br />
+</p>
+<p>Create variant_call folder in AIM:</p>
+<pre class="bash"><code>mkdir variant_call
+mv fasta variant_call</code></pre>
+<p><br />
+</p>
+<p>Create variant_call_gepoliano folder in AIM:</p>
+<pre class="bash"><code>mkdir variant_call_gepoliano</code></pre>
 <p><br />
 </p>
 <div id="index-the-fasta-file-with-bwa" class="section level3">

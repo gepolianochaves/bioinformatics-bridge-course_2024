@@ -82,15 +82,19 @@ https://linuxconfig.org/how-to-insert-line-to-the-beginning-of-file-on-linux
 
 \
 
-Finally, this chunk allows us to transform the mitochondrial FASTA files downloaded from the GenBank using R. The paths are from my local machine but I transfer the capital fasta file to the appropriate folder in the hummingbird server:
+* Finally, this part allows us to transform the mitochondrial FASTA files downloaded from the GenBank using R. 
 
-\
+* The paths are from my local machine but I transfer the capital fasta file to the appropriate folder in the hummingbird server:
 
-```{bash, eval=F}
-## Change directory to the folder in my local machine, where I stored the GenBank mitochondrial sequences.
-cd ../geraldo/data/
-## Open file, remove spaces and make letters uppercase
-cat mt_brazilian.fasta | tr -d ' ' |  tr '[:lower:]' '[:upper:]' > mt_brazilian_capital.fasta
+* After renaming the fasta sequences, they can be concatenated:
+
+```{bash concatenate fasta files, eval=F}
+fastaDir=./data
+## Change directory to the fasta folder
+cd $fastaDir
+## Concatenate the fasta files into one single multiple fasta sequences file.
+cat AF* > mt_brazilian_exercise_multiple.fasta
+cat mt_brazilian_exercise_multiple.fasta | tr -d ' ' |  tr '[:lower:]' '[:upper:]' > mt_brazilian_exercise_multiple_capital.fasta
 ```
 
 \
@@ -99,15 +103,18 @@ cat mt_brazilian.fasta | tr -d ' ' |  tr '[:lower:]' '[:upper:]' > mt_brazilian_
 
 \
 
+Renaming the fasta sequences is necessary so the sequence names are consistent with GenBank nomenclature.
+
 ```{bash, eval=F}
+fastaDir=./data
 ## Change directory to the fasta folder
-cd /hb/home/gchaves/results/geraldo/mitochondria/fasta
+cd $fastaDir
 ## splitfasta breaks multi-fasta file
-/hb/home/gchaves/.local/bin/splitfasta mt_brazilian_capital.fasta 
+splitfasta mt_brazilian_exercise.fasta 
 ## Change directory to the folder containing all fasta files
-cd mt_brazilian_capital_split_files
+cd mt_brazilian_exercise_split_files
 ## for loop
-for file in mt_brazilian_capital_*; do 
+for file in mt_brazilian_exercise*; do 
   echo $file; 
   ## create variable fileName using the first line of fasta and removing the '>'
   fileName=$(head -n 1 $file | sed 's/>//g')
@@ -120,8 +127,9 @@ done
 ## After everything is done, change directory to the directory above
 cd ..
 ## Remove the filder that splitfasta created.
-rm -r mt_brazilian_capital_split_files
+rm -r mt_brazilian_exercise_split_files
 ```
+
 
 \
 
@@ -130,6 +138,32 @@ rm -r mt_brazilian_capital_split_files
 \
 
 ## 2. UCSC Hummingbird Server Script
+
+\
+
+Processed fasta files are transfered to the AIM with this command:
+
+```{bash transfer fasta folder, eval=F}
+rsync -avz /hb/home/gchaves/results/geraldo/mitochondria/fasta dcuser@ec2-3-93-220-76.compute-1.amazonaws.com:/home/dcuser/fasta
+```
+
+\
+
+Create variant_call folder in AIM:
+
+```{bash Create variant_call folder in AIM, eval=F}
+mkdir variant_call
+mv fasta variant_call
+```
+
+\
+
+Create variant_call_gepoliano folder in AIM:
+
+```{bash Create variant_call_gepoliano folder in AIM, eval=F}
+mkdir variant_call_gepoliano
+```
+
 
 \
 

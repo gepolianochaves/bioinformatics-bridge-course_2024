@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Gepoliano Chaves" />
 
 
-<title>download_sequences.knit</title>
+<title>Variant Call Pipeline</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -32,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -291,13 +294,22 @@ $(document).ready(function () {
     <li class="divider"></li>
     <li class="dropdown-header">Week 3: DNA Sequencing and the Command Line</li>
     <li>
-      <a href="notebooks/Introduction-to-the-Terminal.html">3.1. Command Line or Terminal</a>
+      <a href="download_sequences.html">3.1A. Download mtDNA fasta sequences</a>
     </li>
     <li>
-      <a href="02-variant_call_pipeline.html">3.2. Variant Call Pipeline using Sequenced DNA</a>
+      <a href="notebooks/07-Phylogenetic-Analyisis_mt_BR.html">3.1B. Phylogenetic Analysis</a>
     </li>
     <li>
-      <a href="download_sequences.html">3.3. Survival Analysis</a>
+      <a href="notebooks/haplogroups.html">3.1C. Haplogroups</a>
+    </li>
+    <li>
+      <a href="https://haplogrep.readthedocs.io/en/latest/annotations/#clusters-and-population-frequencies">3.1D. Haplogroups Annotations</a>
+    </li>
+    <li>
+      <a href="notebooks/Introduction-to-the-Terminal.html">3.2. Command Line or Terminal</a>
+    </li>
+    <li>
+      <a href="02-variant_call_pipeline.html">3.3. Variant Call Pipeline using Sequenced DNA</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Week 4</li>
@@ -306,6 +318,9 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">4.2.</a>
+    </li>
+    <li>
+      <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">4.3.</a>
     </li>
   </ul>
 </li>
@@ -360,23 +375,32 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Variant Call Pipeline</h1>
+<h4 class="author">Gepoliano Chaves</h4>
+<h4 class="date">September 4th, 2024</h4>
 
 </div>
 
 
-<div id="reference" class="section level1">
-<h1>Reference</h1>
+<p><br />
+</p>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p><br />
+</p>
 <p><a href="https://www.ncbi.nlm.nih.gov/genbank/"
 class="uri">https://www.ncbi.nlm.nih.gov/genbank/</a></p>
 <p><a
 href="https://jhudatascience.org/AnVIL_Phylogenetic-Techniques/downloading-the-sequences-from-genbank.html"
 class="uri">https://jhudatascience.org/AnVIL_Phylogenetic-Techniques/downloading-the-sequences-from-genbank.html</a></p>
+<p><br />
+</p>
 <pre class="r"><code>library(ape)
-mt_brazilian &lt;- read.GenBank(c(
+mt_brazilian_exercise &lt;- read.GenBank(c(
   # &quot;AF243627&quot;, # Amerindian/Asian lineage
   # &quot;AF243628&quot;, # Amerindian/Asian lineage
   # &quot;AF243629&quot;, # Amerindian/Asian lineage
-  # &quot;AF243700&quot;, # Amerindian/Asian lineage 
+  # &quot;AF243700&quot;, # Amerindian/Asian lineage
   &quot;AF243780&quot;, # European lineage
   &quot;AF243781&quot;, # European lineage
   &quot;AF243782&quot;, # European lineage
@@ -388,42 +412,28 @@ mt_brazilian &lt;- read.GenBank(c(
   &quot;AF243788&quot;, # European lineage
   &quot;AF243789&quot;, # European lineage
   &quot;AF243790&quot;, # European lineage
-  &quot;AF243791&quot;, # European lineage 
-  &quot;AF243792&quot;, # European lineage     
-  &quot;AF243793&quot;, # European lineage   
-  &quot;AF243794&quot;, # European lineage   
-  &quot;AF243795&quot;, # European lineage 
-  &quot;AF243796&quot;  # European lineage
-  # &quot;AF243634&quot;, # African lineage 
-  # &quot;AF243635&quot;, # African lineage 
-  # &quot;AF243636&quot;, # African lineage 
-  # &quot;AF243637&quot;, # African lineage 
-  # &quot;AF243638&quot;, # African lineage 
+  &quot;AF243791&quot;, # European lineage
+  &quot;AF243792&quot;, # European lineage
+  &quot;AF243793&quot;, # European lineage
+  &quot;AF243794&quot;, # European lineage
+  &quot;AF243795&quot;, # European lineage
+  &quot;AF243796&quot;#,  # European lineage
+  # &quot;AF243634&quot;, # African lineage
+  # &quot;AF243635&quot;, # African lineage
+  # &quot;AF243636&quot;, # African lineage
+  # &quot;AF243637&quot;, # African lineage
+  # &quot;AF243638&quot;#, # African lineage
   # &quot;AF243639&quot;, # African lineage 
   # &quot;AF243640&quot;  # African lineage 
 ))</code></pre>
+<p><br />
+</p>
 <p>Write to file</p>
-<pre class="r"><code>write.dna(mt_brazilian, 
-          file = &quot;data/mt_brazilian.fasta&quot;, 
+<p><br />
+</p>
+<pre class="r"><code>write.dna(mt_brazilian_exercise, 
+          file = &quot;data/mt_brazilian_exercise.fasta&quot;, 
           format = &quot;fasta&quot;)</code></pre>
-<pre class="r"><code>labadorf_metadata_selected_df &lt;- read.csv(&quot;../../../DevComBio/projects/dementiaDiabetesBrazilian/papers/chaves_2019/data/labadorf_metadata_selected_df.txt&quot;,
-                                          sep = &quot;\t&quot;)
-
-haplogroups.labadorf &lt;- read.table(&quot;../../../DevComBio/projects/dementiaDiabetesBrazilian/papers/chaves_2019/haplogroups/haplogroups.extended.csv&quot;,
-                                   sep = &quot;\t&quot;, 
-                                   header = T)</code></pre>
-<p>Merge metadata with haplogroups</p>
-<pre class="r"><code>labadorf_metadata_selected_df &lt;- data.table(labadorf_metadata_selected_df, key = &quot;manual_sample_id&quot;) 
-haplogroups.labadorf          &lt;- data.table(haplogroups.labadorf,          key = &quot;SampleID&quot;)
-
-labadorf_metadata_haplogroups &lt;- labadorf_metadata_selected_df[haplogroups.labadorf]</code></pre>
-<p>Write to file</p>
-<pre class="r"><code>write.table(labadorf_metadata_haplogroups,
-            file = &quot;../../../DevComBio/projects/dementiaDiabetesBrazilian/papers/chaves_2019/data/labadorf_metadata_haplogroups.txt&quot;,
-            append = F,
-            sep = &quot;\t&quot;,
-            row.names = F,
-            col.names = T)</code></pre>
 </div>
 
 

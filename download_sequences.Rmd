@@ -1,17 +1,34 @@
+---
+title: "Variant Call Pipeline"
 
-# Reference
+author: "Gepoliano Chaves"
+
+date: "September 4th, 2024"
+
+output:
+  html_document:
+    df_print: paged
+---
+
+\
+
+# References
+
+\
 
 https://www.ncbi.nlm.nih.gov/genbank/
 
 https://jhudatascience.org/AnVIL_Phylogenetic-Techniques/downloading-the-sequences-from-genbank.html
 
+\
+
 ```{r}
 library(ape)
-mt_brazilian <- read.GenBank(c(
+mt_brazilian_exercise <- read.GenBank(c(
   # "AF243627", # Amerindian/Asian lineage
   # "AF243628", # Amerindian/Asian lineage
   # "AF243629", # Amerindian/Asian lineage
-  # "AF243700", # Amerindian/Asian lineage 
+  # "AF243700", # Amerindian/Asian lineage
   "AF243780", # European lineage
   "AF243781", # European lineage
   "AF243782", # European lineage
@@ -23,58 +40,32 @@ mt_brazilian <- read.GenBank(c(
   "AF243788", # European lineage
   "AF243789", # European lineage
   "AF243790", # European lineage
-  "AF243791", # European lineage 
-  "AF243792", # European lineage     
-  "AF243793", # European lineage   
-  "AF243794", # European lineage   
-  "AF243795", # European lineage 
-  "AF243796"  # European lineage
-  # "AF243634", # African lineage 
-  # "AF243635", # African lineage 
-  # "AF243636", # African lineage 
-  # "AF243637", # African lineage 
-  # "AF243638", # African lineage 
+  "AF243791", # European lineage
+  "AF243792", # European lineage
+  "AF243793", # European lineage
+  "AF243794", # European lineage
+  "AF243795", # European lineage
+  "AF243796"#,  # European lineage
+  # "AF243634", # African lineage
+  # "AF243635", # African lineage
+  # "AF243636", # African lineage
+  # "AF243637", # African lineage
+  # "AF243638"#, # African lineage
   # "AF243639", # African lineage 
   # "AF243640"  # African lineage 
 ))
 ```
 
+\
+
 Write to file
+
+\
 
 ```{r}
-write.dna(mt_brazilian, 
-          file = "data/mt_brazilian.fasta", 
+write.dna(mt_brazilian_exercise, 
+          file = "data/mt_brazilian_exercise.fasta", 
           format = "fasta")
 ```
-
-```{r, eval=F}
-labadorf_metadata_selected_df <- read.csv("../../../DevComBio/projects/dementiaDiabetesBrazilian/papers/chaves_2019/data/labadorf_metadata_selected_df.txt",
-                                          sep = "\t")
-
-haplogroups.labadorf <- read.table("../../../DevComBio/projects/dementiaDiabetesBrazilian/papers/chaves_2019/haplogroups/haplogroups.extended.csv",
-                                   sep = "\t", 
-                                   header = T)
-```
-
-Merge metadata with haplogroups
-
-```{r, eval=F}
-labadorf_metadata_selected_df <- data.table(labadorf_metadata_selected_df, key = "manual_sample_id") 
-haplogroups.labadorf          <- data.table(haplogroups.labadorf,          key = "SampleID")
-
-labadorf_metadata_haplogroups <- labadorf_metadata_selected_df[haplogroups.labadorf]
-```
-
-Write to file
-
-```{r, eval=F}
-write.table(labadorf_metadata_haplogroups,
-            file = "../../../DevComBio/projects/dementiaDiabetesBrazilian/papers/chaves_2019/data/labadorf_metadata_haplogroups.txt",
-            append = F,
-            sep = "\t",
-            row.names = F,
-            col.names = T)
-```
-
 
 
