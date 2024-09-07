@@ -60,7 +60,7 @@ navbar:
       menu:
         - text: "Questions"
         - text: "Week 1"
-          href: "exercises.html"
+          href: "exercises/exercises.html"
         - text: "Solutions"
         - text: "Week 1"
           href: "exercises/solutions.pdf"
