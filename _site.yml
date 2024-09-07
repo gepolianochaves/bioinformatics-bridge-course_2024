@@ -39,8 +39,6 @@ navbar:
           href: "https://haplogrep.readthedocs.io/en/latest/annotations/#clusters-and-population-frequencies"
         - text: "3.2. Command Line or Terminal"
           href: "notebooks/Introduction-to-the-Terminal.html"
-        - text: "3.3. Variant Call Pipeline using Sequenced DNA"
-          href: "02-variant_call_pipeline.html"
         - text: "---------"
         - text: "Week 4"
         - text: "4.1. Variant Call Pipeline using Sequenced DNA"
