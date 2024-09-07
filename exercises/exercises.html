@@ -372,9 +372,18 @@ Learning</strong></a>
 3: DNA Sequencing and Introduction to the Terminal</strong></a>
 <ul>
 <li><a href="#chapter-1-dna-sequencing" id="toc-chapter-1-dna-sequencing">Chapter 1: DNA Sequencing</a></li>
+<li><a href="#chapter-2-command-line-or-terminal" id="toc-chapter-2-command-line-or-terminal">Chapter 2: Command Line or
+Terminal</a></li>
+<li><a href="#chapter-3-download-fasta-sequences" id="toc-chapter-3-download-fasta-sequences">Chapter 3: Download fasta
+sequences</a></li>
 </ul></li>
 <li><a href="#part-4-presentations-and-final-considerations" id="toc-part-4-presentations-and-final-considerations"><strong>Part 4:
-Presentations and Final Considerations</strong></a></li>
+Presentations and Final Considerations</strong></a>
+<ul>
+<li><a href="#chapter-1-haplogroups" id="toc-chapter-1-haplogroups">Chapter 1: Haplogroups</a></li>
+<li><a href="#chapter-2-variant-call-pipeline" id="toc-chapter-2-variant-call-pipeline">Chapter 2: Variant Call
+Pipeline</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -882,12 +891,142 @@ in history of DNA sequencing.</p>
 </p>
 </div>
 </div>
+<div id="chapter-2-command-line-or-terminal" class="section level2">
+<h2>Chapter 2: Command Line or Terminal</h2>
+<p><br />
+</p>
+<pre class="bash"><code>echo &quot;Print a greeting meeting:&quot;</code></pre>
+<pre><code>## Print a greeting meeting:</code></pre>
+<pre class="bash"><code>echo &quot;Hello researchers!!! How is your day so far?&quot;</code></pre>
+<pre><code>## Hello researchers!!! How is your day so far?</code></pre>
+<p><br />
+</p>
+<p>Define a variable</p>
+<p><br />
+</p>
+<pre class="bash"><code>test_variable=this_file</code></pre>
+<p><br />
+</p>
+<p>Now print the name of the variable:</p>
+<pre class="bash"><code>echo test_variable</code></pre>
+<pre><code>## test_variable</code></pre>
+<p><br />
+</p>
+<p>Check files that are present in the current directory:</p>
+<p><br />
+</p>
+<pre class="bash"><code>ls</code></pre>
+<pre><code>## Rbook.pdf
+## exercises.Rmd
+## exercises.html
+## exercises.pdf
+## exercises_files
+## solutions html.Rmd
+## solutions-html.pdf
+## solutions.Rmd
+## solutions.pdf
+## test_directory</code></pre>
+<p>These are the files and folders that are present in this
+directory</p>
+<p><br />
+</p>
+<p>Let’s create a folder in this directory, using the mkdir command:</p>
+<pre class="bash"><code>mkdir test_directory</code></pre>
+<pre><code>## mkdir: test_directory: File exists</code></pre>
+<p><br />
+</p>
+<p>If by some reason we type the command again, Bash will throw an error
+at us:</p>
+<pre class="bash"><code>mkdir test_directory</code></pre>
+<pre><code>## mkdir: test_directory: File exists</code></pre>
+<p>echo “These are the files present in this directory:” ls echo “Move
+into the testDir directory:” echo “Check the directory where we are at:”
+ls echo “Check what is inside the testDir directory:”</p>
+<p>The print working directory command prints the directory inside which
+you are:</p>
+<pre class="bash"><code>pwd</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/exercises</code></pre>
+<p>echo - pode ser feito criando-se arquivos de texto</p>
+<pre class="bash"><code>echo &quot;As you can see, there is nothing inside this directory:&quot;
+echo &quot;Because there is nothing here, let&#39;s create something:&quot;</code></pre>
+<pre><code>## As you can see, there is nothing inside this directory:
+## Because there is nothing here, let&#39;s create something:</code></pre>
+<p>cat &gt; aFile.txt</p>
+<p>echo words &gt; aFile.txt</p>
+<p>echo “Hello World”;</p>
+<p>ls</p>
+<p>touch firstFile.txt touch secondFile.txt touch thirdFile.txt</p>
+<p>pwd</p>
+<p>ls</p>
+<p>echo “this is the output of a for loop”:</p>
+<p>for i in *txt; do echo this is file $i; done</p>
+<p>cd ../ pwd ls</p>
+<p>Relate these exercises to a terminal command? cat</p>
+<p>This is a command to count the lines of a file:</p>
+<pre class="bash"><code>wc -l</code></pre>
+<p>A script to count the number of reads or sequences in a fastq or
+fasta file A for loop script to count the number of fasta files</p>
+<p>for i in AF243*; do echo $i; done</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="chapter-3-download-fasta-sequences" class="section level2">
+<h2>Chapter 3: Download fasta sequences</h2>
+<p><br />
+</p>
+<div id="question-1-2" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>What was the package used to download fasta sequences?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-2" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>What was the function used to download fasta sequences?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3-2" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>What was the function used to save fasta sequences downloaded?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
 </div>
 <div id="part-4-presentations-and-final-considerations" class="section level1">
 <h1><strong>Part 4: Presentations and Final Considerations</strong></h1>
 <p><br />
 </p>
-<div id="question-1-2" class="section level4">
+<div id="chapter-1-haplogroups" class="section level2">
+<h2>Chapter 1: Haplogroups</h2>
+<p><br />
+</p>
+<div id="question-1-3" class="section level4">
 <h4>Question 1</h4>
 <p><br />
 </p>
@@ -899,7 +1038,7 @@ in history of DNA sequencing.</p>
 <p><br />
 </p>
 </div>
-<div id="question-2-2" class="section level4">
+<div id="question-2-3" class="section level4">
 <h4>Question 2</h4>
 <p><br />
 </p>
@@ -914,7 +1053,7 @@ the Haplogrep QC.</p>
 <p><br />
 </p>
 </div>
-<div id="question-3-2" class="section level4">
+<div id="question-3-3" class="section level4">
 <h4>Question 3</h4>
 <p><br />
 </p>
@@ -1008,6 +1147,51 @@ the USA reported by Mitchell et al., 2014.</div>
 </p>
 <p><br />
 </p>
+</div>
+</div>
+<div id="chapter-2-variant-call-pipeline" class="section level2">
+<h2>Chapter 2: Variant Call Pipeline</h2>
+<p><br />
+</p>
+<div id="question-1-4" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p>Which tool performs alignment in the Variant Call Pipeline?</p>
+<ul class="task-list">
+<li><p><input type="checkbox"></input>samtools</p></li>
+<li><p><input type="checkbox"></input>bcftools</p></li>
+<li><p><input type="checkbox"></input>bwa</p></li>
+<li><p><input type="checkbox"></input>bamtools</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-4" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>Why was the for loop used in the Variant Call Pipeline?</p>
+<ul class="task-list">
+<li><p><input type="checkbox"></input>To save time in the analysis</p></li>
+<li><p><input type="checkbox"></input>To allow identification of variants in
+all mitochondrial fasta files</p></li>
+<li><p><input type="checkbox"></input>So that the samples could be aligned to
+a reference genome</p></li>
+<li><p><input type="checkbox"></input>To save space and computational
+resources in the computer</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
 </div>
 </div>
 
