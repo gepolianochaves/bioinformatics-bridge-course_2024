@@ -62,7 +62,7 @@ navbar:
         - text: "Questions"
           href: "exercises/exercises.html"
         - text: "Solutions"
-        - text: "Solutions"
+        - text: "Preliminary Solutions"
           href: "exercises/solutions.pdf"
     - text: "Final Presentations"
       icon: fa-address-book-o
