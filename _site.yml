@@ -35,7 +35,7 @@ navbar:
           href: "download_sequences.html"
         - text: "3.2B. Phylogenetic Analysis"
           href: "notebooks/07-Phylogenetic-Analyisis_mt_BR.html"
-        - text: "3.2C. Haplogroups"
+        - text: "3.2C. Results: mtDNA haplogroups"
           href: "notebooks/haplogroups.html"
         - text: "3.2D. Haplogroups Annotations"
           href: "https://haplogrep.readthedocs.io/en/latest/annotations/#clusters-and-population-frequencies"
