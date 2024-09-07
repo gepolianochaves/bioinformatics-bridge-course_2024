@@ -1,9 +1,10 @@
 ---
-title: "Exercises"
+title: "Solutions"
 author: Research with Computational Biology (ReComBio)
 date: August 26, 2024
-output: html_document 
+output: pdf_document
 ---
+
 
 \
 
@@ -38,7 +39,7 @@ library(dplyr)
 
 \
 
-```{r}
+```{r, eval=F}
 r2_gse62564_GSVA_Metadata <- readRDS("../../ReComBio Scientific/ReComBio Book English/recombio bookdown/data/r2_gse62564_GSVA_Metadata.rds")
 ```
 
@@ -50,7 +51,7 @@ r2_gse62564_GSVA_Metadata <- readRDS("../../ReComBio Scientific/ReComBio Book En
 
 \
 
-```{r make numeric}
+```{r make numeric, eval=F}
 r2_gse62564_GSVA_Metadata <- r2_gse62564_GSVA_Metadata %>% 
    mutate_at("HALLMARK_HYPOXIA", as.numeric) %>%
    mutate_at("HALLMARK_INFLAMMATORY_RESPONSE", as.numeric) %>%
@@ -77,7 +78,7 @@ Use R plot functions to visualize the correlation between Hallmark Hypoxia and H
 
 HALLMARK_INFLAMMATORY_RESPONSE vs. HALLMARK_HYPOXIA
 
-```{r, warning=F, message=F}
+```{r, warning=F, message=F, eval=F}
 qplot(HALLMARK_INFLAMMATORY_RESPONSE, HALLMARK_HYPOXIA, 
       data = r2_gse62564_GSVA_Metadata,
       #colour=quantile,
@@ -103,7 +104,7 @@ Use R plot functions to visualize the correlation between Hallmark Hypoxia and H
 
 HALLMARK_INFLAMMATORY_RESPONSE vs. ADRN_Norm_vs_Hypo_Up_554.txt
 
-```{r}
+```{r, eval=F}
 qplot(HALLMARK_INFLAMMATORY_RESPONSE, ADRN_Norm_vs_Hypo_Up_554.txt, 
       data = r2_gse62564_GSVA_Metadata,
       # colour=quantile,
@@ -129,7 +130,7 @@ Use R plot functions to visualize the correlation between Hallmark Hypoxia and H
 
 HALLMARK_INFLAMMATORY_RESPONSE vs. ADRN_Norm_vs_Hypo_Down_635.txt
 
-```{r HALLMARK_INFLAMMATORY_RESPONSE vs. ADRN_Norm_vs_Hypo_Down_635.txt}
+```{r HALLMARK_INFLAMMATORY_RESPONSE vs. ADRN_Norm_vs_Hypo_Down_635.txt, eval=F}
 qplot(HALLMARK_INFLAMMATORY_RESPONSE, ADRN_Norm_vs_Hypo_Down_635.txt, 
       data = r2_gse62564_GSVA_Metadata,
       # colour=quantile,
