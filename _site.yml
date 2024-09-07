@@ -58,11 +58,11 @@ navbar:
     - text: "Exercises"
       icon: fa-address-book-o
       menu:
+        - text: "Exercises"
         - text: "Questions"
-        - text: "Week 1"
           href: "exercises/exercises.html"
         - text: "Solutions"
-        - text: "Week 1"
+        - text: "Solutions"
           href: "exercises/solutions.pdf"
     - text: "Final Presentations"
       icon: fa-address-book-o
