@@ -372,8 +372,8 @@ Learning</strong></a>
 3: DNA Sequencing and Introduction to the Terminal</strong></a>
 <ul>
 <li><a href="#chapter-1-dna-sequencing" id="toc-chapter-1-dna-sequencing">Chapter 1: DNA Sequencing</a></li>
-<li><a href="#chapter-2-command-line-or-terminal" id="toc-chapter-2-command-line-or-terminal">Chapter 2: Command Line or
-Terminal</a></li>
+<li><a href="#chapter-2-introductory-commands-in-command-line-or-terminal" id="toc-chapter-2-introductory-commands-in-command-line-or-terminal">Chapter
+2: Introductory Commands in Command Line or Terminal</a></li>
 <li><a href="#chapter-3-download-fasta-sequences" id="toc-chapter-3-download-fasta-sequences">Chapter 3: Download fasta
 sequences</a></li>
 </ul></li>
@@ -384,6 +384,8 @@ Presentations and Final Considerations</strong></a>
 Variants and Haplogroups</a></li>
 <li><a href="#chapter-2-variant-call-pipeline" id="toc-chapter-2-variant-call-pipeline">Chapter 2: Variant Call
 Pipeline</a></li>
+<li><a href="#chapter-3-accessing-the-terminal-in-aws-image-instance" id="toc-chapter-3-accessing-the-terminal-in-aws-image-instance">Chapter
+3: Accessing the Terminal in AWS Image Instance</a></li>
 </ul></li>
 </ul>
 </div>
@@ -892,8 +894,8 @@ in history of DNA sequencing.</p>
 </p>
 </div>
 </div>
-<div id="chapter-2-command-line-or-terminal" class="section level2">
-<h2>Chapter 2: Command Line or Terminal</h2>
+<div id="chapter-2-introductory-commands-in-command-line-or-terminal" class="section level2">
+<h2>Chapter 2: Introductory Commands in Command Line or Terminal</h2>
 <p><br />
 </p>
 <pre class="bash"><code>echo &quot;Print a greeting meeting:&quot;</code></pre>
@@ -1397,6 +1399,118 @@ the files you wrote?</p>
 <li><p><input type="checkbox"></input>ls</p></li>
 <li><p><input type="checkbox"></input>mkdir</p></li>
 </ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+<div id="chapter-3-accessing-the-terminal-in-aws-image-instance" class="section level2">
+<h2>Chapter 3: Accessing the Terminal in AWS Image Instance</h2>
+<p><br />
+</p>
+<div id="question-1-5" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p>Please read instructions about Launching your own AMI instances (<a href="https://datacarpentry.org/genomics-workshop/AMI-setup" class="uri">https://datacarpentry.org/genomics-workshop/AMI-setup</a>).
+The instructor can sign into the AWS EC2 Dashboard (<a href="https://console.aws.amazon.com/ec2/" class="uri">https://console.aws.amazon.com/ec2/</a>) but students do not
+have to do this or create an AWS account. Creating an AWS account is
+responsability of the student because you may have to pay for these
+resources.</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-5" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>Once you are provided with instructions on how to access the AWS
+instance, do so by typing the ssh command in the terminal:</p>
+<p><br />
+</p>
+<pre class="bash"><code>ssh dcuser@ec2-3-82-97-221.compute-1.amazonaws.com</code></pre>
+<p><br />
+</p>
+<p>Once asked, type the password:</p>
+<pre class="bash"><code>data4Carp</code></pre>
+<p><br />
+</p>
+<ul>
+<li>Please only insert the commands once instructed because all studets
+will access the resources at the same time.</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3-5" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>Once inside the AWS instance, copy the variant_call modified with
+your name as I am doing below. This part is similar to what I did when I
+specified the
+<a href="https://bioinformatics-bridge-course.netlify.app/02-variant_call_pipeline#ucsc-hummingbird-server-script">steps
+of the variant call pipeline</a>:</p>
+<pre class="bash"><code>cp -r variant_call variant_call_gepoliano</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-4-4" class="section level4">
+<h4>Question 4</h4>
+<p><br />
+</p>
+<p>You can now copy the variant call pipeline commands and paste it in
+the terminal, as I did in the variant call notebook: <a href="https://bioinformatics-bridge-course.netlify.app/02-variant_call_pipeline#variant-call-pipeline-using-a-for-loop-strategy" class="uri">https://bioinformatics-bridge-course.netlify.app/02-variant_call_pipeline#variant-call-pipeline-using-a-for-loop-strategy</a>:</p>
+<p><br />
+</p>
+<pre class="bash"><code>
+cd /home/dcuser/variant_call_gepoliano/fasta
+
+REFERENCE=AF243627.fasta
+
+## for loop specific to the individual fasta files
+for fastaFile in AF*.fasta; do
+  
+  ## Pick just the eight firt letters of the string
+  fastaFileName=${fastaFile:0:8}
+  echo &quot;started sample $fastaFileName&quot;
+  
+  ## Align
+  bwa mem -t 4 ../references/$REFERENCE $fastaFile &gt; ../sam/$fastaFileName&quot;.sam&quot;
+  echo &quot;Just finished aligning sample $fastaFileName&quot;
+  
+  ## SAM to BAM
+  samtools view -S -b ../sam/$fastaFileName&quot;.sam&quot; &gt; \
+  ../bam/$fastaFileName&quot;.bam&quot;
+  echo &quot;Finished SAM to BAM of sample $fastaFileName&quot;
+  
+  ## Samtools uses reference FASTA to detect &quot;piles&quot; in the alignment
+  bcftools mpileup -f ../references/$REFERENCE ../bam/$fastaFileName&quot;.bam&quot; &gt; \
+  ../bcf/$fastaFileName&quot;.bcf&quot;
+  
+  ## Bcftools extracts SNPs
+  echo &quot;started Bcftools SNPs for sample $fastaFileName&quot;
+  bcftools view -v snps ../bcf/$fastaFileName&quot;.bcf&quot; &gt; ../snps_vcf/$fastaFileName&quot;_snps.vcf&quot;
+
+done
+
+echo &quot;Finished the entire for loop&quot;
+</code></pre>
+<p><br />
+</p>
+<p>What do you see in your screen? How do you know if it run
+sucessfully?</p>
+<p><br />
+</p>
 <p><br />
 </p>
 <p><br />
