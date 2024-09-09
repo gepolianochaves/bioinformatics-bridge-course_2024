@@ -12,7 +12,7 @@ title: "Assignments by Dates"
 
 \
 
-<a href="exercises/exercises#chapter-2-command-line-or-terminal" > Chapter 2: Genetic Variants, Terminal Commanda and Variant Call Pipeline</a>
+<a href="exercises/exercises#chapter-2-command-line-or-terminal" > Chapter 2: Genetic Variants, Terminal Commands and Variant Call Pipeline</a>
 
 
 
