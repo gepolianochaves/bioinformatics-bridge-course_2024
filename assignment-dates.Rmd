@@ -29,5 +29,3 @@ title: "Assignments by Dates"
 
 <a href="exercises/exercises#chapter-2-variant-call-pipeline" > Chapter 2: Variant Call Pipeline</a>
 
-exercises#chapter-2-variant-call-pipeline
-
