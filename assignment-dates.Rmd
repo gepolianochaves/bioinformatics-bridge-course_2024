@@ -1,0 +1,36 @@
+---
+title: "Assignements by Dates"
+---
+
+\
+
+\
+
+## **Week 4 - Genetic Variants and Haplogrups:**
+
+\
+
+R and RStudio download:
+
+        - text: "4.2. Access terminal in AWS image"
+          href: "exercises/exercises#chapter-2-command-line-or-terminal"
+          
+<a href="exercises/exercises#chapter-2-command-line-or-terminal" > exercise</a>
+
+\
+
+\
+
+**Week 3 - DNA Sequencing and the Command Line:**
+
+\
+
+Progress in DNA Sequencing Technologies
+
+* [DNA Sequencing](https://www.youtube.com/watch?v=lU8ztLZRrvI)
+
+
+Variant Call Pipeline using Sequenced DNA
+
+* [For loop strategy using mtDNA sequeces in FASTA file format](https://youtu.be/AhrgAFdbU6Y)
+
