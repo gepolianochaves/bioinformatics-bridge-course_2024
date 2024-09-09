@@ -45,8 +45,6 @@ navbar:
         - text: "Week 4: Presentations and Final Considerations"
         - text: "4.1. Variant Call Pipeline using Sequenced DNA"
           href: "02-variant_call_pipeline.html"
-        - text: "4.1. Variant Call Pipeline Exercises"
-          href: "https://bioinformatics-bridge-course.netlify.app/exercises/exercises#chapter-2-variant-call-pipeline"
         - text: "4.2. Access terminal in AWS image"
           href: "exercises/exercises#chapter-2-command-line-or-terminal"
         - text: "4.3. Final Presentations"
