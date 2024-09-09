@@ -27,5 +27,7 @@ title: "Assignments by Dates"
 <a href="exercises/exercises#chapter-1-genetic-variants-and-haplogroups" > Chapter 1: Genetic Variants and Haplogrups</a>
 
 
-<a href="exercises/exercises#chapter-2-command-line-or-terminal" > Chapter 2: Variant Call Pipeline</a>
+<a href="exercises/exercises#chapter-2-variant-call-pipeline" > Chapter 2: Variant Call Pipeline</a>
+
+exercises#chapter-2-variant-call-pipeline
 
