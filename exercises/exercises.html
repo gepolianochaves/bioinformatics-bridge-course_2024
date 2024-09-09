@@ -898,26 +898,78 @@ in history of DNA sequencing.</p>
 <h2>Chapter 2: Introductory Commands in Command Line or Terminal</h2>
 <p><br />
 </p>
-<pre class="bash"><code>echo &quot;Print a greeting meeting:&quot;</code></pre>
-<pre><code>## Print a greeting meeting:</code></pre>
-<pre class="bash"><code>echo &quot;Hello researchers!!! How is your day so far?&quot;</code></pre>
-<pre><code>## Hello researchers!!! How is your day so far?</code></pre>
+<p>Use the echo command to print a greeting to the class like this
+one:</p>
+<pre class="bash"><code>echo &quot;Print a greeting to the class:&quot;</code></pre>
+<pre><code>## Print a greeting to the class:</code></pre>
 <p><br />
 </p>
-<p>Define a variable</p>
+<p>Now print your greeting message. Insert the message using the echo
+command:</p>
+<pre class="bash"><code>echo &quot; &quot;</code></pre>
 <p><br />
 </p>
+<p>We can define a variable</p>
 <pre class="bash"><code>test_variable=this_file</code></pre>
 <p><br />
 </p>
-<p>Now print the name of the variable:</p>
-<pre class="bash"><code>echo test_variable</code></pre>
-<pre><code>## test_variable</code></pre>
+<p>and now print the name of the variable also using the echo
+command:</p>
+<pre class="bash"><code>test_variable=this_file
+echo $test_variable</code></pre>
+<pre><code>## this_file</code></pre>
 <p><br />
 </p>
 <p>Check files that are present in the current directory:</p>
+<pre class="bash"><code>ls</code></pre>
+<pre><code>## Rbook.pdf
+## exercises.Rmd
+## exercises.html
+## exercises.pdf
+## exercises_files
+## solutions html.Rmd
+## solutions-html.pdf
+## solutions.Rmd
+## solutions.pdf</code></pre>
 <p><br />
 </p>
+<p>In the previous chunk there are files and folders that are present in
+that directory. I will print the files again with an echo message so it
+is more clear what was the command and what was the output:</p>
+<p><br />
+</p>
+<pre class="bash"><code>echo &quot;List the files. These are the files inside this directory:&quot;
+ls</code></pre>
+<pre><code>## List the files. These are the files inside this directory:
+## Rbook.pdf
+## exercises.Rmd
+## exercises.html
+## exercises.pdf
+## exercises_files
+## solutions html.Rmd
+## solutions-html.pdf
+## solutions.Rmd
+## solutions.pdf</code></pre>
+<p><br />
+</p>
+<p>This is the current directory with command pwd:</p>
+<pre class="bash"><code>pwd</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/exercises</code></pre>
+<p>Above you can see that that was a directory called exercises inside
+another folder named bioinformatics-bridge-course_2024.</p>
+<p><br />
+</p>
+<p>Let’s create a folder in this directory, using the mkdir command:</p>
+<pre class="bash"><code>mkdir test_directory</code></pre>
+<p><br />
+</p>
+<p>If by some reason we type the command again, Bash will throw an error
+at us:</p>
+<pre class="bash"><code>mkdir test_directory</code></pre>
+<pre><code>## mkdir: test_directory: File exists</code></pre>
+<p><br />
+</p>
+<p>These are the files present in this directory:</p>
 <pre class="bash"><code>ls</code></pre>
 <pre><code>## Rbook.pdf
 ## exercises.Rmd
@@ -929,47 +981,147 @@ in history of DNA sequencing.</p>
 ## solutions.Rmd
 ## solutions.pdf
 ## test_directory</code></pre>
-<p>These are the files and folders that are present in this
-directory</p>
 <p><br />
 </p>
-<p>Let’s create a folder in this directory, using the mkdir command:</p>
-<pre class="bash"><code>mkdir test_directory</code></pre>
-<pre><code>## mkdir: test_directory: File exists</code></pre>
+<p>Let’s move into the directory that we just created. To do that we use
+the cd (change directory command):</p>
+<pre class="bash"><code>cd test_directory</code></pre>
 <p><br />
 </p>
-<p>If by some reason we type the command again, Bash will throw an error
-at us:</p>
-<pre class="bash"><code>mkdir test_directory</code></pre>
-<pre><code>## mkdir: test_directory: File exists</code></pre>
-<p>echo “These are the files present in this directory:” ls echo “Move
-into the testDir directory:” echo “Check the directory where we are at:”
-ls echo “Check what is inside the testDir directory:”</p>
-<p>The print working directory command prints the directory inside which
-you are:</p>
-<pre class="bash"><code>pwd</code></pre>
-<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/exercises</code></pre>
+<p>Check the directory where we are at. The pwd (print working
+directory) command prints the directory inside which we are:</p>
+<pre class="bash"><code>cd test_directory
+pwd</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/exercises/test_directory</code></pre>
+<p>Note that we are inside the test_directory.</p>
+<p><br />
+</p>
+<p>Let’s look at what is inside the test_directory:</p>
+<pre class="bash"><code>cd test_directory
+pwd
+ls</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/exercises/test_directory</code></pre>
+<p><br />
+</p>
 <p>echo - pode ser feito criando-se arquivos de texto</p>
 <pre class="bash"><code>echo &quot;As you can see, there is nothing inside this directory:&quot;
 echo &quot;Because there is nothing here, let&#39;s create something:&quot;</code></pre>
 <pre><code>## As you can see, there is nothing inside this directory:
 ## Because there is nothing here, let&#39;s create something:</code></pre>
-<p>cat &gt; aFile.txt</p>
-<p>echo words &gt; aFile.txt</p>
-<p>echo “Hello World”;</p>
-<p>ls</p>
-<p>touch firstFile.txt touch secondFile.txt touch thirdFile.txt</p>
-<p>pwd</p>
-<p>ls</p>
-<p>echo “this is the output of a for loop”:</p>
-<p>for i in *txt; do echo this is file $i; done</p>
-<p>cd ../ pwd ls</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Let’s create 3 files inside the test_directory and list what is
+inside the test_directory folder:</p>
+<pre class="bash"><code>cd test_directory
+pwd
+touch  firstFile.txt
+touch  secondFile.txt
+touch  thirdFile.txt
+ls
+</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/exercises/test_directory
+## firstFile.txt
+## secondFile.txt
+## thirdFile.txt</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Let’s have the terminal print the names of the txt files in the
+test_directory for us:</p>
+<pre class="bash"><code>cd test_directory
+pwd
+for i in *txt; do echo the name of this file is&quot;:&quot; $i ; done</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/exercises/test_directory
+## the name of this file is: firstFile.txt
+## the name of this file is: secondFile.txt
+## the name of this file is: thirdFile.txt</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Let’s have the terminal print one word, tow words and three words to
+the files, like this:</p>
+<pre class="bash"><code>cd test_directory
+pwd
+echo word1 &gt;&gt; firstFile.txt
+echo word1 &gt;&gt; secondFile.txt
+echo word1 &gt;&gt; thirdFile.txt
+
+echo word2 &gt;&gt; secondFile.txt
+echo word2 &gt;&gt; thirdFile.txt
+
+echo word3 &gt;&gt; thirdFile.txt</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/exercises/test_directory</code></pre>
+<p><br />
+</p>
+<p>Let’s look at each one of the txt files to see what we created:</p>
+<pre class="bash"><code>cd test_directory
+echo &quot;word counts of firstFile.txt:&quot;
+cat firstFile.txt
+echo &quot;word counts of secondFile.txt:&quot;
+cat secondFile.txt
+echo &quot;word counts of thirdFile.txt:&quot;
+cat thirdFile.txt</code></pre>
+<pre><code>## word counts of firstFile.txt:
+## word1
+## word counts of secondFile.txt:
+## word1
+## word2
+## word counts of thirdFile.txt:
+## word1
+## word2
+## word3</code></pre>
+<p><br />
+</p>
+<p>In a for loop:</p>
+<pre class="bash"><code>cd test_directory
+
+for i in *txt; do cat $i ; done
+#cat *txt</code></pre>
+<pre><code>## word1
+## word1
+## word2
+## word1
+## word2
+## word3</code></pre>
 <p>Relate these exercises to a terminal command? cat</p>
+<p><br />
+</p>
 <p>This is a command to count the lines of a file:</p>
-<pre class="bash"><code>wc -l</code></pre>
+<pre class="bash"><code>cd test_directory
+wc -l firstFile.txt
+wc -l secondFile.txt
+wc -l thirdFile.txt</code></pre>
+<pre><code>##        1 firstFile.txt
+##        2 secondFile.txt
+##        3 thirdFile.txt</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
 <p>A script to count the number of reads or sequences in a fastq or
-fasta file A for loop script to count the number of fasta files</p>
+fasta file.</p>
+<p>A for loop script to count the number of fasta files</p>
 <p>for i in AF243*; do echo $i; done</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Finally, remove the test_directory</p>
+<pre class="bash"><code>rm -r test_directory</code></pre>
 <p><br />
 </p>
 <p><br />
