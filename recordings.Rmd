@@ -39,6 +39,16 @@ Exercised on Classification
 
 * [Lecture Recording 7: Classification Algorithm Exercises](https://youtu.be/lFe-Lw9Glzk)
 
+**Week 4:**
+
+\
+
+Final Presentations and Final Considerations
+
+* [Lecture Recording 8: Variant Call Practice](https://youtu.be/7a99JZDhvSE)
+
+\
+
 
 
 
