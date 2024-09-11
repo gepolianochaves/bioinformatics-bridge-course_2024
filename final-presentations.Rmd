@@ -7,7 +7,7 @@ title: "Instructions for Last Presentation"
 \
 
 
-### Explaining your assigned R operator or command
+### 1. Explaining your assigned R operator or command
 
 \
 
@@ -28,3 +28,27 @@ Your presentation should include the following:
 \
 
 You should be prepared to spend no more than 5 minutes walking people through your command. Please put your slides in the google drive folder called "presentations describing commands". Here is an example set of slides: https://docs.google.com/presentation/d/1xz1qODz8Wkqf-2oLKKSTAYQBqrMNHK5k1lH32YZu5vo/edit#slide=id.g2f67101e387_0_17  
+
+\
+
+\
+
+### 2. Final Presentation about the Mini-Project slides
+
+\
+
+As a second alternative you can use figures in Questions 1-3 in Part 1: Introduction to R and the R Syntax in Chapter 3: Data visualization to Correlate NB clinical variables with hypoxia phenotypes. Those figures can be found in the following link:
+
+\
+
+https://bioinformatics-bridge-course.netlify.app/exercises/exercises#part-1-introduction-to-r-and-the-r-syntax
+
+\
+
+\
+
+### 3. Final Presentation about a Paper Figure
+
+\
+
+As a final alternative you can do your presentation about a figure in a paper of your choice or a paper that we discussed together.
