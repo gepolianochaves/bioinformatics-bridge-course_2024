@@ -6,4 +6,4 @@ title: "Last presentation"
 
 \
 
-As your last prestation, please present on the functino and the output of the figures in https://docs.google.com/spreadsheets/d/1oROvpYepzb8evuDov1q8k5KE3BOJJt9s3BC4s3EGC2M/edit?gid=0#
+As your last prestation, please present on the function and the output of the figures in https://docs.google.com/spreadsheets/d/1oROvpYepzb8evuDov1q8k5KE3BOJJt9s3BC4s3EGC2M/edit?gid=0#
