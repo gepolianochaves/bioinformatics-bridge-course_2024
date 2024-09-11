@@ -1,9 +1,30 @@
 ---
-title: "Last presentation"
+title: "Instructions for Last Presentation"
 ---
 
 \
 
 \
 
-As your last prestation, please present on the function and the output of the figures in https://docs.google.com/spreadsheets/d/1oROvpYepzb8evuDov1q8k5KE3BOJJt9s3BC4s3EGC2M/edit?gid=0#
+
+### Explaining your assigned R operator or command
+
+\
+
+
+Each researcher has been assigned a command in the participant list: https://docs.google.com/spreadsheets/d/1oROvpYepzb8evuDov1q8k5KE3BOJJt9s3BC4s3EGC2M/edit?gid=0#
+
+\
+
+Choose a command that says "fourth week".
+You can choose a command that was presented by someone before you, in weeks 1-3, as long as you do not choose a command that you presented before.
+Your presentation should include the following: 
+
+
+- [ ] One slide defining the command. You can use technical language, but you should also use non-technical language, explaining it simply.
+- [ ] One slide giving an example of how it's supposed to work (you can use an example from a code notebook) with a screenshot of you using the command. 
+- [ ] One slide giving examples of mistakes that can occur with a screenshot of you demonstrating the mistake in your R console or terminal.
+
+\
+
+You should be prepared to spend no more than 5 minutes walking people through your command. Please put your slides in the google drive folder called "presentations describing commands". Here is an example set of slides: https://docs.google.com/presentation/d/1xz1qODz8Wkqf-2oLKKSTAYQBqrMNHK5k1lH32YZu5vo/edit#slide=id.g2f67101e387_0_17  
