@@ -71,7 +71,7 @@ navbar:
       icon: fa-address-book-o
       menu:
         - text: "Final Projects"
-        - text: "final-presentations"
+        - text: "Final-Presentations"
           href: "final-presentations.html"
         - text: "Project 2: Survival Analysis of Neuroblastoma"
           href: "notebooks/neuroblastoma-survival.html"
