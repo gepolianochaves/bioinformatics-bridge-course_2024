@@ -11,7 +11,7 @@ title: "Assignments by Dates"
 
 \
 
-<a href="exercises/exercises.html#chapter-1-classification" > Machine Learning</a>
+<a href="exercises/exercises.html#chapter-1-classification" > Chapter 3: Classification using Logistic Regression</a>
 
 
 \
