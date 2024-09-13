@@ -6,6 +6,17 @@ title: "Assignments by Dates"
 
 \
 
+## **Week 2 - Machine Learning**
+
+
+\
+
+<a href="exercises/exercises.html#chapter-1-classification" > Machine Learning</a>
+
+
+\
+
+
 ## **Week 3 - DNA Sequencing and the Command Line**
 
 
