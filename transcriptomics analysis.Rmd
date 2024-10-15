@@ -13,6 +13,20 @@ output:
 
 \
 
+\
+
+# Summary
+
+In this part we do transcriptomic analysis of neuroblastoma RNA-Seq isolated tumors of patients. We conduct the analysis according to reference documentation.
+
+Reference: https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html
+
+Reference of DESeq2 normalization by division by the size factors or normalization factors:
+https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html
+
+
+\
+
 # Load Libraries
 
 \
@@ -27,15 +41,6 @@ library("clusterProfiler")
 library(pheatmap)
 library(RColorBrewer)
 ```
-
-\
-
-Reference: https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html
-
-\
-
-Reference of DESeq2 normalization by division by the size factors or normalization factors:
-https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html
 
 \
 

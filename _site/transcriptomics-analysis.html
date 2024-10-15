@@ -281,14 +281,9 @@ $(document).ready(function () {
       <a href="notebooks/02-neuroblastoma-r2-plots-GSE62564.html">1.3. Data Visualization</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">Part 2 (Special): Gene Expression Analysis</li>
-    <li>
-      <a href="transcriptomics-analysis.html">1.1. Transcription Analysis in R</a>
-    </li>
-    <li class="divider"></li>
     <li class="dropdown-header">Part 2: Machine Learning</li>
     <li>
-      <a href="notebooks/02-neuroblastoma-r2-plots-GSE62564.html">2.1. Data Visualization</a>
+      <a href="transcriptomics-analysis.html">2.1. Transcriptome Analysis</a>
     </li>
     <li>
       <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.2. Introduction to Machine Learning</a>
@@ -404,6 +399,7 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
+<li><a href="#summary" id="toc-summary">Summary</a></li>
 <li><a href="#load-libraries" id="toc-load-libraries">Load
 Libraries</a></li>
 <li><a href="#load-gene-expression-dataframe"
@@ -470,6 +466,23 @@ Information</a></li>
 
 <p><br />
 </p>
+<p><br />
+</p>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>In this part we do transcriptomic analysis of neuroblastoma RNA-Seq
+isolated tumors of patients. We conduct the analysis according to
+reference documentation.</p>
+<p>Reference: <a
+href="https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html"
+class="uri">https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html</a></p>
+<p>Reference of DESeq2 normalization by division by the size factors or
+normalization factors: <a
+href="https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html"
+class="uri">https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html</a></p>
+<p><br />
+</p>
+</div>
 <div id="load-libraries" class="section level1">
 <h1>Load Libraries</h1>
 <p><br />
@@ -482,17 +495,6 @@ library(expss)
 library(&quot;clusterProfiler&quot;)
 library(pheatmap)
 library(RColorBrewer)</code></pre>
-<p><br />
-</p>
-<p>Reference: <a
-href="https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html"
-class="uri">https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html</a></p>
-<p><br />
-</p>
-<p>Reference of DESeq2 normalization by division by the size factors or
-normalization factors: <a
-href="https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html"
-class="uri">https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html</a></p>
 <p><br />
 </p>
 </div>
