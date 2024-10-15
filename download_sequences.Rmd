@@ -22,7 +22,7 @@ https://jhudatascience.org/AnVIL_Phylogenetic-Techniques/downloading-the-sequenc
 
 \
 
-```{r}
+```{r, eval=F}
 library(ape)
 mt_brazilian_exercise <- read.GenBank(c(
   # "AF243627", # Amerindian/Asian lineage
@@ -62,7 +62,7 @@ Write to file
 
 \
 
-```{r}
+```{r, eval=F}
 write.dna(mt_brazilian_exercise, 
           file = "data/mt_brazilian_exercise.fasta", 
           format = "fasta")

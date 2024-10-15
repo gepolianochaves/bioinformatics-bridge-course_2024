@@ -1,0 +1,367 @@
+---
+title: "Transcriptomic Analysis"
+
+author: "Gepoliano Chaves"
+
+date: "October 14th, 2024"
+
+output:
+  html_document:
+    df_print: paged
+    toc: true
+---
+
+\
+
+# Load Libraries
+
+\
+
+```{r, warning=F, message=F}
+library(readxl)
+library(DESeq2)
+library(ggplot2)
+library(dplyr)
+library(expss)
+library("clusterProfiler")
+library(pheatmap)
+library(RColorBrewer)
+```
+
+\
+
+Reference: https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html
+
+\
+
+Reference of DESeq2 normalization by division by the size factors or normalization factors:
+https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html
+
+\
+
+# Load Gene Expression Dataframe
+
+\
+
+Reference Values: 70 samples and 300 genes
+
+\
+
+```{r}
+r2_gse62564_GSVA_Metadata <- readRDS( "../../SIP/SIP2023_BME03/recombio bookdown/results/r2_gse62564_GSVA_Metadata.rds")
+```
+
+\
+
+In this part we can select the number of tumor samples to analyze. In total, the original dataframe has 498 tumor samples so for the sake of time, we will select around 50 samples to start with.
+
+\
+
+```{r}
+set.seed(12345)
+r2_gse62564_GSVA_Metadata <- r2_gse62564_GSVA_Metadata[sample(nrow(r2_gse62564_GSVA_Metadata), size=55), ]
+```
+
+\
+
+It is not the first time that I encounter this Error: unable to find an inherited method for function ‘select’ for signature ‘x = "data.frame"’. Then  I have to write dplyr:: in front of the select function, to select the variables that will define the metadata dataframe:
+
+```{r}
+r2_gse62564_Metadata <- r2_gse62564_GSVA_Metadata %>% dplyr::select(c(high_risk, mycn_status))
+r2_gse62564_Metadata$high_risk <- as.factor(r2_gse62564_Metadata$high_risk)
+r2_gse62564_Metadata$sampleID <- rownames(r2_gse62564_Metadata)
+```
+
+\
+
+In this part I transpose the metadata to allow removing the long list of phenotype scores from age_at_diagnosis to WEINMANN_ADAPTATION_TO_HYPOXIA_UP:
+
+```{r}
+r2_gse62564_selected <- t(r2_gse62564_GSVA_Metadata %>% dplyr::select(-c(age_at_diagnosis:WEINMANN_ADAPTATION_TO_HYPOXIA_UP)))
+```
+
+\
+
+Select random sample of three rows from data frame:
+
+```{r, eval=T}
+set.seed(12345)
+r2_gse62564_rand_df <- r2_gse62564_selected[sample(nrow(r2_gse62564_selected), size=400), ]
+```
+
+```{r, eval=F, include=F}
+r2_gse62564_rand_df <- r2_gse62564_selected
+```
+
+\
+
+## Make Counts Numeric and make sure they are integers
+
+```{r}
+r2_gse62564_rand_num_df <- as.data.frame(r2_gse62564_rand_df)
+r2_gse62564_rand_num_df <- r2_gse62564_rand_num_df %>% 
+  mutate_if(is.character,as.numeric)%>% 
+  mutate_if(is.numeric, round)
+```
+
+\
+
+## Construct dds object neuroblastoma
+
+```{r}
+dds_nb <- DESeqDataSetFromMatrix(countData = r2_gse62564_rand_num_df,
+                              colData = r2_gse62564_Metadata,
+                              design = ~ high_risk)
+```
+
+\
+
+## Pre-filtering
+
+```{r}
+keep_nb <- rowSums(counts(dds_nb)) >= 10
+dds_nb <- dds_nb[keep_nb,]
+```
+
+\
+
+## Note on factor levels
+
+```{r}
+dds_nb$high_risk <- factor(dds_nb$high_risk, levels = c("yes","no"))
+```
+
+\
+
+## Differential expression analysis
+
+\
+
+### Genes differentially expressed between conditions
+
+```{r}
+dds_nb <- DESeq(dds_nb)
+res_nb <- results(dds_nb)
+res_nb
+```
+
+\
+
+## MA Plot
+
+```{r}
+plotMA(res_nb, ylim=c(-2,2))
+```
+
+\
+
+## Log fold change shrinkage for visualization and ranking
+
+```{r}
+resultsNames(res_nb)
+```
+
+```{r}
+summary(res_nb)
+```
+
+\
+
+## Volcano Plot
+
+```{r}
+res_nb <- res_nb[complete.cases(res_nb),]
+
+res_nb_df <- as.data.frame(res_nb)
+
+res_nb_volcPlot_df <- res_nb_df %>%
+  dplyr::mutate(differential_expression = ifelse(res_nb_df$log2FoldChange > 0 & res_nb_df$padj < 0.05, "HR Up", ifelse(res_nb_df$log2FoldChange < 0 & res_nb_df$padj < 0.05, "HR Down", "Not Significant")))
+
+
+
+ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj)))+
+  geom_point()
+
+
+
+ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj),col=differential_expression))+
+  geom_point()
+
+
+
+ggplot(data=res_nb_volcPlot_df, 
+       aes(x=log2FoldChange,y=-log10(padj),col=differential_expression
+           ))+
+  geom_point()+
+   ggtitle("Plot of HR Up/Dn") +
+  theme(
+    plot.title = element_text(color="red", size=14, face="bold.italic"),
+  )+
+  theme_bw() + # Select theme with a white background  
+  theme(panel.border = element_rect(colour = "black", fill = NA, size= 0.5),    
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank()) 
+
+
+
+
+
+ggplot(data = res_nb_volcPlot_df,
+       aes(x = log2FoldChange,
+           y = -log10(padj))) + 
+  geom_point(aes(colour = differential_expression), 
+             alpha = 1, 
+             shape = 16,
+             size = 1) + 
+  geom_hline(yintercept = -log10(0.05),
+             linetype = "dashed") + 
+  geom_vline(xintercept = c(-2, 2),
+             linetype = "dashed") +
+  scale_x_continuous(limits = c(-4, 4)) +
+  # Add y limits
+  scale_y_continuous(limits = c(-2, 10)) + # Have tested the y limit up to 200
+  # Colors of ADRN and MES Genes
+  scale_color_manual(values = c("#0000ff",   # Blue
+                                "#ff0000",   # Gray
+                                "#c9c9c9"))+ # Red
+  ggtitle("Plot of HR Up/Dn") +
+  theme(
+    plot.title = element_text(color="red", size=14, face="bold.italic"),
+  )+
+  theme_bw() + # Select theme with a white background  
+  theme(panel.border = element_rect(colour = "black", fill = NA, size= 0.5),    
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank()) 
+```
+
+\
+
+## Enrichment analysis
+
+```{r}
+cross_cases(res_nb_volcPlot_df, differential_expression)
+```
+
+\
+
+## List of up-regulated genes
+
+```{r,}
+res_nb_volcPlot_df["gene_symbol"] <- rownames(res_nb_volcPlot_df)
+nb_volcPlo_Up <- subset(res_nb_volcPlot_df, differential_expression == "HR Up" )
+List_nb_volcPlo_Up <- as.character(nb_volcPlo_Up$gene_symbol)
+length(List_nb_volcPlo_Up)
+```
+
+\
+
+```{r}
+library(msigdbr)
+h_gene_sets_H = msigdbr(species = "Homo sapiens", category = c("H")) 
+h_gene_sets_C2 = msigdbr(species = "Homo sapiens", category = c("C2")) 
+h_gene_sets_C5 = msigdbr(species = "Homo sapiens", category = c("C5")) 
+```
+
+\
+
+# Prepare enrichment set including several gene sets
+
+```{r}
+msigdbr_df <- rbind(h_gene_sets_H, h_gene_sets_C2)
+msigdbr_df <- rbind(msigdbr_df, h_gene_sets_C5)
+```
+
+\
+
+## Define database for Enrichr to look at
+ 
+```{r}
+msigdbr_t2g = msigdbr_df %>% dplyr::distinct(gs_name, gene_symbol) %>% as.data.frame()
+```
+
+\
+
+## ADRN Enrichment Table RNA-Seq: Up-regulated Enrichments
+
+```{r}
+enrichr_nb_volcPlo_Up <- enricher(List_nb_volcPlo_Up, TERM2GENE = msigdbr_t2g)
+enrichr_nb_volcPlo_Up_df <- as.data.frame(enrichr_nb_volcPlo_Up)
+```
+
+\
+
+## dotplot
+
+```{r eval=T}
+dotplot(enrichr_nb_volcPlo_Up, 
+                      font.size = 6,
+                       showCategory=10) + ggtitle("High Risk Up-Regulated")+
+  theme(axis.text.y = element_text(size = 6),
+        legend.text=element_text(size=6),
+        legend.key.size = unit(0.2, 'cm'))+
+  theme_classic()
+```
+
+\
+
+## Data transformations and visualization
+
+\
+
+#### Extracting transformed counts values
+
+```{r, eval=T}
+vsd_nb <- varianceStabilizingTransformation(dds_nb)
+head(assay(vsd_nb), 4)
+```
+
+\
+
+## Data quality assessment by sample clustering and visualization
+
+```{r}
+select_nb <- order(rowMeans(counts(dds_nb,normalized=TRUE)),
+                decreasing=TRUE)[1:20]
+df_nb <- as.data.frame(colData(dds_nb)[,c("high_risk", "mycn_status")])
+# pheatmap(assay(dds_nb)[select_nb,], cluster_rows=FALSE, show_rownames=FALSE,
+#          cluster_cols=FALSE, annotation_col=df_nb)
+pheatmap(assay(dds_nb)[select_nb,],annotation_col=df_nb)
+```
+
+\
+
+## Heatmap of the sample-to-sample distances
+
+```{r}
+sampleDists_nb <- dist(t(assay(vsd_nb)))
+```
+
+```{r}
+sampleDistMatrixNb <- as.matrix(sampleDists_nb)
+rownames(sampleDistMatrixNb) <- paste(vsd_nb$high_risk, sep="-")
+colnames(sampleDistMatrixNb) <- NULL
+colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+pheatmap(sampleDistMatrixNb,
+         clustering_distance_rows=sampleDists_nb,
+         clustering_distance_cols=sampleDists_nb,
+         col=colors)
+```
+
+\
+
+## Principal component plot of the samples
+
+\
+
+```{r}
+plotPCA(vsd_nb, intgroup=c("high_risk", "mycn_status"))
+```
+
+
+\
+
+# Session Information
+
+```{r session}
+sessionInfo()
+```

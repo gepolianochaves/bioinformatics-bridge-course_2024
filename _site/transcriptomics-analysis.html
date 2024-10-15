@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Gepoliano Chaves" />
+
+
+<title>Transcriptomic Analysis</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ReComBio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-info"></span>
+     
+    About
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Code Notebooks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Part 1: The R Syntax</li>
+    <li>
+      <a href="notebooks/Introduction-to-R-and-Terminal.html">1.1. Introduction to R</a>
+    </li>
+    <li>
+      <a href="notebooks/01-neuroblastoma-r2-GSE62564.html">1.2. Data Download and Processing</a>
+    </li>
+    <li>
+      <a href="notebooks/02-neuroblastoma-r2-plots-GSE62564.html">1.3. Data Visualization</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Part 2 (Special): Gene Expression Analysis</li>
+    <li>
+      <a href="transcriptomics-analysis.html">1.1. Transcription Analysis in R</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Part 2: Machine Learning</li>
+    <li>
+      <a href="notebooks/02-neuroblastoma-r2-plots-GSE62564.html">2.1. Data Visualization</a>
+    </li>
+    <li>
+      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.2. Introduction to Machine Learning</a>
+    </li>
+    <li>
+      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.3. Classification using Logistic Regression</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Part 3: DNA Sequencing and the Command Line</li>
+    <li>
+      <a href="https://www.youtube.com/watch?v=lU8ztLZRrvI">3.1. DNA Sequencing Technologies</a>
+    </li>
+    <li>
+      <a href="download_sequences.html">3.2A. Download mtDNA fasta sequences</a>
+    </li>
+    <li>
+      <a href="notebooks/07-Phylogenetic-Analyisis_mt_BR.html">3.2B. Phylogenetic Analysis</a>
+    </li>
+    <li>
+      <a href="notebooks/haplogroups.html">3.2C. Results: mtDNA haplogroups</a>
+    </li>
+    <li>
+      <a href="https://haplogrep.readthedocs.io/en/latest/annotations/#clusters-and-population-frequencies">3.2D. Haplogroups Annotations</a>
+    </li>
+    <li>
+      <a href="notebooks/Introduction-to-the-Terminal.html">3.3. Command Line or Terminal</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Part 4: Presentations and Final Considerations</li>
+    <li>
+      <a href="02-variant_call_pipeline.html">4.1. Variant Call Pipeline using Sequenced DNA</a>
+    </li>
+    <li>
+      <a href="exercises/exercises#chapter-2-command-line-or-terminal">4.2. Access terminal in AWS image</a>
+    </li>
+    <li>
+      <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">4.3. Final Presentations</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="videos.html">
+    <span class="fa fa-solid fa-video"></span>
+     
+    Videos
+  </a>
+</li>
+<li>
+  <a href="pdf/miniproject-slides.pdf">
+    <span class="fa fa-address-book-o"></span>
+     
+    Mini Project
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-address-book-o"></span>
+     
+    Exercises
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Exercises</li>
+    <li>
+      <a href="exercises/exercises.html">Questions</a>
+    </li>
+    <li>
+      <a href="assignment-dates">Assignments by Date</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Solutions</li>
+    <li>
+      <a href="exercises/solutions.pdf">Preliminary Solutions</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-address-book-o"></span>
+     
+    Final Presentations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Final Projects</li>
+    <li>
+      <a href="final-presentations.html">Final-Presentations</a>
+    </li>
+    <li>
+      <a href="notebooks/neuroblastoma-survival.html">Project 2: Survival Analysis of Neuroblastoma</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Transcriptomic Analysis</h1>
+<h4 class="author">Gepoliano Chaves</h4>
+<h4 class="date">October 14th, 2024</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#load-libraries" id="toc-load-libraries">Load
+Libraries</a></li>
+<li><a href="#load-gene-expression-dataframe"
+id="toc-load-gene-expression-dataframe">Load Gene Expression
+Dataframe</a>
+<ul>
+<li><a href="#make-counts-numeric-and-make-sure-they-are-integers"
+id="toc-make-counts-numeric-and-make-sure-they-are-integers">Make Counts
+Numeric and make sure they are integers</a></li>
+<li><a href="#construct-dds-object-neuroblastoma"
+id="toc-construct-dds-object-neuroblastoma">Construct dds object
+neuroblastoma</a></li>
+<li><a href="#pre-filtering"
+id="toc-pre-filtering">Pre-filtering</a></li>
+<li><a href="#note-on-factor-levels" id="toc-note-on-factor-levels">Note
+on factor levels</a></li>
+<li><a href="#differential-expression-analysis"
+id="toc-differential-expression-analysis">Differential expression
+analysis</a>
+<ul>
+<li><a href="#genes-differentially-expressed-between-conditions"
+id="toc-genes-differentially-expressed-between-conditions">Genes
+differentially expressed between conditions</a></li>
+</ul></li>
+<li><a href="#ma-plot" id="toc-ma-plot">MA Plot</a></li>
+<li><a href="#log-fold-change-shrinkage-for-visualization-and-ranking"
+id="toc-log-fold-change-shrinkage-for-visualization-and-ranking">Log
+fold change shrinkage for visualization and ranking</a></li>
+<li><a href="#volcano-plot" id="toc-volcano-plot">Volcano Plot</a></li>
+<li><a href="#enrichment-analysis"
+id="toc-enrichment-analysis">Enrichment analysis</a></li>
+<li><a href="#list-of-up-regulated-genes"
+id="toc-list-of-up-regulated-genes">List of up-regulated genes</a></li>
+</ul></li>
+<li><a href="#prepare-enrichment-set-including-several-gene-sets"
+id="toc-prepare-enrichment-set-including-several-gene-sets">Prepare
+enrichment set including several gene sets</a>
+<ul>
+<li><a href="#define-database-for-enrichr-to-look-at"
+id="toc-define-database-for-enrichr-to-look-at">Define database for
+Enrichr to look at</a></li>
+<li><a href="#adrn-enrichment-table-rna-seq-up-regulated-enrichments"
+id="toc-adrn-enrichment-table-rna-seq-up-regulated-enrichments">ADRN
+Enrichment Table RNA-Seq: Up-regulated Enrichments</a></li>
+<li><a href="#dotplot" id="toc-dotplot">dotplot</a></li>
+<li><a href="#data-transformations-and-visualization"
+id="toc-data-transformations-and-visualization">Data transformations and
+visualization</a></li>
+<li><a
+href="#data-quality-assessment-by-sample-clustering-and-visualization"
+id="toc-data-quality-assessment-by-sample-clustering-and-visualization">Data
+quality assessment by sample clustering and visualization</a></li>
+<li><a href="#heatmap-of-the-sample-to-sample-distances"
+id="toc-heatmap-of-the-sample-to-sample-distances">Heatmap of the
+sample-to-sample distances</a></li>
+<li><a href="#principal-component-plot-of-the-samples"
+id="toc-principal-component-plot-of-the-samples">Principal component
+plot of the samples</a></li>
+</ul></li>
+<li><a href="#session-information" id="toc-session-information">Session
+Information</a></li>
+</ul>
+</div>
+
+<p><br />
+</p>
+<div id="load-libraries" class="section level1">
+<h1>Load Libraries</h1>
+<p><br />
+</p>
+<pre class="r"><code>library(readxl)
+library(DESeq2)
+library(ggplot2)
+library(dplyr)
+library(expss)
+library(&quot;clusterProfiler&quot;)
+library(pheatmap)
+library(RColorBrewer)</code></pre>
+<p><br />
+</p>
+<p>Reference: <a
+href="https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html"
+class="uri">https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html</a></p>
+<p><br />
+</p>
+<p>Reference of DESeq2 normalization by division by the size factors or
+normalization factors: <a
+href="https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html"
+class="uri">https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html</a></p>
+<p><br />
+</p>
+</div>
+<div id="load-gene-expression-dataframe" class="section level1">
+<h1>Load Gene Expression Dataframe</h1>
+<p><br />
+</p>
+<p>Reference Values: 70 samples and 300 genes</p>
+<p><br />
+</p>
+<pre class="r"><code>r2_gse62564_GSVA_Metadata &lt;- readRDS( &quot;../../SIP/SIP2023_BME03/recombio bookdown/results/r2_gse62564_GSVA_Metadata.rds&quot;)</code></pre>
+<p><br />
+</p>
+<p>In this part we can select the number of tumor samples to analyze. In
+total, the original dataframe has 498 tumor samples so for the sake of
+time, we will select around 50 samples to start with.</p>
+<p><br />
+</p>
+<pre class="r"><code>set.seed(12345)
+r2_gse62564_GSVA_Metadata &lt;- r2_gse62564_GSVA_Metadata[sample(nrow(r2_gse62564_GSVA_Metadata), size=55), ]</code></pre>
+<p><br />
+</p>
+<p>It is not the first time that I encounter this Error: unable to find
+an inherited method for function ‘select’ for signature ‘x =
+“data.frame”’. Then I have to write dplyr:: in front of the select
+function, to select the variables that will define the metadata
+dataframe:</p>
+<pre class="r"><code>r2_gse62564_Metadata &lt;- r2_gse62564_GSVA_Metadata %&gt;% dplyr::select(c(high_risk, mycn_status))
+r2_gse62564_Metadata$high_risk &lt;- as.factor(r2_gse62564_Metadata$high_risk)
+r2_gse62564_Metadata$sampleID &lt;- rownames(r2_gse62564_Metadata)</code></pre>
+<p><br />
+</p>
+<p>In this part I transpose the metadata to allow removing the long list
+of phenotype scores from age_at_diagnosis to
+WEINMANN_ADAPTATION_TO_HYPOXIA_UP:</p>
+<pre class="r"><code>r2_gse62564_selected &lt;- t(r2_gse62564_GSVA_Metadata %&gt;% dplyr::select(-c(age_at_diagnosis:WEINMANN_ADAPTATION_TO_HYPOXIA_UP)))</code></pre>
+<p><br />
+</p>
+<p>Select random sample of three rows from data frame:</p>
+<pre class="r"><code>set.seed(12345)
+r2_gse62564_rand_df &lt;- r2_gse62564_selected[sample(nrow(r2_gse62564_selected), size=400), ]</code></pre>
+<p><br />
+</p>
+<div id="make-counts-numeric-and-make-sure-they-are-integers"
+class="section level2">
+<h2>Make Counts Numeric and make sure they are integers</h2>
+<pre class="r"><code>r2_gse62564_rand_num_df &lt;- as.data.frame(r2_gse62564_rand_df)
+r2_gse62564_rand_num_df &lt;- r2_gse62564_rand_num_df %&gt;% 
+  mutate_if(is.character,as.numeric)%&gt;% 
+  mutate_if(is.numeric, round)</code></pre>
+<p><br />
+</p>
+</div>
+<div id="construct-dds-object-neuroblastoma" class="section level2">
+<h2>Construct dds object neuroblastoma</h2>
+<pre class="r"><code>dds_nb &lt;- DESeqDataSetFromMatrix(countData = r2_gse62564_rand_num_df,
+                              colData = r2_gse62564_Metadata,
+                              design = ~ high_risk)</code></pre>
+<pre><code>## converting counts to integer mode</code></pre>
+<p><br />
+</p>
+</div>
+<div id="pre-filtering" class="section level2">
+<h2>Pre-filtering</h2>
+<pre class="r"><code>keep_nb &lt;- rowSums(counts(dds_nb)) &gt;= 10
+dds_nb &lt;- dds_nb[keep_nb,]</code></pre>
+<p><br />
+</p>
+</div>
+<div id="note-on-factor-levels" class="section level2">
+<h2>Note on factor levels</h2>
+<pre class="r"><code>dds_nb$high_risk &lt;- factor(dds_nb$high_risk, levels = c(&quot;yes&quot;,&quot;no&quot;))</code></pre>
+<p><br />
+</p>
+</div>
+<div id="differential-expression-analysis" class="section level2">
+<h2>Differential expression analysis</h2>
+<p><br />
+</p>
+<div id="genes-differentially-expressed-between-conditions"
+class="section level3">
+<h3>Genes differentially expressed between conditions</h3>
+<pre class="r"><code>dds_nb &lt;- DESeq(dds_nb)</code></pre>
+<pre><code>## estimating size factors</code></pre>
+<pre><code>## estimating dispersions</code></pre>
+<pre><code>## gene-wise dispersion estimates</code></pre>
+<pre><code>## mean-dispersion relationship</code></pre>
+<pre><code>## final dispersion estimates</code></pre>
+<pre><code>## fitting model and testing</code></pre>
+<pre><code>## -- replacing outliers and refitting for 5 genes
+## -- DESeq argument &#39;minReplicatesForReplace&#39; = 7 
+## -- original counts are preserved in counts(dds)</code></pre>
+<pre><code>## estimating dispersions</code></pre>
+<pre><code>## fitting model and testing</code></pre>
+<pre class="r"><code>res_nb &lt;- results(dds_nb)
+res_nb</code></pre>
+<pre><code>## log2 fold change (MLE): high risk no vs yes 
+## Wald test p-value: high risk no vs yes 
+## DataFrame with 400 rows and 6 columns
+##               baseMean log2FoldChange     lfcSE      stat      pvalue
+##              &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;
+## MLK7-AS1       1.31447     -0.5075966  0.365353 -1.389331 1.64732e-01
+## ZNF562        31.53441     -0.5581062  0.104586 -5.336351 9.48357e-08
+## PITX1          2.74169     -1.8298833  0.467518 -3.914040 9.07644e-05
+## LOC100506258   2.97734      0.1881946  0.287578  0.654413 5.12846e-01
+## SRSF10        51.81808     -0.0426755  0.101486 -0.420508 6.74114e-01
+## ...                ...            ...       ...       ...         ...
+## HIST2H4B       5.88411      -0.851124  0.246887 -3.447422 0.000565965
+## RHPN1          8.96054       0.213377  0.320608  0.665539 0.505705816
+## PKN2          34.02251       0.230331  0.102567  2.245675 0.024724850
+## MEP1A          1.31634       0.425583  0.407642  1.044012 0.296479728
+## FBXL18        44.22974       0.319733  0.128816  2.482082 0.013061717
+##                     padj
+##                &lt;numeric&gt;
+## MLK7-AS1     3.01491e-01
+## ZNF562       3.06635e-06
+## PITX1        6.60311e-04
+## LOC100506258 6.98882e-01
+## SRSF10       8.24232e-01
+## ...                  ...
+## HIST2H4B       0.0028894
+## RHPN1          0.6974426
+## PKN2           0.0648192
+## MEP1A          0.4638473
+## FBXL18         0.0383935</code></pre>
+<p><br />
+</p>
+</div>
+</div>
+<div id="ma-plot" class="section level2">
+<h2>MA Plot</h2>
+<pre class="r"><code>plotMA(res_nb, ylim=c(-2,2))</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><br />
+</p>
+</div>
+<div id="log-fold-change-shrinkage-for-visualization-and-ranking"
+class="section level2">
+<h2>Log fold change shrinkage for visualization and ranking</h2>
+<pre class="r"><code>resultsNames(res_nb)</code></pre>
+<pre><code>## character(0)</code></pre>
+<pre class="r"><code>summary(res_nb)</code></pre>
+<pre><code>## 
+## out of 400 with nonzero total read count
+## adjusted p-value &lt; 0.1
+## LFC &gt; 0 (up)       : 70, 18%
+## LFC &lt; 0 (down)     : 50, 12%
+## outliers [1]       : 0, 0%
+## low counts [2]     : 109, 27%
+## (mean count &lt; 1)
+## [1] see &#39;cooksCutoff&#39; argument of ?results
+## [2] see &#39;independentFiltering&#39; argument of ?results</code></pre>
+<p><br />
+</p>
+</div>
+<div id="volcano-plot" class="section level2">
+<h2>Volcano Plot</h2>
+<pre class="r"><code>res_nb &lt;- res_nb[complete.cases(res_nb),]
+
+res_nb_df &lt;- as.data.frame(res_nb)
+
+res_nb_volcPlot_df &lt;- res_nb_df %&gt;%
+  dplyr::mutate(differential_expression = ifelse(res_nb_df$log2FoldChange &gt; 0 &amp; res_nb_df$padj &lt; 0.05, &quot;HR Up&quot;, ifelse(res_nb_df$log2FoldChange &lt; 0 &amp; res_nb_df$padj &lt; 0.05, &quot;HR Down&quot;, &quot;Not Significant&quot;)))
+
+
+
+ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj)))+
+  geom_point()</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj),col=differential_expression))+
+  geom_point()</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(data=res_nb_volcPlot_df, 
+       aes(x=log2FoldChange,y=-log10(padj),col=differential_expression
+           ))+
+  geom_point()+
+   ggtitle(&quot;Plot of HR Up/Dn&quot;) +
+  theme(
+    plot.title = element_text(color=&quot;red&quot;, size=14, face=&quot;bold.italic&quot;),
+  )+
+  theme_bw() + # Select theme with a white background  
+  theme(panel.border = element_rect(colour = &quot;black&quot;, fill = NA, size= 0.5),    
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank()) </code></pre>
+<pre><code>## Warning: The `size` argument of `element_rect()` is
+## deprecated as of ggplot2 3.4.0.
+## ℹ Please use the `linewidth` argument
+##   instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()`
+## to see where this warning was generated.</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = res_nb_volcPlot_df,
+       aes(x = log2FoldChange,
+           y = -log10(padj))) + 
+  geom_point(aes(colour = differential_expression), 
+             alpha = 1, 
+             shape = 16,
+             size = 1) + 
+  geom_hline(yintercept = -log10(0.05),
+             linetype = &quot;dashed&quot;) + 
+  geom_vline(xintercept = c(-2, 2),
+             linetype = &quot;dashed&quot;) +
+  scale_x_continuous(limits = c(-4, 4)) +
+  # Add y limits
+  scale_y_continuous(limits = c(-2, 10)) + # Have tested the y limit up to 200
+  # Colors of ADRN and MES Genes
+  scale_color_manual(values = c(&quot;#0000ff&quot;,   # Blue
+                                &quot;#ff0000&quot;,   # Gray
+                                &quot;#c9c9c9&quot;))+ # Red
+  ggtitle(&quot;Plot of HR Up/Dn&quot;) +
+  theme(
+    plot.title = element_text(color=&quot;red&quot;, size=14, face=&quot;bold.italic&quot;),
+  )+
+  theme_bw() + # Select theme with a white background  
+  theme(panel.border = element_rect(colour = &quot;black&quot;, fill = NA, size= 0.5),    
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank()) </code></pre>
+<pre><code>## Warning: Removed 1 row containing missing values or
+## values outside the scale range
+## (`geom_point()`).</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-4.png" width="672" /></p>
+<p><br />
+</p>
+</div>
+<div id="enrichment-analysis" class="section level2">
+<h2>Enrichment analysis</h2>
+<pre class="r"><code>cross_cases(res_nb_volcPlot_df, differential_expression)</code></pre>
+<table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
+<thead>
+<tr>
+<th style="border-bottom: 1px solid grey; font-weight: 900; border-top: 2px solid grey; text-align: center;">
+</th>
+<th style="font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+ #Total 
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" style="font-weight: 900;">
+ differential_expression 
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   HR Down 
+</td>
+<td style="text-align: right;">
+42
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   HR Up 
+</td>
+<td style="text-align: right;">
+63
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   Not Significant 
+</td>
+<td style="text-align: right;">
+186
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid grey; text-align: left;">
+   #Total cases 
+</td>
+<td style="border-bottom: 2px solid grey; text-align: right;">
+291
+</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+</div>
+<div id="list-of-up-regulated-genes" class="section level2">
+<h2>List of up-regulated genes</h2>
+<pre class="r"><code>res_nb_volcPlot_df[&quot;gene_symbol&quot;] &lt;- rownames(res_nb_volcPlot_df)
+nb_volcPlo_Up &lt;- subset(res_nb_volcPlot_df, differential_expression == &quot;HR Up&quot; )
+List_nb_volcPlo_Up &lt;- as.character(nb_volcPlo_Up$gene_symbol)
+length(List_nb_volcPlo_Up)</code></pre>
+<pre><code>## [1] 63</code></pre>
+<p><br />
+</p>
+<pre class="r"><code>library(msigdbr)
+h_gene_sets_H = msigdbr(species = &quot;Homo sapiens&quot;, category = c(&quot;H&quot;)) 
+h_gene_sets_C2 = msigdbr(species = &quot;Homo sapiens&quot;, category = c(&quot;C2&quot;)) 
+h_gene_sets_C5 = msigdbr(species = &quot;Homo sapiens&quot;, category = c(&quot;C5&quot;)) </code></pre>
+<p><br />
+</p>
+</div>
+</div>
+<div id="prepare-enrichment-set-including-several-gene-sets"
+class="section level1">
+<h1>Prepare enrichment set including several gene sets</h1>
+<pre class="r"><code>msigdbr_df &lt;- rbind(h_gene_sets_H, h_gene_sets_C2)
+msigdbr_df &lt;- rbind(msigdbr_df, h_gene_sets_C5)</code></pre>
+<p><br />
+</p>
+<div id="define-database-for-enrichr-to-look-at" class="section level2">
+<h2>Define database for Enrichr to look at</h2>
+<pre class="r"><code>msigdbr_t2g = msigdbr_df %&gt;% dplyr::distinct(gs_name, gene_symbol) %&gt;% as.data.frame()</code></pre>
+<p><br />
+</p>
+</div>
+<div id="adrn-enrichment-table-rna-seq-up-regulated-enrichments"
+class="section level2">
+<h2>ADRN Enrichment Table RNA-Seq: Up-regulated Enrichments</h2>
+<pre class="r"><code>enrichr_nb_volcPlo_Up &lt;- enricher(List_nb_volcPlo_Up, TERM2GENE = msigdbr_t2g)
+enrichr_nb_volcPlo_Up_df &lt;- as.data.frame(enrichr_nb_volcPlo_Up)</code></pre>
+<p><br />
+</p>
+</div>
+<div id="dotplot" class="section level2">
+<h2>dotplot</h2>
+<pre class="r"><code>dotplot(enrichr_nb_volcPlo_Up, 
+                      font.size = 6,
+                       showCategory=10) + ggtitle(&quot;High Risk Up-Regulated&quot;)+
+  theme(axis.text.y = element_text(size = 6),
+        legend.text=element_text(size=6),
+        legend.key.size = unit(0.2, &#39;cm&#39;))+
+  theme_classic()</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><br />
+</p>
+</div>
+<div id="data-transformations-and-visualization" class="section level2">
+<h2>Data transformations and visualization</h2>
+<p><br />
+</p>
+<div id="extracting-transformed-counts-values" class="section level4">
+<h4>Extracting transformed counts values</h4>
+<pre class="r"><code>vsd_nb &lt;- varianceStabilizingTransformation(dds_nb)
+head(assay(vsd_nb), 4)</code></pre>
+<pre><code>##              GSM1205379 GSM1205288 GSM1205445 GSM1205455 GSM1205457 GSM1205389
+## MLK7-AS1       2.688023   2.688023   2.688023   2.688023   2.977123   2.688023
+## ZNF562         5.225106   5.185561   5.185561   4.872369   4.821297   4.821297
+## PITX1          2.688023   2.688023   2.688023   2.688023   2.688023   2.688023
+## LOC100506258   2.977123   3.192668   3.192668   2.977123   2.977123   2.977123
+##              GSM1205551 GSM1205330 GSM1205312 GSM1205589 GSM1205453 GSM1205495
+## MLK7-AS1       2.688023   2.977123   2.688023   2.688023   2.688023   2.977123
+## ZNF562         5.474709   5.507034   5.144874   4.655711   5.225106   5.373070
+## PITX1          2.688023   2.688023   2.688023   2.688023   2.688023   2.688023
+## LOC100506258   3.369538   2.977123   3.775873   2.688023   3.521428   2.688023
+##              GSM1205323 GSM1205727 GSM1205275 GSM1205340 GSM1205587 GSM1205503
+## MLK7-AS1       2.688023   2.977123   2.688023   2.688023   2.737003   2.985519
+## ZNF562         5.225106   5.896159   5.144874   4.325578   5.168947   5.559645
+## PITX1          2.688023   2.688023   2.688023   3.775873   2.737003   4.182891
+## LOC100506258   3.655450   3.521428   3.369538   3.521428   3.459248   2.985519
+##              GSM1205702 GSM1205653 GSM1205277 GSM1205660 GSM1205531 GSM1205523
+## MLK7-AS1       2.978256   2.688023   2.688023   2.688023   2.688023   2.688023
+## ZNF562         5.798292   5.225106   4.768274   5.301022   5.301022   5.144874
+## PITX1          2.688848   4.325578   2.688023   2.688023   2.688023   2.688023
+## LOC100506258   2.688848   2.977123   2.977123   3.369538   3.192668   2.688023
+##              GSM1205494 GSM1205697 GSM1205449 GSM1205565 GSM1205249 GSM1205496
+## MLK7-AS1       2.977123   2.977123   2.692495   2.977123   2.690371   2.692495
+## ZNF562         5.944008   5.599821   5.278415   5.686930   4.976662   5.811177
+## PITX1          2.688023   3.192668   2.692495   5.373070   2.690371   2.692495
+## LOC100506258   2.977123   3.192668   3.530402   2.977123   2.980348   2.692495
+##              GSM1205630 GSM1205251 GSM1205378 GSM1205429 GSM1205385 GSM1205343
+## MLK7-AS1       2.688023   2.688023   2.688023   2.688023   2.688023   2.688023
+## ZNF562         5.144874   4.768274   5.263574   5.373070   4.655711   5.225106
+## PITX1          2.688023   2.688023   2.688023   2.688023   2.688023   2.977123
+## LOC100506258   3.986316   2.977123   3.192668   2.977123   3.885506   3.192668
+##              GSM1205612 GSM1205253 GSM1205317 GSM1205299 GSM1205591 GSM1205360
+## MLK7-AS1       2.688023   2.688023   2.984880   2.977123   2.688023   2.688023
+## ZNF562         5.059793   5.686930   5.734612   4.872369   5.263574   5.225106
+## PITX1          2.688023   2.688023   2.984880   2.688023   2.977123   2.688023
+## LOC100506258   3.775873   3.192668   2.693671   2.977123   3.192668   2.977123
+##              GSM1205297 GSM1205598 GSM1205525 GSM1205262 GSM1205273 GSM1205469
+## MLK7-AS1       2.688023   2.982874   2.688023   2.688023   2.688023   2.688023
+## ZNF562         5.144874   5.644000   4.821297   4.821297   4.969218   4.821297
+## PITX1          2.688023   2.692210   2.688023   2.688023   2.688023   2.688023
+## LOC100506258   2.688023   2.692210   3.369538   2.977123   2.977123   3.521428
+##              GSM1205403 GSM1205374 GSM1205626 GSM1205448 GSM1205382 GSM1205620
+## MLK7-AS1       2.977123   2.977123   2.977123   2.688023   2.977123   2.983266
+## ZNF562         5.185561   5.474709   5.871620   5.185561   5.015237   5.862536
+## PITX1          2.688023   2.688023   7.552517   2.688023   2.688023   5.239866
+## LOC100506258   2.977123   2.688023   2.977123   2.977123   3.369538   2.983266
+##              GSM1205683
+## MLK7-AS1       2.688023
+## ZNF562         5.373070
+## PITX1          2.688023
+## LOC100506258   2.977123</code></pre>
+<p><br />
+</p>
+</div>
+</div>
+<div id="data-quality-assessment-by-sample-clustering-and-visualization"
+class="section level2">
+<h2>Data quality assessment by sample clustering and visualization</h2>
+<pre class="r"><code>select_nb &lt;- order(rowMeans(counts(dds_nb,normalized=TRUE)),
+                decreasing=TRUE)[1:20]
+df_nb &lt;- as.data.frame(colData(dds_nb)[,c(&quot;high_risk&quot;, &quot;mycn_status&quot;)])
+# pheatmap(assay(dds_nb)[select_nb,], cluster_rows=FALSE, show_rownames=FALSE,
+#          cluster_cols=FALSE, annotation_col=df_nb)
+pheatmap(assay(dds_nb)[select_nb,],annotation_col=df_nb)</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><br />
+</p>
+</div>
+<div id="heatmap-of-the-sample-to-sample-distances"
+class="section level2">
+<h2>Heatmap of the sample-to-sample distances</h2>
+<pre class="r"><code>sampleDists_nb &lt;- dist(t(assay(vsd_nb)))</code></pre>
+<pre class="r"><code>sampleDistMatrixNb &lt;- as.matrix(sampleDists_nb)
+rownames(sampleDistMatrixNb) &lt;- paste(vsd_nb$high_risk, sep=&quot;-&quot;)
+colnames(sampleDistMatrixNb) &lt;- NULL
+colors &lt;- colorRampPalette( rev(brewer.pal(9, &quot;Blues&quot;)) )(255)
+pheatmap(sampleDistMatrixNb,
+         clustering_distance_rows=sampleDists_nb,
+         clustering_distance_cols=sampleDists_nb,
+         col=colors)</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><br />
+</p>
+</div>
+<div id="principal-component-plot-of-the-samples"
+class="section level2">
+<h2>Principal component plot of the samples</h2>
+<p><br />
+</p>
+<pre class="r"><code>plotPCA(vsd_nb, intgroup=c(&quot;high_risk&quot;, &quot;mycn_status&quot;))</code></pre>
+<pre><code>## using ntop=500 top features by variance</code></pre>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><br />
+</p>
+</div>
+</div>
+<div id="session-information" class="section level1">
+<h1>Session Information</h1>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.4.1 (2024-06-14)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Big Sur 11.4
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## time zone: America/Chicago
+## tzcode source: internal
+## 
+## attached base packages:
+## [1] stats4    stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
+## 
+## other attached packages:
+##  [1] msigdbr_7.5.1               RColorBrewer_1.1-3         
+##  [3] pheatmap_1.0.12             clusterProfiler_4.12.6     
+##  [5] expss_0.11.6                DESeq2_1.44.0              
+##  [7] SummarizedExperiment_1.34.0 Biobase_2.64.0             
+##  [9] MatrixGenerics_1.16.0       matrixStats_1.4.1          
+## [11] GenomicRanges_1.56.1        GenomeInfoDb_1.40.1        
+## [13] IRanges_2.38.1              S4Vectors_0.42.1           
+## [15] BiocGenerics_0.50.0         readxl_1.4.3               
+## [17] dplyr_1.1.4                 maditr_0.8.4               
+## [19] ggplot2_3.5.1              
+## 
+## loaded via a namespace (and not attached):
+##   [1] rstudioapi_0.16.0       jsonlite_1.8.9          magrittr_2.0.3         
+##   [4] farver_2.1.2            rmarkdown_2.28          fs_1.6.4               
+##   [7] zlibbioc_1.50.0         vctrs_0.6.5             memoise_2.0.1          
+##  [10] ggtree_3.12.0           htmltools_0.5.8.1       S4Arrays_1.4.1         
+##  [13] cellranger_1.1.0        gridGraphics_0.5-1      SparseArray_1.4.8      
+##  [16] sass_0.4.9              bslib_0.8.0             htmlwidgets_1.6.4      
+##  [19] fontawesome_0.5.2       plyr_1.8.9              httr2_1.0.5            
+##  [22] cachem_1.1.0            igraph_2.0.3            lifecycle_1.0.4        
+##  [25] pkgconfig_2.0.3         gson_0.1.0              Matrix_1.7-0           
+##  [28] R6_2.5.1                fastmap_1.2.0           GenomeInfoDbData_1.2.12
+##  [31] aplot_0.2.3             digest_0.6.37           enrichplot_1.24.4      
+##  [34] colorspace_2.1-1        patchwork_1.3.0         AnnotationDbi_1.66.0   
+##  [37] RSQLite_2.3.7           labeling_0.4.3          fansi_1.0.6            
+##  [40] httr_1.4.7              polyclip_1.10-7         abind_1.4-8            
+##  [43] compiler_4.4.1          bit64_4.5.2             withr_3.0.1            
+##  [46] htmlTable_2.4.3         backports_1.5.0         BiocParallel_1.38.0    
+##  [49] viridis_0.6.5           DBI_1.2.3               highr_0.11             
+##  [52] ggforce_0.4.2           R.utils_2.12.3          MASS_7.3-61            
+##  [55] rappdirs_0.3.3          DelayedArray_0.30.1     tools_4.4.1            
+##  [58] scatterpie_0.2.4        ape_5.8                 R.oo_1.26.0            
+##  [61] glue_1.8.0              nlme_3.1-166            GOSemSim_2.30.2        
+##  [64] shadowtext_0.1.4        grid_4.4.1              checkmate_2.3.2        
+##  [67] reshape2_1.4.4          fgsea_1.30.0            generics_0.1.3         
+##  [70] gtable_0.3.5            R.methodsS3_1.8.2       tidyr_1.3.1            
+##  [73] data.table_1.16.0       tidygraph_1.3.1         utf8_1.2.4             
+##  [76] XVector_0.44.0          ggrepel_0.9.6           pillar_1.9.0           
+##  [79] stringr_1.5.1           babelgene_22.9          yulab.utils_0.1.7      
+##  [82] splines_4.4.1           tweenr_2.0.3            treeio_1.28.0          
+##  [85] lattice_0.22-6          bit_4.5.0               tidyselect_1.2.1       
+##  [88] GO.db_3.19.1            locfit_1.5-9.10         Biostrings_2.72.1      
+##  [91] knitr_1.48              gridExtra_2.3           xfun_0.48              
+##  [94] graphlayouts_1.2.0      stringi_1.8.4           UCSC.utils_1.0.0       
+##  [97] lazyeval_0.2.2          ggfun_0.1.6             yaml_2.3.10            
+## [100] evaluate_1.0.0          codetools_0.2-20        ggraph_2.2.1           
+## [103] tibble_3.2.1            qvalue_2.36.0           ggplotify_0.1.2        
+## [106] cli_3.6.3               munsell_0.5.1           jquerylib_0.1.4        
+## [109] Rcpp_1.0.13             png_0.1-8               parallel_4.4.1         
+## [112] blob_1.2.4              DOSE_3.30.5             tidytree_0.4.6         
+## [115] viridisLite_0.4.2       scales_1.3.0            purrr_1.0.2            
+## [118] crayon_1.5.3            rlang_1.1.4             cowplot_1.1.3          
+## [121] fastmatch_1.1-4         KEGGREST_1.44.1</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

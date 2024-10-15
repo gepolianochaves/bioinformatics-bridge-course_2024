@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Research with Computational Biology (ReComBio)" />
+
+
+<title>Exercises</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ReComBio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-info"></span>
+     
+    About
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Code Notebooks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Part 1: The R Syntax</li>
+    <li>
+      <a href="notebooks/Introduction-to-R-and-Terminal.html">1.1. Introduction to R</a>
+    </li>
+    <li>
+      <a href="notebooks/01-neuroblastoma-r2-GSE62564.html">1.2. Data Download and Processing</a>
+    </li>
+    <li>
+      <a href="notebooks/02-neuroblastoma-r2-plots-GSE62564.html">1.3. Data Visualization</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Part 2 (Special): Gene Expression Analysis</li>
+    <li>
+      <a href="transcriptomics-analysis.html">1.1. Transcription Analysis in R</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Part 2: Machine Learning</li>
+    <li>
+      <a href="notebooks/02-neuroblastoma-r2-plots-GSE62564.html">2.1. Data Visualization</a>
+    </li>
+    <li>
+      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.2. Introduction to Machine Learning</a>
+    </li>
+    <li>
+      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.3. Classification using Logistic Regression</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Part 3: DNA Sequencing and the Command Line</li>
+    <li>
+      <a href="https://www.youtube.com/watch?v=lU8ztLZRrvI">3.1. DNA Sequencing Technologies</a>
+    </li>
+    <li>
+      <a href="download_sequences.html">3.2A. Download mtDNA fasta sequences</a>
+    </li>
+    <li>
+      <a href="notebooks/07-Phylogenetic-Analyisis_mt_BR.html">3.2B. Phylogenetic Analysis</a>
+    </li>
+    <li>
+      <a href="notebooks/haplogroups.html">3.2C. Results: mtDNA haplogroups</a>
+    </li>
+    <li>
+      <a href="https://haplogrep.readthedocs.io/en/latest/annotations/#clusters-and-population-frequencies">3.2D. Haplogroups Annotations</a>
+    </li>
+    <li>
+      <a href="notebooks/Introduction-to-the-Terminal.html">3.3. Command Line or Terminal</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Part 4: Presentations and Final Considerations</li>
+    <li>
+      <a href="02-variant_call_pipeline.html">4.1. Variant Call Pipeline using Sequenced DNA</a>
+    </li>
+    <li>
+      <a href="exercises/exercises#chapter-2-command-line-or-terminal">4.2. Access terminal in AWS image</a>
+    </li>
+    <li>
+      <a href="notebooks/10-Survival-KM-and-Cox-Regression-Kocak-498.html">4.3. Final Presentations</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="videos.html">
+    <span class="fa fa-solid fa-video"></span>
+     
+    Videos
+  </a>
+</li>
+<li>
+  <a href="pdf/miniproject-slides.pdf">
+    <span class="fa fa-address-book-o"></span>
+     
+    Mini Project
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-address-book-o"></span>
+     
+    Exercises
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Exercises</li>
+    <li>
+      <a href="exercises/exercises.html">Questions</a>
+    </li>
+    <li>
+      <a href="assignment-dates">Assignments by Date</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Solutions</li>
+    <li>
+      <a href="exercises/solutions.pdf">Preliminary Solutions</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-address-book-o"></span>
+     
+    Final Presentations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Final Projects</li>
+    <li>
+      <a href="final-presentations.html">Final-Presentations</a>
+    </li>
+    <li>
+      <a href="notebooks/neuroblastoma-survival.html">Project 2: Survival Analysis of Neuroblastoma</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Exercises</h1>
+<h4 class="author">Research with Computational Biology (ReComBio)</h4>
+<h4 class="date">September 7th, 2024</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#part-1-introduction-to-r-and-the-r-syntax"
+id="toc-part-1-introduction-to-r-and-the-r-syntax"><strong>Part 1:
+Introduction to R and the R Syntax</strong></a>
+<ul>
+<li><a href="#chapter-3-data-visualization"
+id="toc-chapter-3-data-visualization">Chapter 3: Data
+visualization</a></li>
+</ul></li>
+<li><a href="#part-2-machine-learning"
+id="toc-part-2-machine-learning"><strong>Part 2: Machine
+Learning</strong></a>
+<ul>
+<li><a href="#chapter-1-classification"
+id="toc-chapter-1-classification">Chapter 1: Classification</a></li>
+</ul></li>
+<li><a href="#part-3-dna-sequencing-and-introduction-to-the-terminal"
+id="toc-part-3-dna-sequencing-and-introduction-to-the-terminal"><strong>Part
+3: DNA Sequencing and Introduction to the Terminal</strong></a>
+<ul>
+<li><a href="#chapter-1-dna-sequencing"
+id="toc-chapter-1-dna-sequencing">Chapter 1: DNA Sequencing</a></li>
+<li><a
+href="#chapter-2-introductory-commands-in-command-line-or-terminal"
+id="toc-chapter-2-introductory-commands-in-command-line-or-terminal">Chapter
+2: Introductory Commands in Command Line or Terminal</a></li>
+<li><a href="#chapter-3-download-fasta-sequences"
+id="toc-chapter-3-download-fasta-sequences">Chapter 3: Download fasta
+sequences</a></li>
+</ul></li>
+<li><a href="#part-4-presentations-and-final-considerations"
+id="toc-part-4-presentations-and-final-considerations"><strong>Part 4:
+Presentations and Final Considerations</strong></a>
+<ul>
+<li><a href="#chapter-1-genetic-variants-and-haplogroups"
+id="toc-chapter-1-genetic-variants-and-haplogroups">Chapter 1: Genetic
+Variants and Haplogroups</a></li>
+<li><a href="#chapter-2-variant-call-pipeline"
+id="toc-chapter-2-variant-call-pipeline">Chapter 2: Variant Call
+Pipeline</a></li>
+<li><a href="#chapter-3-accessing-the-terminal-in-aws-image-instance"
+id="toc-chapter-3-accessing-the-terminal-in-aws-image-instance">Chapter
+3: Accessing the Terminal in AWS Image Instance</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p><br />
+</p>
+<p><br />
+</p>
+<div id="part-1-introduction-to-r-and-the-r-syntax"
+class="section level1">
+<h1><strong>Part 1: Introduction to R and the R Syntax</strong></h1>
+<p><br />
+</p>
+<p><br />
+</p>
+<div id="chapter-3-data-visualization" class="section level3">
+<h3>Chapter 3: Data visualization</h3>
+<p><br />
+</p>
+<p><br />
+</p>
+<div id="load-libraries" class="section level4">
+<h4>Load libraries</h4>
+<p><br />
+</p>
+<pre class="r"><code>library(ggplot2)
+library(maditr)
+library(dplyr)</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="load-dataframe" class="section level4">
+<h4>Load dataframe</h4>
+<p><br />
+</p>
+<pre class="r"><code>r2_gse62564_GSVA_Metadata &lt;- readRDS(&quot;../../ReComBio Scientific/ReComBio Book English/recombio bookdown/data/r2_gse62564_GSVA_Metadata.rds&quot;)</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="make-variables-of-numeric-type" class="section level4">
+<h4>Make Variables of Numeric Type</h4>
+<p><br />
+</p>
+<pre class="r"><code>r2_gse62564_GSVA_Metadata &lt;- r2_gse62564_GSVA_Metadata %&gt;% 
+   mutate_at(&quot;HALLMARK_HYPOXIA&quot;, as.numeric) %&gt;%
+   mutate_at(&quot;HALLMARK_INFLAMMATORY_RESPONSE&quot;, as.numeric) %&gt;%
+   mutate_at(&quot;ADRN_Norm_vs_Hypo_Up_554.txt&quot;, as.numeric) %&gt;%
+   mutate_at(&quot;ADRN_Norm_vs_Hypo_Down_635.txt&quot;, as.numeric)</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-1" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p>Use R plot functions to visualize the correlation between Hallmark
+Hypoxia and Hallmark Inflammatory Response</p>
+<p><br />
+</p>
+</div>
+<div id="solution" class="section level4">
+<h4>Solution:</h4>
+<p>HALLMARK_INFLAMMATORY_RESPONSE vs. HALLMARK_HYPOXIA</p>
+<pre class="r"><code>qplot(HALLMARK_INFLAMMATORY_RESPONSE, HALLMARK_HYPOXIA, 
+      data = r2_gse62564_GSVA_Metadata,
+      #colour=quantile,
+      ylab = &quot;HALLMARK_HYPOXIA&quot;,
+      xlab = &quot;HALLMARK_INFLAMMATORY_RESPONSE&quot;)</code></pre>
+<p><img src="exercises_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-2" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>Use R plot functions to visualize the correlation between Hallmark
+Hypoxia and Hallmark Inflammatory Response</p>
+<p><br />
+</p>
+</div>
+<div id="solution-1" class="section level4">
+<h4>Solution:</h4>
+<p>HALLMARK_INFLAMMATORY_RESPONSE vs. ADRN_Norm_vs_Hypo_Up_554.txt</p>
+<pre class="r"><code>qplot(HALLMARK_INFLAMMATORY_RESPONSE, ADRN_Norm_vs_Hypo_Up_554.txt, 
+      data = r2_gse62564_GSVA_Metadata,
+      # colour=quantile,
+      xlab = &quot;HALLMARK_INFLAMMATORY_RESPONSE&quot;,
+      ylab = &quot;ADRN_Norm_vs_Hypo_Up_554.txt&quot;)</code></pre>
+<p><img src="exercises_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>Use R plot functions to visualize the correlation between Hallmark
+Hypoxia and Hallmark Inflammatory Response</p>
+<p><br />
+</p>
+</div>
+<div id="solution-2" class="section level4">
+<h4>Solution:</h4>
+<p>HALLMARK_INFLAMMATORY_RESPONSE vs. ADRN_Norm_vs_Hypo_Down_635.txt</p>
+<pre class="r"><code>qplot(HALLMARK_INFLAMMATORY_RESPONSE, ADRN_Norm_vs_Hypo_Down_635.txt, 
+      data = r2_gse62564_GSVA_Metadata,
+      # colour=quantile,
+      ylab = &quot;ADRN_Norm_vs_Hypo_Down_635.txt&quot;,
+      xlab = &quot;HALLMARK_INFLAMMATORY_RESPONSE&quot;)</code></pre>
+<p><img src="exercises_files/figure-html/HALLMARK_INFLAMMATORY_RESPONSE%20vs.%20ADRN_Norm_vs_Hypo_Down_635.txt-1.png" width="672" /></p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-4" class="section level4">
+<h4>Question 4</h4>
+<p><br />
+</p>
+<p>From the analysis of questions 1-3, choose the correct option:</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />HALLMARK_INFLAMMATORY_RESPONSE and
+HALLMARK_HYPOXIA have a positive correlation because hypoxia is always
+beneficial in the tumor microenvironment</p></li>
+<li><p><input type="checkbox" />HALLMARK_INFLAMMATORY_RESPONSE and
+ADRN_Norm_vs_Hypo_Up_554.txt have a positive correlation because hypoxia
+upregulation in this case, is beneficial in the tumor
+microenvironment</p></li>
+<li><p><input type="checkbox" />HALLMARK_INFLAMMATORY_RESPONSE and
+ADRN_Norm_vs_Hypo_Up_554.txt have a positive correlation because hypoxia
+upregulation has a negative impact on survival</p></li>
+<li><p><input type="checkbox" />HALLMARK_INFLAMMATORY_RESPONSE and
+ADRN_Norm_vs_Hypo_Down_635.txt have a negative correlation because
+hypoxia upregulation in this case, is not beneficial in the tumor
+microenvironment</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-5" class="section level4">
+<h4>Question 5</h4>
+<p><br />
+</p>
+<p>Which gene expression group has worse survival probability?</p>
+<ul class="task-list">
+<li><input type="checkbox" />High HIF1A expression</li>
+<li><input type="checkbox" />Low HIF1A expression</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-6" class="section level4">
+<h4>Question 6</h4>
+<p><br />
+</p>
+<p>Which phenotype score group has worse survival probability?</p>
+<ul class="task-list">
+<li><input type="checkbox" />High Hallmark Hypoxia</li>
+<li><input type="checkbox" />Low Hallmark Hypoxia</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-7" class="section level4">
+<h4>Question 7</h4>
+<p><br />
+</p>
+<p>Which phenotype score group has worse survival probability?</p>
+<ul class="task-list">
+<li><input type="checkbox" />High Hallmark Inflammatory Response</li>
+<li><input type="checkbox" />Low Hallmark Inflammatory Response</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-8" class="section level4">
+<h4>Question 8</h4>
+<p><br />
+</p>
+<p>Plot the survival curve of the MYCN status variable. Which MYCN
+status has worse survival outcome?</p>
+<ul class="task-list">
+<li><input type="checkbox" />Individuals with MYCN amplification</li>
+<li><input type="checkbox" />Individuals without MYCN amplification</li>
+<li><input type="checkbox" />The MYCN group with unknown MYCN
+status</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-9" class="section level4">
+<h4>Question 9</h4>
+<p><br />
+</p>
+<p>Plot the survival curve of the INSS stage variable. Which INSS stage
+has worse survival outcome?</p>
+<ul class="task-list">
+<li><input type="checkbox" />INSS Stage I</li>
+<li><input type="checkbox" />INSS Stage II</li>
+<li><input type="checkbox" />INSS Stage III</li>
+<li><input type="checkbox" />INSS Stage IV</li>
+<li><input type="checkbox" />INSS Stage IV A</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-10" class="section level4">
+<h4>Question 10</h4>
+<p><br />
+</p>
+<p>Mark TRUE or FALSE.</p>
+<ul class="task-list">
+<li><input type="checkbox" />The higher the age at diagnosis the greater
+the HIF1A expression difference between HR and non-HR</li>
+<li><input type="checkbox" />The lower the age at diagnosis the greater
+the HIF1A expression difference between HR and non-HR</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+</div>
+<div id="part-2-machine-learning" class="section level1">
+<h1><strong>Part 2: Machine Learning</strong></h1>
+<p><br />
+</p>
+<p><br />
+</p>
+<div id="chapter-1-classification" class="section level2">
+<h2>Chapter 1: Classification</h2>
+<p><br />
+</p>
+<p><br />
+</p>
+<div id="question-1-1" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p>How can you predict what label a new patient that was sequenced using
+the UCSC nanopore technology will have using the logistic regression
+model constructed in R?</p>
+<p><br />
+</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />I can build a vector to provide as input
+to R so that the model can use the parameters it calculated to make the
+prediction</p></li>
+<li><p><input type="checkbox" />If I have more than 2 patients to
+predict, I can build a dataframe to input to R</p></li>
+<li><p><input type="checkbox" />It is not possible to know if a patient
+has high risk neuroblastoma disease without doing a FISH (Fluorescence
+<em>in situ</em> hybridization) and understanding if the person has MYCN
+amplification</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-1" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>How can you know if a model represents a good indicator for the high
+risk status of a patient?</p>
+<p><br />
+</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />If the model has high accuracy</p></li>
+<li><p><input type="checkbox" />If the model has medium
+accuracy</p></li>
+<li><p><input type="checkbox" />If the model has low accuracy</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3-1" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>Write a command to input information about the predictor variables of
+a patient into R. To come up with a solution, please discuss the
+strategy to solve this problem in groups in breakout rooms. Please use
+10-15 min to discuss a solution.</p>
+<p><br />
+</p>
+<ul>
+<li>Hint: Use notebook “Classification Using a Logistic Regression
+Model”</li>
+</ul>
+<p><br />
+</p>
+<ul>
+<li>Please describe a solution in words (<strong>human
+language</strong>)</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-4-1" class="section level4">
+<h4>Question 4</h4>
+<p><br />
+</p>
+<p>Write a command to predict the high risk label for the patient based
+in the patient’s gene expression pattern. To come up with a solution,
+please discuss the strategy to solve this problem in groups in breakout
+rooms. Please use 10-15 min to discuss a solution.</p>
+<p><br />
+</p>
+<ul>
+<li><p>Hint 1: Which chunks in the notebook help to explain a possible
+solution?</p></li>
+<li><p>Hint 2: Look at the functions that can possibly present a
+solution?</p></li>
+<li><p>Please describe the solution in pseudocode (<strong>human
+language + computer language merged</strong>)</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-5-1" class="section level4">
+<h4>Question 5</h4>
+<p><br />
+</p>
+<p>Write a command to predict the high risk label for the patient based
+in the patient’s gene expression pattern. To come up with a solution,
+please discuss the strategy to solve this problem in groups. Please use
+10-15 min to discuss a solution.</p>
+<p><br />
+</p>
+<ul>
+<li><p>Hint 1: Which data structures can you use to input the data into
+the R environment? A dataframe? A vector? A character?</p></li>
+<li><p>Please present the solution in a command or algorithm
+(<strong>computer language</strong>)</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-6-1" class="section level4">
+<h4>Question 6</h4>
+<p><br />
+</p>
+<p>Dr. Waterman, who participated in the Summer Bioiformatics Bridge
+Course a couple years ago, has completed a round of experiments aiming
+to use the classification model that we developed for the neuroblastoma
+labels using the Kokak dataset with n=498 patients. Dr. Waterman
+generated 22 phenotype scores for the set of 105 patients that he
+assists. The dataframe with the scores are in the data folder of the
+google drive of the course:</p>
+<p><br />
+</p>
+<p><a
+href="https://drive.google.com/file/d/1Bs6uDvc6i59l5JAjlPbVF7IgrNG5DWfK/view?usp=share_link"
+class="uri">https://drive.google.com/file/d/1Bs6uDvc6i59l5JAjlPbVF7IgrNG5DWfK/view?usp=share_link</a></p>
+<p><br />
+</p>
+<p>Or visit the data folder on Google Drive:</p>
+<p><a
+href="https://drive.google.com/drive/folders/1fr7SkOqMqOqQIW5ttjblGkPHCJY2HDJv?usp=sharing"
+class="uri">https://drive.google.com/drive/folders/1fr7SkOqMqOqQIW5ttjblGkPHCJY2HDJv?usp=sharing</a></p>
+<p><br />
+</p>
+<p>The dataframe is the file gse73517geo105_GSVA_Metadata_selected.csv
+in the shared folder.</p>
+<p><br />
+</p>
+<ul>
+<li><ol style="list-style-type: upper-alpha">
+<li>If he wants to determine the patients that are high risk and the
+patients that are low risk, how should he proceed?</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: upper-alpha">
+<li>Calculate the accuracy of the model that we trained using the Kocak
+data, using this new sample set provided to us by Dr. Waterman.</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: upper-alpha">
+<li>Is this a good the accuracy for the logistic regression model that
+we developed?</li>
+</ol></li>
+</ul>
+<p><br />
+</p>
+<ul>
+<li><p>Hint 1: Use the Waterman dataset as new data in the Machine
+Learning Classification notebook.</p></li>
+<li><p>Hint 2: Construct class prediction and probabilities for the
+Westerman dataset.</p></li>
+<li><p>Hint 3: Construct the results for westermand dataset using the
+class prediction and class probabilities for the Westerman
+dataset.</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+</div>
+<div id="part-3-dna-sequencing-and-introduction-to-the-terminal"
+class="section level1">
+<h1><strong>Part 3: DNA Sequencing and Introduction to the
+Terminal</strong></h1>
+<p><br />
+</p>
+<p><br />
+</p>
+<div id="chapter-1-dna-sequencing" class="section level2">
+<h2>Chapter 1: DNA Sequencing</h2>
+<p><br />
+</p>
+<p><br />
+</p>
+<div id="question-1-2" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p>Watch the video about
+<a href="https://www.youtube.com/watch?v=lU8ztLZRrvI&" > DNA sequencing
+technologies</a> that was based on the Shendure et al., 2017 paper, from
+minutes 14:30 to 15:30. What is another technical name for Next
+Generation Sequencing (NGS) technologies?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-2" class="section level4">
+<h4>Question 2</h4>
+<p><a href="https://www.youtube.com/watch?v=lU8ztLZRrvI&" > Now watch
+the video</a> from 19:06 - 22:37. Which step is responsible for the
+increased amounts of DNA necessary for DNA sequencing?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3-2" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>According to Shendure et al., 2017, how many and what are the names
+of the DNA sequencing technologies?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-4-2" class="section level4">
+<h4>Question 4</h4>
+<p><br />
+</p>
+<p>What is the name of the process that allows bacteria to incorporate
+DNA into own their bacterial cells?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-5-2" class="section level4">
+<h4>Question 5</h4>
+<p><br />
+</p>
+<p>What was the main clinical application of DNA sequencing technologies
+discussed by Shendure et al., 2017 in their paper?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-6-2" class="section level4">
+<h4>Question 6</h4>
+<p><br />
+</p>
+<p>According to Shendure, please identify at least one chemical event in
+the machanics of DNA sequencing.</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-7-1" class="section level4">
+<h4>Question 7</h4>
+<p><br />
+</p>
+<p>According to Shendure, please identify at least one significant event
+in history of DNA sequencing.</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+<div id="chapter-2-introductory-commands-in-command-line-or-terminal"
+class="section level2">
+<h2>Chapter 2: Introductory Commands in Command Line or Terminal</h2>
+<p><br />
+</p>
+<p>Use the echo command to print a greeting to the class like this
+one:</p>
+<pre class="bash"><code>echo &quot;Print a greeting to the class:&quot;</code></pre>
+<pre><code>## Print a greeting to the class:</code></pre>
+<p><br />
+</p>
+<p>Now print your greeting message. Insert the message using the echo
+command:</p>
+<pre class="bash"><code>echo &quot; &quot;</code></pre>
+<p><br />
+</p>
+<p>We can define a variable</p>
+<pre class="bash"><code>test_variable=this_file</code></pre>
+<p><br />
+</p>
+<p>and now print the name of the variable also using the echo
+command:</p>
+<pre class="bash"><code>test_variable=this_file
+echo $test_variable</code></pre>
+<pre><code>## this_file</code></pre>
+<p><br />
+</p>
+<p>Check files that are present in the current directory:</p>
+<pre class="bash"><code>ls</code></pre>
+<pre><code>## 02-variant_call_pipeline.Rmd
+## 02-variant_call_pipeline.html
+## 2024-bioinfo-bridge-course
+## README.md
+## _site
+## _site.yml
+## about.Rmd
+## about.html
+## assignment-dates.Rmd
+## assignment-dates.html
+## bioinformatics-bridge-course_2024.Rproj
+## certificates
+## data
+## download_sequences.Rmd
+## download_sequences.html
+## edited_videos
+## exercises
+## exercises.Rmd
+## exercises_files
+## feedback
+## final-presentations.Rmd
+## images
+## index.Rmd
+## key_pairs
+## last_day
+## not_ready_to_render
+## notebooks
+## papers
+## pdf
+## recordings.Rmd
+## site_libs
+## slides
+## transcriptomics analysis.Rmd
+## videos.Rmd</code></pre>
+<p><br />
+</p>
+<p>In the previous chunk there are files and folders that are present in
+that directory. I will print the files again with an echo message so it
+is more clear what was the command and what was the output:</p>
+<p><br />
+</p>
+<pre class="bash"><code>echo &quot;List the files. These are the files inside this directory:&quot;
+ls</code></pre>
+<pre><code>## List the files. These are the files inside this directory:
+## 02-variant_call_pipeline.Rmd
+## 02-variant_call_pipeline.html
+## 2024-bioinfo-bridge-course
+## README.md
+## _site
+## _site.yml
+## about.Rmd
+## about.html
+## assignment-dates.Rmd
+## assignment-dates.html
+## bioinformatics-bridge-course_2024.Rproj
+## certificates
+## data
+## download_sequences.Rmd
+## download_sequences.html
+## edited_videos
+## exercises
+## exercises.Rmd
+## exercises_files
+## feedback
+## final-presentations.Rmd
+## images
+## index.Rmd
+## key_pairs
+## last_day
+## not_ready_to_render
+## notebooks
+## papers
+## pdf
+## recordings.Rmd
+## site_libs
+## slides
+## transcriptomics analysis.Rmd
+## videos.Rmd</code></pre>
+<p><br />
+</p>
+<p>This is the current directory with command pwd:</p>
+<pre class="bash"><code>pwd</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024</code></pre>
+<p>Above you can see that that was a directory called exercises inside
+another folder named bioinformatics-bridge-course_2024.</p>
+<p><br />
+</p>
+<p>Let’s create a folder in this directory, using the mkdir command:</p>
+<pre class="bash"><code>mkdir test_directory</code></pre>
+<p><br />
+</p>
+<p>If by some reason we type the command again, Bash will throw an error
+at us:</p>
+<pre class="bash"><code>mkdir test_directory</code></pre>
+<pre><code>## mkdir: test_directory: File exists</code></pre>
+<p><br />
+</p>
+<p>These are the files present in this directory:</p>
+<pre class="bash"><code>ls</code></pre>
+<pre><code>## 02-variant_call_pipeline.Rmd
+## 02-variant_call_pipeline.html
+## 2024-bioinfo-bridge-course
+## README.md
+## _site
+## _site.yml
+## about.Rmd
+## about.html
+## assignment-dates.Rmd
+## assignment-dates.html
+## bioinformatics-bridge-course_2024.Rproj
+## certificates
+## data
+## download_sequences.Rmd
+## download_sequences.html
+## edited_videos
+## exercises
+## exercises.Rmd
+## exercises_files
+## feedback
+## final-presentations.Rmd
+## images
+## index.Rmd
+## key_pairs
+## last_day
+## not_ready_to_render
+## notebooks
+## papers
+## pdf
+## recordings.Rmd
+## site_libs
+## slides
+## test_directory
+## transcriptomics analysis.Rmd
+## videos.Rmd</code></pre>
+<p><br />
+</p>
+<p>Let’s move into the directory that we just created. To do that we use
+the cd (change directory command):</p>
+<pre class="bash"><code>cd test_directory</code></pre>
+<p><br />
+</p>
+<p>Check the directory where we are at. The pwd (print working
+directory) command prints the directory inside which we are:</p>
+<pre class="bash"><code>cd test_directory
+pwd</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/test_directory</code></pre>
+<p>Note that we are inside the test_directory.</p>
+<p><br />
+</p>
+<p>Let’s look at what is inside the test_directory:</p>
+<pre class="bash"><code>cd test_directory
+pwd
+ls</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/test_directory</code></pre>
+<p><br />
+</p>
+<p>echo - pode ser feito criando-se arquivos de texto</p>
+<pre class="bash"><code>## go inside the test_directory directory
+cd test_directory
+
+## Print working directory
+pwd
+
+## List what is inside the directory
+ls
+
+echo &quot;As you can see, there is nothing inside this directory:&quot;
+echo &quot;Because there is nothing here, let&#39;s create something, in the part below.&quot;</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/test_directory
+## As you can see, there is nothing inside this directory:
+## Because there is nothing here, let&#39;s create something, in the part below.</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Let’s create 3 files inside the test_directory and list what is
+inside the test_directory folder:</p>
+<pre class="bash"><code>cd test_directory
+pwd
+touch  firstFile.txt
+touch  secondFile.txt
+touch  thirdFile.txt
+ls
+</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/test_directory
+## firstFile.txt
+## secondFile.txt
+## thirdFile.txt</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Let’s have the terminal print the names of the txt files in the
+test_directory for us:</p>
+<pre class="bash"><code>cd test_directory
+pwd
+for i in *txt; do echo the name of this file is&quot;:&quot; $i ; done</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/test_directory
+## the name of this file is: firstFile.txt
+## the name of this file is: secondFile.txt
+## the name of this file is: thirdFile.txt</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Let’s have the terminal print one word, tow words and three words to
+the files, like this:</p>
+<pre class="bash"><code>cd test_directory
+pwd
+echo word1 &gt;&gt; firstFile.txt
+echo word1 &gt;&gt; secondFile.txt
+echo word1 &gt;&gt; thirdFile.txt
+
+echo word2 &gt;&gt; secondFile.txt
+echo word2 &gt;&gt; thirdFile.txt
+
+echo word3 &gt;&gt; thirdFile.txt</code></pre>
+<pre><code>## /Users/gepolianochaves/Desktop/Gepoliano/Bioinformatics Bridge Course/bioinformatics-bridge-course_2024/test_directory</code></pre>
+<p><br />
+</p>
+<p>Let’s look at each one of the txt files to see what we created:</p>
+<pre class="bash"><code>cd test_directory
+echo &quot;word counts of firstFile.txt:&quot;
+cat firstFile.txt
+echo &quot;word counts of secondFile.txt:&quot;
+cat secondFile.txt
+echo &quot;word counts of thirdFile.txt:&quot;
+cat thirdFile.txt</code></pre>
+<pre><code>## word counts of firstFile.txt:
+## word1
+## word counts of secondFile.txt:
+## word1
+## word2
+## word counts of thirdFile.txt:
+## word1
+## word2
+## word3</code></pre>
+<p><br />
+</p>
+<p>In a for loop:</p>
+<pre class="bash"><code>cd test_directory
+
+for i in *txt; do cat $i ; done
+#cat *txt</code></pre>
+<pre><code>## word1
+## word1
+## word2
+## word1
+## word2
+## word3</code></pre>
+<p>Relate these exercises to a terminal command? cat</p>
+<p><br />
+</p>
+<p>This is a command to count the lines of a file:</p>
+<pre class="bash"><code>cd test_directory
+wc -l firstFile.txt
+wc -l secondFile.txt
+wc -l thirdFile.txt</code></pre>
+<pre><code>##        1 firstFile.txt
+##        2 secondFile.txt
+##        3 thirdFile.txt</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>A script to count the number of reads or sequences in a fastq or
+fasta file.</p>
+<p>A for loop script to count the number of fasta files</p>
+<p>for i in AF243*; do echo $i; done</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Finally, remove the test_directory</p>
+<pre class="bash"><code>rm -r test_directory</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="chapter-3-download-fasta-sequences" class="section level2">
+<h2>Chapter 3: Download fasta sequences</h2>
+<p><br />
+</p>
+<div id="question-1-3" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>What was the package used to download fasta sequences?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-3" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>What was the function used to download fasta sequences?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3-3" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>What was the function used to save fasta sequences downloaded?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+</div>
+<div id="part-4-presentations-and-final-considerations"
+class="section level1">
+<h1><strong>Part 4: Presentations and Final Considerations</strong></h1>
+<p><br />
+</p>
+<div id="chapter-1-genetic-variants-and-haplogroups"
+class="section level2">
+<h2>Chapter 1: Genetic Variants and Haplogroups</h2>
+<p><br />
+</p>
+<div id="question-1-4" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p>Please read this Wikipedia article about haplogroups and the genetic
+inheritance of the mitochondria and the Y chromosome: <a
+href="https://en.wikipedia.org/wiki/Haplogroup"
+class="uri">https://en.wikipedia.org/wiki/Haplogroup</a>. What is the
+difference between a haplogroup and a hyplotype?</p>
+<p><br />
+</p>
+<div class="float">
+<img src="../images/haplogroup.png" style="width:60.0%"
+alt="Schematic definition of a haplogroup as presented on the Wikipedia article." />
+<div class="figcaption">Schematic definition of a haplogroup as
+presented on the Wikipedia article.</div>
+</div>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-4" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>Using the fasta sequences that you decided to download, repeat the
+haplogroup analysis of the fasta sequences downloaded in R using the
+haplogrep page: <a href="https://haplogrep.i-med.ac.at"
+class="uri">https://haplogrep.i-med.ac.at</a>. What are the file formats
+accepted by the haplogrep tool?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3-4" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>Please note that among the file formats accepted by the Haplogrep
+tool, is the VCF (variant call file) format. In what part of our course
+did we use a VCF file? Please try uploading VCF files instead of fasta
+files to Haplogrep.</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-4-3" class="section level4">
+<h4>Question 4</h4>
+<p><br />
+</p>
+<p>Look at the Haplogrep3 haplogroup annotations: <a
+href="https://haplogrep.readthedocs.io/en/latest/annotations/#clusters-and-population-frequencies"
+class="uri">https://haplogrep.readthedocs.io/en/latest/annotations/#clusters-and-population-frequencies</a>.</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-5-3" class="section level4">
+<h4>Question 5</h4>
+<p><br />
+</p>
+<p>Now compare with the <a href="/notebooks/haplogroups.html" >
+results</a> of the analysis of the 17 fasta sequences (12 passing and 5
+warnings) isolated from the self-declared white Brazilians that passed
+the Haplogrep QC.</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-6-3" class="section level4">
+<h4>Question 6</h4>
+<p><br />
+</p>
+<p>How many individuals have African matrilineal ancestry?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-7-2" class="section level4">
+<h4>Question 7</h4>
+<p><br />
+How many individuals have European matrilineal ancestry?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-8-1" class="section level4">
+<h4>Question 8</h4>
+<p><br />
+How many individuals have Latino/Admixed American matrilineal
+ancestry?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-9-1" class="section level4">
+<h4>Question 9</h4>
+<p><br />
+How many individuals have East Asian matrilineal ancestry?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-10-1" class="section level4">
+<h4>Question 10</h4>
+<p><br />
+</p>
+<p>How many individuals have South Asian matrilineal ancestry?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-11" class="section level4">
+<h4>Question 11</h4>
+<p><br />
+</p>
+<p>Which percentage of European, Latino (admixed) East Asian and African
+do you see in the mitocondrial haplogroups in the samples sequenced in
+self-declared white Brazilians?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-12" class="section level4">
+<h4>Question 12</h4>
+<p><br />
+</p>
+<p>Compare the <a href="/notebooks/haplogroups.html" > results</a> shown
+in Question 2 with the results from Mitchell 2014, shown in the figure
+below. What are the similarities in the colors of the ethnical-racial
+groups classified as African, European and Asian in the samples from
+Brazil and from the USA? If you need to access the paper, please refer
+to the shared drive or the attached link:
+<a href="https://drive.google.com/file/d/1Z3Gw0QNPa80qQ1jLEbD1jcKAZFo2mtmf/view?usp=sharing" >
+Mitchell et al., 2014</a>.</p>
+<p><br />
+</p>
+<div class="float">
+<img src="../images/mt_usa_mitchell.png" style="width:60.0%"
+alt="Human mitochondrial haplogroups in samples from the USA reported by Mitchell et al., 2014." />
+<div class="figcaption">Human mitochondrial haplogroups in samples from
+the USA reported by Mitchell et al., 2014.</div>
+</div>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-13" class="section level4">
+<h4>Question 13</h4>
+<p><br />
+</p>
+<p>What is the suggested origin of matrilineal clusters L in
+self-declared white Brazilians?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-14" class="section level4">
+<h4>Question 14</h4>
+<p><br />
+</p>
+<p>What is the suggested origin of matrilineal clusters J, K, HV and U
+in self-declared white Brazilians?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-15" class="section level4">
+<h4>Question 15</h4>
+<p><br />
+</p>
+<p>What is the suggested origin of matrilineal clusters A and B in
+self-declared white Brazilians?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+<div id="chapter-2-variant-call-pipeline" class="section level2">
+<h2>Chapter 2: Variant Call Pipeline</h2>
+<p><br />
+</p>
+<div id="question-1-5" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p>Which tool performs alignment in the Variant Call Pipeline?</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />samtools</p></li>
+<li><p><input type="checkbox" />bcftools</p></li>
+<li><p><input type="checkbox" />bwa</p></li>
+<li><p><input type="checkbox" />bamtools</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-5" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>Why was the for loop used in the Variant Call Pipeline?</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />To save time in the analysis</p></li>
+<li><p><input type="checkbox" />To allow identification of variants in
+all mitochondrial fasta files</p></li>
+<li><p><input type="checkbox" />So that the samples could be aligned to
+a reference genome</p></li>
+<li><p><input type="checkbox" />To save space and computational
+resources in the computer</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3-5" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>Using the on-line IDE (<a
+href="https://www.onlinegdb.com/online_c++_compiler"
+class="uri">https://www.onlinegdb.com/online_c++_compiler</a>), please
+create 3-5 txt files in the terminal. Please make sure you create the
+files with different names. Which of the commands below can you use to
+print the names of the files to the screen of the terminal?</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />echo</p></li>
+<li><p><input type="checkbox" />print</p></li>
+<li><p><input type="checkbox" />cat</p></li>
+<li><p><input type="checkbox" />ls</p></li>
+<li><p><input type="checkbox" />pwd</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-4-4" class="section level4">
+<h4>Question 4</h4>
+<p><br />
+</p>
+<p>Write a script to print the names of at least one of the txt files
+that were created in the previous exercise.</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-5-4" class="section level4">
+<h4>Question 5</h4>
+<p><br />
+</p>
+<p>Write a script to print the names of all txt files that were created
+in question 3. Use a for loop.</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-6-4" class="section level4">
+<h4>Question 6</h4>
+<p><br />
+</p>
+<p>In the terminal, which command can you use to print a word to the end
+of a txt file?</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />echo “word” &gt;&gt; file.txt</p></li>
+<li><p><input type="checkbox" />print “word” &gt; file.txt</p></li>
+<li><p><input type="checkbox" />cat “word” &gt; file.txt</p></li>
+<li><p><input type="checkbox" />ls “word” &gt; file.txt</p></li>
+<li><p><input type="checkbox" />pwd “word” &gt;&gt; file.txt</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-7-3" class="section level4">
+<h4>Question 7</h4>
+<p><br />
+</p>
+<p>Save some words to the files you created in question number 3. You
+can use the command below:</p>
+<p><br />
+</p>
+<pre class="bash"><code>echo  &quot;word&quot; &gt;&gt; file.txt</code></pre>
+<p><br />
+</p>
+<p>Make sure you understand the usage of the &gt;&gt; operator. Do not
+forget to also make sure the terminal recognizes the name of the txt
+files you created by using the tab key in your keyboard. Which command
+can you use to count how many words you provided as input to the text
+file?</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />wc -l</p></li>
+<li><p><input type="checkbox" />echo wc -l</p></li>
+<li><p><input type="checkbox" />wc -l &gt; file.txt</p></li>
+<li><p><input type="checkbox" />pwd –word-counts</p></li>
+<li><p><input type="checkbox" />file.txt –word-counts</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-8-2" class="section level4">
+<h4>Question 8</h4>
+<p><br />
+</p>
+<p>Which command can you use to double-check the words you inputed to
+the files you wrote?</p>
+<ul class="task-list">
+<li><p><input type="checkbox" />echo</p></li>
+<li><p><input type="checkbox" />cat</p></li>
+<li><p><input type="checkbox" />pwd</p></li>
+<li><p><input type="checkbox" />ls</p></li>
+<li><p><input type="checkbox" />mkdir</p></li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+<div id="chapter-3-accessing-the-terminal-in-aws-image-instance"
+class="section level2">
+<h2>Chapter 3: Accessing the Terminal in AWS Image Instance</h2>
+<p><br />
+</p>
+<div id="question-1-6" class="section level4">
+<h4>Question 1</h4>
+<p><br />
+</p>
+<p>Please read instructions about Launching your own AMI instances (<a
+href="https://datacarpentry.org/genomics-workshop/AMI-setup"
+class="uri">https://datacarpentry.org/genomics-workshop/AMI-setup</a>).
+The instructor can sign into the AWS EC2 Dashboard (<a
+href="https://console.aws.amazon.com/ec2/"
+class="uri">https://console.aws.amazon.com/ec2/</a>) but students do not
+have to do this or create an AWS account. Creating an AWS account is
+responsability of the student because you may have to pay for these
+resources.</p>
+<p><br />
+</p>
+</div>
+<div id="question-2-6" class="section level4">
+<h4>Question 2</h4>
+<p><br />
+</p>
+<p>Once you are provided with instructions on how to access the AWS
+instance, do so by typing the ssh command in the terminal:</p>
+<p><br />
+</p>
+<pre class="bash"><code>ssh dcuser@ec2-3-82-97-221.compute-1.amazonaws.com</code></pre>
+<p><br />
+</p>
+<p>Once asked, type the password:</p>
+<pre class="bash"><code>data4Carp</code></pre>
+<p><br />
+</p>
+<ul>
+<li>Please only insert the commands once instructed because all studets
+will access the resources at the same time.</li>
+</ul>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-3-6" class="section level4">
+<h4>Question 3</h4>
+<p><br />
+</p>
+<p>Once inside the AWS instance, copy the variant_call modified with
+your name as I am doing below. This part is similar to what I did when I
+specified the
+<a href="https://bioinformatics-bridge-course.netlify.app/02-variant_call_pipeline#ucsc-hummingbird-server-script" >steps
+of the variant call pipeline</a>:</p>
+<pre class="bash"><code>cp -r variant_call variant_call_gepoliano</code></pre>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+<div id="question-4-5" class="section level4">
+<h4>Question 4</h4>
+<p><br />
+</p>
+<p>You can now copy the variant call pipeline commands and paste it in
+the terminal, as I did in the variant call notebook: <a
+href="https://bioinformatics-bridge-course.netlify.app/02-variant_call_pipeline#variant-call-pipeline-using-a-for-loop-strategy"
+class="uri">https://bioinformatics-bridge-course.netlify.app/02-variant_call_pipeline#variant-call-pipeline-using-a-for-loop-strategy</a>:</p>
+<p><br />
+</p>
+<pre class="bash"><code>
+cd /home/dcuser/variant_call_gepoliano/fasta
+
+REFERENCE=AF243627.fasta
+
+## for loop specific to the individual fasta files
+for fastaFile in AF*.fasta; do
+  
+  ## Pick just the eight firt letters of the string
+  fastaFileName=${fastaFile:0:8}
+  echo &quot;started sample $fastaFileName&quot;
+  
+  ## Align
+  bwa mem -t 4 ../references/$REFERENCE $fastaFile &gt; ../sam/$fastaFileName&quot;.sam&quot;
+  echo &quot;Just finished aligning sample $fastaFileName&quot;
+  
+  ## SAM to BAM
+  samtools view -S -b ../sam/$fastaFileName&quot;.sam&quot; &gt; \
+  ../bam/$fastaFileName&quot;.bam&quot;
+  echo &quot;Finished SAM to BAM of sample $fastaFileName&quot;
+  
+  ## Samtools uses reference FASTA to detect &quot;piles&quot; in the alignment
+  bcftools mpileup -f ../references/$REFERENCE ../bam/$fastaFileName&quot;.bam&quot; &gt; \
+  ../bcf/$fastaFileName&quot;.bcf&quot;
+  
+  ## Bcftools extracts SNPs
+  echo &quot;started Bcftools SNPs for sample $fastaFileName&quot;
+  bcftools view -v snps ../bcf/$fastaFileName&quot;.bcf&quot; &gt; ../snps_vcf/$fastaFileName&quot;_snps.vcf&quot;
+
+done
+
+echo &quot;Finished the entire for loop&quot;
+</code></pre>
+<p><br />
+</p>
+<p>What do you see in your screen? How do you know if it run
+sucessfully?</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
