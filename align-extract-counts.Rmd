@@ -1,0 +1,192 @@
+---
+title: "Download and align Fastq files and extract Read Counts"
+
+author: "Gepoliano Chaves"
+
+date: "October 15th, 2024"
+
+output:
+  html_document:
+    df_print: paged
+    toc: true
+---
+
+
+\
+
+## References
+
+\
+
+Google search: SRA download subset number of reads
+
+In the link below, I learned the syntax to download a subset of fastq reads rather than an entire fastq file:
+https://bioinformatics.ccr.cancer.gov/docs/b4b/Module1_Unix_Biowulf/Lesson6/
+
+\
+
+## Transfer files
+
+\
+
+#### Transfer an alignment pipeline script
+
+```{bash, eval=F}
+scp gchaves@hb.ucsc.edu:/hb/home/gchaves/scripts/Signaling_GSE68952_H3K4me3.sh ./scripts
+```
+
+\
+
+#### Transfer the human reference genome
+
+```{bash, eval=F}
+origin=/hb/home/gchaves/references/hg19/GRCh37.p13.genome.fa
+destination=/home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa
+
+/hb/home/gchaves/programs/sshpass-1.06/sshpass -p "bioinfo" \
+scp $origin bioinfo@200.128.7.33:$destination
+```
+
+\
+
+#### Transfer featureCounts
+
+```{bash, eval=F}
+scp -r gchaves@hb.ucsc.edu:/hb/home/gchaves/results/neuroblastoma/SRR899360_1.fastq /home/bioinfo/data/
+```
+
+\
+
+#### Transfer fastq file
+
+```{bash, eval=F}
+scp -r /hb/home/gchaves/results/neuroblastoma/SRR899360_1.fastq bioinfo@200.128.7.33:/home/bioinfo/data/neuroblastoma
+```
+
+\
+
+#### Transfer sam file
+
+```{bash, eval=F}
+scp -r /hb/home/gchaves/results/neuroblastoma/SRR899360.sam bioinfo@200.128.7.33:/home/bioinfo/data/neuroblastoma
+```
+
+\
+
+#### Transfer GTF file
+
+```{bash, eval=F}
+scp -r /hb/home/gchaves/references/hg19_bme237/gtf/gencode.v19.annotation.gtf  bioinfo@200.128.7.33:/home/bioinfo/data/references/
+```
+
+\
+
+#### Build the index
+
+```{bash, eval=F}
+cd /home/bioinfo/data/references/hg19/
+bwa index -a bwtsw GRCh37.p13.genome.fa
+```
+
+\
+
+## Look at GEO Metadata File
+
+\
+
+In this part I stored the metadata information to document the SRA file that I am downloading. Later I can match this file with the patient and RNA-Seq sample that it was extracted from.
+
+```{r, eval=T, warning=F, message=F}
+library(maditr)
+sra_run_table_df <- read.table("./scripts/SraRunTable.txt", sep = ",", header = T)
+sra_run_table_selected <- sra_run_table_df %>% dplyr::select(Run, BioProject, BioSample, Experiment, 
+                                                             flowcell, Sample.Name, BARCODE)
+```
+
+\
+
+Check flowcells and Barcodes
+
+```{r}
+library(expss)
+# cross_cases(sra_run_table_selected, flowcell)
+# cross_cases(sra_run_table_selected, BioProject)
+# cross_cases(sra_run_table_selected, BARCODE)
+```
+
+
+\
+
+## Download fastq and align
+
+\
+
+This command loads the sratoolkit to the server environment:
+
+```{bash, eval=F}
+module load sratoolkit/3.0.0
+```
+
+\
+
+This command downloads a limited number of reads using the SRA ID number that in this case is SRR899360:
+
+```{bash, eval=F}
+## Declare human reference genome
+## REFERENCE=~/references/hg19/GRCh37.p13.genome.fa
+REFERENCE=/home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa
+
+## Download fastq file
+fastq-dump --split-files -X 1000 SRR899360 --split-files SRR899360 \
+--outdir /hb/home/gchaves/results/neuroblastoma
+
+## Specify fastq file
+FastqR1=/hb/home/gchaves/results/neuroblastoma/SRR899360_1.fastq
+	
+## Align
+module load bwa
+#bwa mem -t 4 $REFERENCE $FastqR1 > /hb/home/gchaves/results/neuroblastoma/SRR899360.sam
+bwa mem -t 4 /home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa /home/bioinfo/data/neuroblastoma/SRR899360_1.fastq > /home/bioinfo/data/neuroblastoma/SRR899360.bam
+```
+
+\
+
+## Extract counts with featureCounts
+
+\
+
+Finally we export the number of counts to the counts file. According to this reference, p is an option for paired-end fastq files:
+
+* https://rnnh.github.io/bioinfo-notebook/docs/featureCounts.html
+
+```{bash, eval=F, include=F}
+/hb/home/gchaves/programs/subread-2.0.6-Linux-x86_64/bin/featureCounts -T 16 -a \
+~/references/hg19_bme237/gtf/gencode.v19.annotation.gtf -t gene -g \
+gene_name -o /hb/home/gchaves/results/neuroblastoma/SRR899360.counts \
+/hb/home/gchaves/results/neuroblastoma/SRR899360.bam
+```
+
+
+* Bioinfo server
+
+```{bash, eval=F}
+/home/bioinfo/data/programs/subread-2.0.6-Linux-x86_64/bin/featureCounts -T 16 -a \
+/home/bioinfo/data/references/gencode.v19.annotation.gtf -t gene -g \
+gene_name -o /home/bioinfo/data/neuroblastoma/SRR899360.counts \
+/home/bioinfo/data/neuroblastoma/SRR899360.sam
+```
+
+\
+
+Inspect the counts file:
+
+```{bash, eval=F}
+cd /hb/home/gchaves/results/neuroblastoma/
+head SRR899360.counts
+wc -l SRR899360.counts
+```
+
+
+
+
+

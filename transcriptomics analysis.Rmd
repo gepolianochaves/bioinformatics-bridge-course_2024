@@ -17,12 +17,34 @@ output:
 
 # Summary
 
-In this part we do transcriptomic analysis of neuroblastoma RNA-Seq isolated tumors of patients. We conduct the analysis according to reference documentation.
+In this part we do transcriptome analysis of RNA-Seq isolated from tumors of neuroblastoma patients. We conduct the analysis according to reference documentation.
 
-Reference: https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html
+\
 
-Reference of DESeq2 normalization by division by the size factors or normalization factors:
+# References 
+
+This was the google search: deseq2 tutorial in r and the following references showed up:
+
+* This was the main reference I used: https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html for the pipeline itself.
+
+* This reference has a good explanation of the method DESeq2 uses for read (count) normalization. Normalization by division by the size factors or normalization factors:
 https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html
+
+* This is the Bioconductor reference for DESeq2: https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
+
+
+In this other google search: RNA-Seq tutorialm these were the references:
+
+* https://bioinformatics.uconn.edu/resources-and-events/tutorials-2/rna-seq-tutorial-with-reference-genome/
+
+* https://scienceparkstudygroup.github.io/rna-seq-lesson/
+
+
+To see how RNA-Seq is applied in the health system, I did this google search: RNA-Seq sistema unico de saude brasil and these articles were retrieved:
+
+* https://pubmed.ncbi.nlm.nih.gov/31963351/
+
+* Pesquisa translacional na era pós-genômica: avanços na área da transcriptômica (Pacheco 2019)
 
 
 \

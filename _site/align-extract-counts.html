@@ -12,7 +12,7 @@
 <meta name="author" content="Gepoliano Chaves" />
 
 
-<title>Variant Call Pipeline</title>
+<title>Download and align Fastq files and extract Read Counts</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -394,65 +394,165 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Variant Call Pipeline</h1>
+<h1 class="title toc-ignore">Download and align Fastq files and extract
+Read Counts</h1>
 <h4 class="author">Gepoliano Chaves</h4>
-<h4 class="date">September 4th, 2024</h4>
+<h4 class="date">October 15th, 2024</h4>
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#transfer-files" id="toc-transfer-files">Transfer
+files</a></li>
+<li><a href="#look-at-geo-metadata-file"
+id="toc-look-at-geo-metadata-file">Look at GEO Metadata File</a></li>
+<li><a href="#download-fastq-and-align"
+id="toc-download-fastq-and-align">Download fastq and align</a></li>
+<li><a href="#extract-counts-with-featurecounts"
+id="toc-extract-counts-with-featurecounts">Extract counts with
+featureCounts</a></li>
+</ul>
+</div>
 
 <p><br />
 </p>
-<div id="references" class="section level1">
-<h1>References</h1>
+<div id="references" class="section level2">
+<h2>References</h2>
 <p><br />
 </p>
-<p><a href="https://www.ncbi.nlm.nih.gov/genbank/"
-class="uri">https://www.ncbi.nlm.nih.gov/genbank/</a></p>
-<p><a
-href="https://jhudatascience.org/AnVIL_Phylogenetic-Techniques/downloading-the-sequences-from-genbank.html"
-class="uri">https://jhudatascience.org/AnVIL_Phylogenetic-Techniques/downloading-the-sequences-from-genbank.html</a></p>
+<p>Google search: SRA download subset number of reads</p>
+<p>In the link below, I learned the syntax to download a subset of fastq
+reads rather than an entire fastq file: <a
+href="https://bioinformatics.ccr.cancer.gov/docs/b4b/Module1_Unix_Biowulf/Lesson6/"
+class="uri">https://bioinformatics.ccr.cancer.gov/docs/b4b/Module1_Unix_Biowulf/Lesson6/</a></p>
 <p><br />
 </p>
-<pre class="r"><code>library(ape)
-mt_brazilian_exercise &lt;- read.GenBank(c(
-  # &quot;AF243627&quot;, # Amerindian/Asian lineage
-  # &quot;AF243628&quot;, # Amerindian/Asian lineage
-  # &quot;AF243629&quot;, # Amerindian/Asian lineage
-  # &quot;AF243700&quot;, # Amerindian/Asian lineage
-  &quot;AF243780&quot;, # European lineage
-  &quot;AF243781&quot;, # European lineage
-  &quot;AF243782&quot;, # European lineage
-  &quot;AF243783&quot;, # European lineage
-  &quot;AF243784&quot;, # European lineage
-  &quot;AF243785&quot;, # European lineage
-  &quot;AF243786&quot;, # European lineage
-  &quot;AF243787&quot;, # European lineage
-  &quot;AF243788&quot;, # European lineage
-  &quot;AF243789&quot;, # European lineage
-  &quot;AF243790&quot;, # European lineage
-  &quot;AF243791&quot;, # European lineage
-  &quot;AF243792&quot;, # European lineage
-  &quot;AF243793&quot;, # European lineage
-  &quot;AF243794&quot;, # European lineage
-  &quot;AF243795&quot;, # European lineage
-  &quot;AF243796&quot;#,  # European lineage
-  # &quot;AF243634&quot;, # African lineage
-  # &quot;AF243635&quot;, # African lineage
-  # &quot;AF243636&quot;, # African lineage
-  # &quot;AF243637&quot;, # African lineage
-  # &quot;AF243638&quot;#, # African lineage
-  # &quot;AF243639&quot;, # African lineage 
-  # &quot;AF243640&quot;  # African lineage 
-))</code></pre>
+</div>
+<div id="transfer-files" class="section level2">
+<h2>Transfer files</h2>
 <p><br />
 </p>
-<p>Write to file</p>
+<div id="transfer-an-alignment-pipeline-script" class="section level4">
+<h4>Transfer an alignment pipeline script</h4>
+<pre class="bash"><code>scp gchaves@hb.ucsc.edu:/hb/home/gchaves/scripts/Signaling_GSE68952_H3K4me3.sh ./scripts</code></pre>
 <p><br />
 </p>
-<pre class="r"><code>write.dna(mt_brazilian_exercise, 
-          file = &quot;data/mt_brazilian_exercise.fasta&quot;, 
-          format = &quot;fasta&quot;)</code></pre>
+</div>
+<div id="transfer-the-human-reference-genome" class="section level4">
+<h4>Transfer the human reference genome</h4>
+<pre class="bash"><code>origin=/hb/home/gchaves/references/hg19/GRCh37.p13.genome.fa
+destination=/home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa
+
+/hb/home/gchaves/programs/sshpass-1.06/sshpass -p &quot;bioinfo&quot; \
+scp $origin bioinfo@200.128.7.33:$destination</code></pre>
+<p><br />
+</p>
+</div>
+<div id="transfer-featurecounts" class="section level4">
+<h4>Transfer featureCounts</h4>
+<pre class="bash"><code>scp -r gchaves@hb.ucsc.edu:/hb/home/gchaves/results/neuroblastoma/SRR899360_1.fastq /home/bioinfo/data/</code></pre>
+<p><br />
+</p>
+</div>
+<div id="transfer-fastq-file" class="section level4">
+<h4>Transfer fastq file</h4>
+<pre class="bash"><code>scp -r /hb/home/gchaves/results/neuroblastoma/SRR899360_1.fastq bioinfo@200.128.7.33:/home/bioinfo/data/neuroblastoma</code></pre>
+<p><br />
+</p>
+</div>
+<div id="transfer-sam-file" class="section level4">
+<h4>Transfer sam file</h4>
+<pre class="bash"><code>scp -r /hb/home/gchaves/results/neuroblastoma/SRR899360.sam bioinfo@200.128.7.33:/home/bioinfo/data/neuroblastoma</code></pre>
+<p><br />
+</p>
+</div>
+<div id="transfer-gtf-file" class="section level4">
+<h4>Transfer GTF file</h4>
+<pre class="bash"><code>scp -r /hb/home/gchaves/references/hg19_bme237/gtf/gencode.v19.annotation.gtf  bioinfo@200.128.7.33:/home/bioinfo/data/references/</code></pre>
+<p><br />
+</p>
+</div>
+<div id="build-the-index" class="section level4">
+<h4>Build the index</h4>
+<pre class="bash"><code>cd /home/bioinfo/data/references/hg19/
+bwa index -a bwtsw GRCh37.p13.genome.fa</code></pre>
+<p><br />
+</p>
+</div>
+</div>
+<div id="look-at-geo-metadata-file" class="section level2">
+<h2>Look at GEO Metadata File</h2>
+<p><br />
+</p>
+<p>In this part I stored the metadata information to document the SRA
+file that I am downloading. Later I can match this file with the patient
+and RNA-Seq sample that it was extracted from.</p>
+<pre class="r"><code>library(maditr)
+sra_run_table_df &lt;- read.table(&quot;./scripts/SraRunTable.txt&quot;, sep = &quot;,&quot;, header = T)
+sra_run_table_selected &lt;- sra_run_table_df %&gt;% dplyr::select(Run, BioProject, BioSample, Experiment, 
+                                                             flowcell, Sample.Name, BARCODE)</code></pre>
+<p><br />
+</p>
+<p>Check flowcells and Barcodes</p>
+<pre class="r"><code>library(expss)
+# cross_cases(sra_run_table_selected, flowcell)
+# cross_cases(sra_run_table_selected, BioProject)
+# cross_cases(sra_run_table_selected, BARCODE)</code></pre>
+<p><br />
+</p>
+</div>
+<div id="download-fastq-and-align" class="section level2">
+<h2>Download fastq and align</h2>
+<p><br />
+</p>
+<p>This command loads the sratoolkit to the server environment:</p>
+<pre class="bash"><code>module load sratoolkit/3.0.0</code></pre>
+<p><br />
+</p>
+<p>This command downloads a limited number of reads using the SRA ID
+number that in this case is SRR899360:</p>
+<pre class="bash"><code>## Declare human reference genome
+## REFERENCE=~/references/hg19/GRCh37.p13.genome.fa
+REFERENCE=/home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa
+
+## Download fastq file
+fastq-dump --split-files -X 1000 SRR899360 --split-files SRR899360 \
+--outdir /hb/home/gchaves/results/neuroblastoma
+
+## Specify fastq file
+FastqR1=/hb/home/gchaves/results/neuroblastoma/SRR899360_1.fastq
+    
+## Align
+module load bwa
+#bwa mem -t 4 $REFERENCE $FastqR1 &gt; /hb/home/gchaves/results/neuroblastoma/SRR899360.sam
+bwa mem -t 4 /home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa /home/bioinfo/data/neuroblastoma/SRR899360_1.fastq &gt; /home/bioinfo/data/neuroblastoma/SRR899360.bam</code></pre>
+<p><br />
+</p>
+</div>
+<div id="extract-counts-with-featurecounts" class="section level2">
+<h2>Extract counts with featureCounts</h2>
+<p><br />
+</p>
+<p>Finally we export the number of counts to the counts file. According
+to this reference, p is an option for paired-end fastq files:</p>
+<ul>
+<li><p><a
+href="https://rnnh.github.io/bioinfo-notebook/docs/featureCounts.html"
+class="uri">https://rnnh.github.io/bioinfo-notebook/docs/featureCounts.html</a></p></li>
+<li><p>Bioinfo server</p></li>
+</ul>
+<pre class="bash"><code>/home/bioinfo/data/programs/subread-2.0.6-Linux-x86_64/bin/featureCounts -T 16 -a \
+/home/bioinfo/data/references/gencode.v19.annotation.gtf -t gene -g \
+gene_name -o /home/bioinfo/data/neuroblastoma/SRR899360.counts \
+/home/bioinfo/data/neuroblastoma/SRR899360.sam</code></pre>
+<p><br />
+</p>
+<p>Inspect the counts file:</p>
+<pre class="bash"><code>cd /hb/home/gchaves/results/neuroblastoma/
+head SRR899360.counts
+wc -l SRR899360.counts</code></pre>
 </div>
 
 

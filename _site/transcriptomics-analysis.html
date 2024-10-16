@@ -283,13 +283,16 @@ $(document).ready(function () {
     <li class="divider"></li>
     <li class="dropdown-header">Part 2: Machine Learning</li>
     <li>
-      <a href="transcriptomics-analysis.html">2.1. Transcriptome Analysis</a>
+      <a href="align-extract-counts.html">2.1. Align and Extract Counts</a>
     </li>
     <li>
-      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.2. Introduction to Machine Learning</a>
+      <a href="transcriptomics-analysis.html">2.2. Transcriptome Analysis</a>
     </li>
     <li>
-      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.3. Classification using Logistic Regression</a>
+      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.3. Introduction to Machine Learning</a>
+    </li>
+    <li>
+      <a href="notebooks/17-shiny-tumor-classification-bbc2024.html">2.4. Classification using Logistic Regression</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Part 3: DNA Sequencing and the Command Line</li>
@@ -400,6 +403,7 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#summary" id="toc-summary">Summary</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
 <li><a href="#load-libraries" id="toc-load-libraries">Load
 Libraries</a></li>
 <li><a href="#load-gene-expression-dataframe"
@@ -470,16 +474,48 @@ Information</a></li>
 </p>
 <div id="summary" class="section level1">
 <h1>Summary</h1>
-<p>In this part we do transcriptomic analysis of neuroblastoma RNA-Seq
-isolated tumors of patients. We conduct the analysis according to
+<p>In this part we do transcriptome analysis of RNA-Seq isolated from
+tumors of neuroblastoma patients. We conduct the analysis according to
 reference documentation.</p>
-<p>Reference: <a
+<p><br />
+</p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>This was the google search: deseq2 tutorial in r and the following
+references showed up:</p>
+<ul>
+<li><p>This was the main reference I used: <a
 href="https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html"
-class="uri">https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html</a></p>
-<p>Reference of DESeq2 normalization by division by the size factors or
-normalization factors: <a
+class="uri">https://introtogenomics.readthedocs.io/en/latest/2021.11.11.DeseqTutorial.html</a>
+for the pipeline itself.</p></li>
+<li><p>This reference has a good explanation of the method DESeq2 uses
+for read (count) normalization. Normalization by division by the size
+factors or normalization factors: <a
 href="https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html"
-class="uri">https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html</a></p>
+class="uri">https://rdrr.io/bioc/DESeq2/man/varianceStabilizingTransformation.html</a></p></li>
+<li><p>This is the Bioconductor reference for DESeq2: <a
+href="https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html"
+class="uri">https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html</a></p></li>
+</ul>
+<p>In this other google search: RNA-Seq tutorialm these were the
+references:</p>
+<ul>
+<li><p><a
+href="https://bioinformatics.uconn.edu/resources-and-events/tutorials-2/rna-seq-tutorial-with-reference-genome/"
+class="uri">https://bioinformatics.uconn.edu/resources-and-events/tutorials-2/rna-seq-tutorial-with-reference-genome/</a></p></li>
+<li><p><a href="https://scienceparkstudygroup.github.io/rna-seq-lesson/"
+class="uri">https://scienceparkstudygroup.github.io/rna-seq-lesson/</a></p></li>
+</ul>
+<p>To see how RNA-Seq is applied in the health system, I did this google
+search: RNA-Seq sistema unico de saude brasil and these articles were
+retrieved:</p>
+<ul>
+<li><p><a href="https://pubmed.ncbi.nlm.nih.gov/31963351/"
+class="uri">https://pubmed.ncbi.nlm.nih.gov/31963351/</a></p></li>
+<li><p>Pesquisa translacional na era pós-genômica: avanços na área da
+transcriptômica (Pacheco 2019)</p></li>
+</ul>
 <p><br />
 </p>
 </div>
@@ -679,13 +715,16 @@ ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj)))+
   theme(panel.border = element_rect(colour = &quot;black&quot;, fill = NA, size= 0.5),    
         panel.grid.minor = element_blank(),
         panel.grid.major = element_blank()) </code></pre>
-<pre><code>## Warning: The `size` argument of `element_rect()` is
-## deprecated as of ggplot2 3.4.0.
+<pre><code>## Warning: The `size` argument of `element_rect()`
+## is deprecated as of ggplot2 3.4.0.
 ## ℹ Please use the `linewidth` argument
 ##   instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()`
-## to see where this warning was generated.</code></pre>
+## This warning is displayed once every 8
+## hours.
+## Call
+## `lifecycle::last_lifecycle_warnings()`
+## to see where this warning was
+## generated.</code></pre>
 <p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = res_nb_volcPlot_df,
        aes(x = log2FoldChange,
@@ -713,8 +752,8 @@ ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj)))+
   theme(panel.border = element_rect(colour = &quot;black&quot;, fill = NA, size= 0.5),    
         panel.grid.minor = element_blank(),
         panel.grid.major = element_blank()) </code></pre>
-<pre><code>## Warning: Removed 1 row containing missing values or
-## values outside the scale range
+<pre><code>## Warning: Removed 1 row containing missing values
+## or values outside the scale range
 ## (`geom_point()`).</code></pre>
 <p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-4.png" width="672" /></p>
 <p><br />
@@ -954,14 +993,14 @@ class="section level2">
 ## other attached packages:
 ##  [1] msigdbr_7.5.1               RColorBrewer_1.1-3         
 ##  [3] pheatmap_1.0.12             clusterProfiler_4.12.6     
-##  [5] expss_0.11.6                DESeq2_1.44.0              
-##  [7] SummarizedExperiment_1.34.0 Biobase_2.64.0             
-##  [9] MatrixGenerics_1.16.0       matrixStats_1.4.1          
-## [11] GenomicRanges_1.56.1        GenomeInfoDb_1.40.1        
-## [13] IRanges_2.38.1              S4Vectors_0.42.1           
-## [15] BiocGenerics_0.50.0         readxl_1.4.3               
-## [17] dplyr_1.1.4                 maditr_0.8.4               
-## [19] ggplot2_3.5.1              
+##  [5] DESeq2_1.44.0               SummarizedExperiment_1.34.0
+##  [7] Biobase_2.64.0              MatrixGenerics_1.16.0      
+##  [9] matrixStats_1.4.1           GenomicRanges_1.56.1       
+## [11] GenomeInfoDb_1.40.1         IRanges_2.38.1             
+## [13] S4Vectors_0.42.1            BiocGenerics_0.50.0        
+## [15] readxl_1.4.3                dplyr_1.1.4                
+## [17] ggplot2_3.5.1               expss_0.11.6               
+## [19] maditr_0.8.4               
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] rstudioapi_0.16.0       jsonlite_1.8.9          magrittr_2.0.3         
