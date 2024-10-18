@@ -403,6 +403,7 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#summary" id="toc-summary">Summary</a></li>
+<li><a href="#data" id="toc-data">Data</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
 <li><a href="#load-libraries" id="toc-load-libraries">Load
 Libraries</a></li>
@@ -410,9 +411,11 @@ Libraries</a></li>
 id="toc-load-gene-expression-dataframe">Load Gene Expression
 Dataframe</a>
 <ul>
-<li><a href="#make-counts-numeric-and-make-sure-they-are-integers"
-id="toc-make-counts-numeric-and-make-sure-they-are-integers">Make Counts
-Numeric and make sure they are integers</a></li>
+<li><a href="#read-r2_gse62564_rand_num_df-object"
+id="toc-read-r2_gse62564_rand_num_df-object">Read
+r2_gse62564_rand_num_df object</a></li>
+<li><a href="#load-metadata-object" id="toc-load-metadata-object">Load
+Metadata object</a></li>
 <li><a href="#construct-dds-object-neuroblastoma"
 id="toc-construct-dds-object-neuroblastoma">Construct dds object
 neuroblastoma</a></li>
@@ -428,7 +431,6 @@ analysis</a>
 id="toc-genes-differentially-expressed-between-conditions">Genes
 differentially expressed between conditions</a></li>
 </ul></li>
-<li><a href="#ma-plot" id="toc-ma-plot">MA Plot</a></li>
 <li><a href="#log-fold-change-shrinkage-for-visualization-and-ranking"
 id="toc-log-fold-change-shrinkage-for-visualization-and-ranking">Log
 fold change shrinkage for visualization and ranking</a></li>
@@ -477,6 +479,14 @@ Information</a></li>
 <p>In this part we do transcriptome analysis of RNA-Seq isolated from
 tumors of neuroblastoma patients. We conduct the analysis according to
 reference documentation.</p>
+<p><br />
+</p>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>Data is available in this Google folder: <a
+href="https://drive.google.com/drive/u/1/folders/1lSzUkQdBJw6uQ4uXW0IFlQF_pPWkjMkH"
+class="uri">https://drive.google.com/drive/u/1/folders/1lSzUkQdBJw6uQ4uXW0IFlQF_pPWkjMkH</a></p>
 <p><br />
 </p>
 </div>
@@ -547,8 +557,6 @@ library(RColorBrewer)</code></pre>
 <p>In this part we can select the number of tumor samples to analyze. In
 total, the original dataframe has 498 tumor samples so for the sake of
 time, we will select around 50 samples to start with.</p>
-<p><br />
-</p>
 <pre class="r"><code>set.seed(12345)
 r2_gse62564_GSVA_Metadata &lt;- r2_gse62564_GSVA_Metadata[sample(nrow(r2_gse62564_GSVA_Metadata), size=55), ]</code></pre>
 <p><br />
@@ -561,6 +569,7 @@ dataframe:</p>
 <pre class="r"><code>r2_gse62564_Metadata &lt;- r2_gse62564_GSVA_Metadata %&gt;% dplyr::select(c(high_risk, mycn_status))
 r2_gse62564_Metadata$high_risk &lt;- as.factor(r2_gse62564_Metadata$high_risk)
 r2_gse62564_Metadata$sampleID &lt;- rownames(r2_gse62564_Metadata)</code></pre>
+<pre class="r"><code>saveRDS(r2_gse62564_Metadata, file = &quot;./data/r2_gse62564_Metadata.rds&quot;)</code></pre>
 <p><br />
 </p>
 <p>In this part I transpose the metadata to allow removing the long list
@@ -574,13 +583,22 @@ WEINMANN_ADAPTATION_TO_HYPOXIA_UP:</p>
 r2_gse62564_rand_df &lt;- r2_gse62564_selected[sample(nrow(r2_gse62564_selected), size=400), ]</code></pre>
 <p><br />
 </p>
-<div id="make-counts-numeric-and-make-sure-they-are-integers"
-class="section level2">
-<h2>Make Counts Numeric and make sure they are integers</h2>
-<pre class="r"><code>r2_gse62564_rand_num_df &lt;- as.data.frame(r2_gse62564_rand_df)
+<pre class="r"><code>## Make Counts Numeric and make sure they are integers
+r2_gse62564_rand_num_df &lt;- as.data.frame(r2_gse62564_rand_df)
 r2_gse62564_rand_num_df &lt;- r2_gse62564_rand_num_df %&gt;% 
   mutate_if(is.character,as.numeric)%&gt;% 
   mutate_if(is.numeric, round)</code></pre>
+<p><br />
+</p>
+<div id="read-r2_gse62564_rand_num_df-object" class="section level2">
+<h2>Read r2_gse62564_rand_num_df object</h2>
+<pre class="r"><code>r2_gse62564_rand_num_df &lt;- readRDS(&quot;./data/r2_gse62564_rand_num_df.rds&quot;)</code></pre>
+<p><br />
+</p>
+</div>
+<div id="load-metadata-object" class="section level2">
+<h2>Load Metadata object</h2>
+<pre class="r"><code>r2_gse62564_Metadata &lt;- readRDS(&quot;./data/r2_gse62564_Metadata.rds&quot;)</code></pre>
 <p><br />
 </p>
 </div>
@@ -658,14 +676,9 @@ res_nb</code></pre>
 ## FBXL18         0.0383935</code></pre>
 <p><br />
 </p>
-</div>
-</div>
-<div id="ma-plot" class="section level2">
-<h2>MA Plot</h2>
-<pre class="r"><code>plotMA(res_nb, ylim=c(-2,2))</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p><br />
 </p>
+</div>
 </div>
 <div id="log-fold-change-shrinkage-for-visualization-and-ranking"
 class="section level2">
@@ -699,10 +712,10 @@ res_nb_volcPlot_df &lt;- res_nb_df %&gt;%
 
 ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj)))+
   geom_point()</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj),col=differential_expression))+
   geom_point()</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
 <pre class="r"><code>ggplot(data=res_nb_volcPlot_df, 
        aes(x=log2FoldChange,y=-log10(padj),col=differential_expression
            ))+
@@ -715,17 +728,12 @@ ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj)))+
   theme(panel.border = element_rect(colour = &quot;black&quot;, fill = NA, size= 0.5),    
         panel.grid.minor = element_blank(),
         panel.grid.major = element_blank()) </code></pre>
-<pre><code>## Warning: The `size` argument of `element_rect()`
-## is deprecated as of ggplot2 3.4.0.
-## ℹ Please use the `linewidth` argument
-##   instead.
-## This warning is displayed once every 8
-## hours.
-## Call
-## `lifecycle::last_lifecycle_warnings()`
-## to see where this warning was
+<pre><code>## Warning: The `size` argument of `element_rect()` is deprecated as of ggplot2 3.4.0.
+## ℹ Please use the `linewidth` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = res_nb_volcPlot_df,
        aes(x = log2FoldChange,
            y = -log10(padj))) + 
@@ -752,10 +760,9 @@ ggplot(data=res_nb_volcPlot_df,aes(x=log2FoldChange,y=-log10(padj)))+
   theme(panel.border = element_rect(colour = &quot;black&quot;, fill = NA, size= 0.5),    
         panel.grid.minor = element_blank(),
         panel.grid.major = element_blank()) </code></pre>
-<pre><code>## Warning: Removed 1 row containing missing values
-## or values outside the scale range
+<pre><code>## Warning: Removed 1 row containing missing values or values outside the scale range
 ## (`geom_point()`).</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-16-4.png" width="672" /></p>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-20-4.png" width="672" /></p>
 <p><br />
 </p>
 </div>
@@ -862,7 +869,7 @@ enrichr_nb_volcPlo_Up_df &lt;- as.data.frame(enrichr_nb_volcPlo_Up)</code></pre>
         legend.text=element_text(size=6),
         legend.key.size = unit(0.2, &#39;cm&#39;))+
   theme_classic()</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p><br />
 </p>
 </div>
@@ -937,7 +944,7 @@ df_nb &lt;- as.data.frame(colData(dds_nb)[,c(&quot;high_risk&quot;, &quot;mycn_s
 # pheatmap(assay(dds_nb)[select_nb,], cluster_rows=FALSE, show_rownames=FALSE,
 #          cluster_cols=FALSE, annotation_col=df_nb)
 pheatmap(assay(dds_nb)[select_nb,],annotation_col=df_nb)</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p><br />
 </p>
 </div>
@@ -953,7 +960,7 @@ pheatmap(sampleDistMatrixNb,
          clustering_distance_rows=sampleDists_nb,
          clustering_distance_cols=sampleDists_nb,
          col=colors)</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p><br />
 </p>
 </div>
@@ -964,7 +971,7 @@ class="section level2">
 </p>
 <pre class="r"><code>plotPCA(vsd_nb, intgroup=c(&quot;high_risk&quot;, &quot;mycn_status&quot;))</code></pre>
 <pre><code>## using ntop=500 top features by variance</code></pre>
-<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="transcriptomics-analysis_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p><br />
 </p>
 </div>
@@ -993,14 +1000,14 @@ class="section level2">
 ## other attached packages:
 ##  [1] msigdbr_7.5.1               RColorBrewer_1.1-3         
 ##  [3] pheatmap_1.0.12             clusterProfiler_4.12.6     
-##  [5] DESeq2_1.44.0               SummarizedExperiment_1.34.0
-##  [7] Biobase_2.64.0              MatrixGenerics_1.16.0      
-##  [9] matrixStats_1.4.1           GenomicRanges_1.56.1       
-## [11] GenomeInfoDb_1.40.1         IRanges_2.38.1             
-## [13] S4Vectors_0.42.1            BiocGenerics_0.50.0        
-## [15] readxl_1.4.3                dplyr_1.1.4                
-## [17] ggplot2_3.5.1               expss_0.11.6               
-## [19] maditr_0.8.4               
+##  [5] expss_0.11.6                maditr_0.8.4               
+##  [7] dplyr_1.1.4                 ggplot2_3.5.1              
+##  [9] DESeq2_1.44.0               SummarizedExperiment_1.34.0
+## [11] Biobase_2.64.0              MatrixGenerics_1.16.0      
+## [13] matrixStats_1.4.1           GenomicRanges_1.56.1       
+## [15] GenomeInfoDb_1.40.1         IRanges_2.38.1             
+## [17] S4Vectors_0.42.1            BiocGenerics_0.50.0        
+## [19] readxl_1.4.3               
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] rstudioapi_0.16.0       jsonlite_1.8.9          magrittr_2.0.3         
@@ -1009,41 +1016,41 @@ class="section level2">
 ##  [10] ggtree_3.12.0           htmltools_0.5.8.1       S4Arrays_1.4.1         
 ##  [13] cellranger_1.1.0        gridGraphics_0.5-1      SparseArray_1.4.8      
 ##  [16] sass_0.4.9              bslib_0.8.0             htmlwidgets_1.6.4      
-##  [19] fontawesome_0.5.2       plyr_1.8.9              httr2_1.0.5            
-##  [22] cachem_1.1.0            igraph_2.0.3            lifecycle_1.0.4        
-##  [25] pkgconfig_2.0.3         gson_0.1.0              Matrix_1.7-0           
-##  [28] R6_2.5.1                fastmap_1.2.0           GenomeInfoDbData_1.2.12
-##  [31] aplot_0.2.3             digest_0.6.37           enrichplot_1.24.4      
-##  [34] colorspace_2.1-1        patchwork_1.3.0         AnnotationDbi_1.66.0   
-##  [37] RSQLite_2.3.7           labeling_0.4.3          fansi_1.0.6            
-##  [40] httr_1.4.7              polyclip_1.10-7         abind_1.4-8            
-##  [43] compiler_4.4.1          bit64_4.5.2             withr_3.0.1            
-##  [46] htmlTable_2.4.3         backports_1.5.0         BiocParallel_1.38.0    
-##  [49] viridis_0.6.5           DBI_1.2.3               highr_0.11             
-##  [52] ggforce_0.4.2           R.utils_2.12.3          MASS_7.3-61            
-##  [55] rappdirs_0.3.3          DelayedArray_0.30.1     tools_4.4.1            
-##  [58] scatterpie_0.2.4        ape_5.8                 R.oo_1.26.0            
-##  [61] glue_1.8.0              nlme_3.1-166            GOSemSim_2.30.2        
-##  [64] shadowtext_0.1.4        grid_4.4.1              checkmate_2.3.2        
-##  [67] reshape2_1.4.4          fgsea_1.30.0            generics_0.1.3         
-##  [70] gtable_0.3.5            R.methodsS3_1.8.2       tidyr_1.3.1            
-##  [73] data.table_1.16.0       tidygraph_1.3.1         utf8_1.2.4             
-##  [76] XVector_0.44.0          ggrepel_0.9.6           pillar_1.9.0           
-##  [79] stringr_1.5.1           babelgene_22.9          yulab.utils_0.1.7      
-##  [82] splines_4.4.1           tweenr_2.0.3            treeio_1.28.0          
-##  [85] lattice_0.22-6          bit_4.5.0               tidyselect_1.2.1       
-##  [88] GO.db_3.19.1            locfit_1.5-9.10         Biostrings_2.72.1      
-##  [91] knitr_1.48              gridExtra_2.3           xfun_0.48              
-##  [94] graphlayouts_1.2.0      stringi_1.8.4           UCSC.utils_1.0.0       
-##  [97] lazyeval_0.2.2          ggfun_0.1.6             yaml_2.3.10            
-## [100] evaluate_1.0.0          codetools_0.2-20        ggraph_2.2.1           
-## [103] tibble_3.2.1            qvalue_2.36.0           ggplotify_0.1.2        
-## [106] cli_3.6.3               munsell_0.5.1           jquerylib_0.1.4        
-## [109] Rcpp_1.0.13             png_0.1-8               parallel_4.4.1         
-## [112] blob_1.2.4              DOSE_3.30.5             tidytree_0.4.6         
-## [115] viridisLite_0.4.2       scales_1.3.0            purrr_1.0.2            
-## [118] crayon_1.5.3            rlang_1.1.4             cowplot_1.1.3          
-## [121] fastmatch_1.1-4         KEGGREST_1.44.1</code></pre>
+##  [19] plyr_1.8.9              httr2_1.0.5             cachem_1.1.0           
+##  [22] igraph_2.0.3            lifecycle_1.0.4         pkgconfig_2.0.3        
+##  [25] gson_0.1.0              Matrix_1.7-0            R6_2.5.1               
+##  [28] fastmap_1.2.0           GenomeInfoDbData_1.2.12 aplot_0.2.3            
+##  [31] digest_0.6.37           enrichplot_1.24.4       colorspace_2.1-1       
+##  [34] patchwork_1.3.0         AnnotationDbi_1.66.0    RSQLite_2.3.7          
+##  [37] labeling_0.4.3          fansi_1.0.6             httr_1.4.7             
+##  [40] polyclip_1.10-7         abind_1.4-8             compiler_4.4.1         
+##  [43] bit64_4.5.2             withr_3.0.1             htmlTable_2.4.3        
+##  [46] backports_1.5.0         BiocParallel_1.38.0     viridis_0.6.5          
+##  [49] DBI_1.2.3               highr_0.11              ggforce_0.4.2          
+##  [52] R.utils_2.12.3          MASS_7.3-61             rappdirs_0.3.3         
+##  [55] DelayedArray_0.30.1     tools_4.4.1             scatterpie_0.2.4       
+##  [58] ape_5.8                 R.oo_1.26.0             glue_1.8.0             
+##  [61] nlme_3.1-166            GOSemSim_2.30.2         shadowtext_0.1.4       
+##  [64] grid_4.4.1              checkmate_2.3.2         reshape2_1.4.4         
+##  [67] fgsea_1.30.0            generics_0.1.3          gtable_0.3.5           
+##  [70] R.methodsS3_1.8.2       tidyr_1.3.1             data.table_1.16.0      
+##  [73] tidygraph_1.3.1         utf8_1.2.4              XVector_0.44.0         
+##  [76] ggrepel_0.9.6           pillar_1.9.0            stringr_1.5.1          
+##  [79] babelgene_22.9          yulab.utils_0.1.7       splines_4.4.1          
+##  [82] tweenr_2.0.3            treeio_1.28.0           lattice_0.22-6         
+##  [85] bit_4.5.0               tidyselect_1.2.1        GO.db_3.19.1           
+##  [88] locfit_1.5-9.10         Biostrings_2.72.1       knitr_1.48             
+##  [91] gridExtra_2.3           xfun_0.48               graphlayouts_1.2.0     
+##  [94] stringi_1.8.4           UCSC.utils_1.0.0        lazyeval_0.2.2         
+##  [97] ggfun_0.1.6             yaml_2.3.10             evaluate_1.0.0         
+## [100] codetools_0.2-20        ggraph_2.2.1            tibble_3.2.1           
+## [103] qvalue_2.36.0           ggplotify_0.1.2         cli_3.6.3              
+## [106] munsell_0.5.1           jquerylib_0.1.4         Rcpp_1.0.13            
+## [109] png_0.1-8               parallel_4.4.1          blob_1.2.4             
+## [112] DOSE_3.30.5             tidytree_0.4.6          viridisLite_0.4.2      
+## [115] scales_1.3.0            purrr_1.0.2             crayon_1.5.3           
+## [118] rlang_1.1.4             cowplot_1.1.3           fastmatch_1.1-4        
+## [121] KEGGREST_1.44.1</code></pre>
 </div>
 
 

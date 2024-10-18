@@ -21,6 +21,12 @@ In this part we do transcriptome analysis of RNA-Seq isolated from tumors of neu
 
 \
 
+# Data 
+
+Data is available in this Google folder: https://drive.google.com/drive/u/1/folders/1lSzUkQdBJw6uQ4uXW0IFlQF_pPWkjMkH
+
+\
+
 # References 
 
 This was the google search: deseq2 tutorial in r and the following references showed up:
@@ -74,7 +80,7 @@ Reference Values: 70 samples and 300 genes
 
 \
 
-```{r}
+```{r, eval=F}
 r2_gse62564_GSVA_Metadata <- readRDS( "../../SIP/SIP2023_BME03/recombio bookdown/results/r2_gse62564_GSVA_Metadata.rds")
 ```
 
@@ -82,9 +88,7 @@ r2_gse62564_GSVA_Metadata <- readRDS( "../../SIP/SIP2023_BME03/recombio bookdown
 
 In this part we can select the number of tumor samples to analyze. In total, the original dataframe has 498 tumor samples so for the sake of time, we will select around 50 samples to start with.
 
-\
-
-```{r}
+```{r, eval=F}
 set.seed(12345)
 r2_gse62564_GSVA_Metadata <- r2_gse62564_GSVA_Metadata[sample(nrow(r2_gse62564_GSVA_Metadata), size=55), ]
 ```
@@ -93,17 +97,22 @@ r2_gse62564_GSVA_Metadata <- r2_gse62564_GSVA_Metadata[sample(nrow(r2_gse62564_G
 
 It is not the first time that I encounter this Error: unable to find an inherited method for function ‘select’ for signature ‘x = "data.frame"’. Then  I have to write dplyr:: in front of the select function, to select the variables that will define the metadata dataframe:
 
-```{r}
+```{r, eval=F}
 r2_gse62564_Metadata <- r2_gse62564_GSVA_Metadata %>% dplyr::select(c(high_risk, mycn_status))
 r2_gse62564_Metadata$high_risk <- as.factor(r2_gse62564_Metadata$high_risk)
 r2_gse62564_Metadata$sampleID <- rownames(r2_gse62564_Metadata)
 ```
 
+```{r, eval=F}
+saveRDS(r2_gse62564_Metadata, file = "./data/r2_gse62564_Metadata.rds")
+```
+
+
 \
 
 In this part I transpose the metadata to allow removing the long list of phenotype scores from age_at_diagnosis to WEINMANN_ADAPTATION_TO_HYPOXIA_UP:
 
-```{r}
+```{r, eval=F}
 r2_gse62564_selected <- t(r2_gse62564_GSVA_Metadata %>% dplyr::select(-c(age_at_diagnosis:WEINMANN_ADAPTATION_TO_HYPOXIA_UP)))
 ```
 
@@ -111,7 +120,7 @@ r2_gse62564_selected <- t(r2_gse62564_GSVA_Metadata %>% dplyr::select(-c(age_at_
 
 Select random sample of three rows from data frame:
 
-```{r, eval=T}
+```{r, eval=F}
 set.seed(12345)
 r2_gse62564_rand_df <- r2_gse62564_selected[sample(nrow(r2_gse62564_selected), size=400), ]
 ```
@@ -122,13 +131,33 @@ r2_gse62564_rand_df <- r2_gse62564_selected
 
 \
 
+```{r, eval=F}
 ## Make Counts Numeric and make sure they are integers
-
-```{r}
 r2_gse62564_rand_num_df <- as.data.frame(r2_gse62564_rand_df)
 r2_gse62564_rand_num_df <- r2_gse62564_rand_num_df %>% 
   mutate_if(is.character,as.numeric)%>% 
   mutate_if(is.numeric, round)
+```
+
+```{r, eval=F, include=F}
+## Save r2_gse62564_rand_num_df object
+saveRDS(r2_gse62564_rand_num_df, file = "./data/r2_gse62564_rand_num_df.rds")
+```
+
+\
+
+## Read r2_gse62564_rand_num_df object
+
+```{r}
+r2_gse62564_rand_num_df <- readRDS("./data/r2_gse62564_rand_num_df.rds")
+```
+
+\
+
+## Load Metadata object
+
+```{r}
+r2_gse62564_Metadata <- readRDS("./data/r2_gse62564_Metadata.rds")
 ```
 
 \
@@ -174,9 +203,9 @@ res_nb
 
 \
 
-## MA Plot
 
-```{r}
+```{r, eval=F, include=F}
+## MA Plot
 plotMA(res_nb, ylim=c(-2,2))
 ```
 
