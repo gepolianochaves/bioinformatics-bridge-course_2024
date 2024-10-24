@@ -330,13 +330,37 @@ Which technology has been used longer to measure gene expression?
 
 \
 
-- [ ] RNA-Seq
+- [ ] RNA-Seq.
 
-- [ ] Microarrays
+- [ ] Microarrays.
 
 - [ ] CRISPR/Cas9.
 
-- [ ] X-ray christalography.
+- [ ] X-ray crystallography.
+
+\
+
+\
+
+\
+
+#### Question 4
+
+\
+
+Mark the option below that contains a useful application for isolation of circulating DNA and RNA for the purpose of longitudinal patient interrogation.
+
+\
+
+- [ ] Liquid biopsy
+
+- [ ] Tumor biopsy
+
+- [ ] Tissue biopsy.
+
+- [ ] Mammalian cell biopsy.
+
+- [ ] X-ray crystallography measurements.
 
 \
 
