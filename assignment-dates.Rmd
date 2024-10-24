@@ -11,7 +11,7 @@ title: "Assignments by Dates"
 
 \
 
-<a href="exercises/exercises#chapter-2-classification" > Chapter 1: RNA Sequencing (RNA-Seq)</a>
+<a href="exercises/exercises#chapter-1-rna-sequencing-rna-seq" > Chapter 1: RNA Sequencing (RNA-Seq)</a>
 
 
 
