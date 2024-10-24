@@ -62,7 +62,7 @@ navbar:
       menu:
         - text: "Exercises"
         - text: "Questions"
-          href: "exercises/exercises.html"
+          href: "exercises.html"
         - text: "Assignments by Date"
           href: "assignment-dates"
         - text: "---------"

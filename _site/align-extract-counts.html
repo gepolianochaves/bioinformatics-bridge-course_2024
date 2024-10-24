@@ -352,7 +352,7 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Exercises</li>
     <li>
-      <a href="exercises/exercises.html">Questions</a>
+      <a href="exercises.html">Questions</a>
     </li>
     <li>
       <a href="assignment-dates">Assignments by Date</a>
@@ -496,8 +496,11 @@ sra_run_table_selected &lt;- sra_run_table_df %&gt;% dplyr::select(Run, BioProje
 <p><br />
 </p>
 <p>Check flowcells and Barcodes</p>
-<pre class="r"><code>library(expss)
-# cross_cases(sra_run_table_selected, flowcell)
+<pre class="r"><code>library(expss)</code></pre>
+<pre><code>## 
+## Use &#39;expss_output_viewer()&#39; to display tables in the RStudio Viewer.
+##  To return to the console output, use &#39;expss_output_default()&#39;.</code></pre>
+<pre class="r"><code># cross_cases(sra_run_table_selected, flowcell)
 # cross_cases(sra_run_table_selected, BioProject)
 # cross_cases(sra_run_table_selected, BARCODE)</code></pre>
 <p><br />
