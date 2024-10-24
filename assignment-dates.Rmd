@@ -6,10 +6,12 @@ title: "Assignments by Dates"
 
 \
 
-## **Week 2 - Machine Learning**
+## **Part 2 - Machine Learning**
 
 
 \
+
+<a href="exercises/exercises.html#chapter-1-rna-sequencing-rna-seq" > Chapter 1: RNA Sequencing (RNA-Seq)</a>
 
 <a href="exercises/exercises.html#chapter-1-classification" > Chapter 3: Classification using Logistic Regression</a>
 
@@ -17,7 +19,7 @@ title: "Assignments by Dates"
 \
 
 
-## **Week 3 - DNA Sequencing and the Command Line**
+## **Part 3 - DNA Sequencing and the Command Line**
 
 
 
@@ -28,7 +30,7 @@ title: "Assignments by Dates"
 
 \
 
-## **Week 4 - Presentations and Final Considerations**
+## **Part 4 - Presentations and Final Considerations**
 
 
 \

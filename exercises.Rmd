@@ -271,7 +271,52 @@ Mark TRUE or FALSE.
 
 \
 
-## Chapter 1: Classification
+## Chapter 1: RNA Sequencing (RNA-Seq)
+
+\
+
+\
+
+#### Question 1
+
+\
+
+What is a transcriptome?
+
+\
+
+- [ ]  It is the complete set of transcripts in a cell, and their quantity, for a specific developmental stage or physiological condition.
+
+- [ ]  It is the complete set of proteins in a cell, and their quantity, for a specific developmental stage or physiological condition.
+
+- [ ]  It is the complete set of interfering RNAs in a cell, and their quantity, for a specific developmental stage or physiological condition.
+
+- [ ]  It is the complete set of ribosomal molecules in a cell, and their quantity, for a specific developmental stage or physiological condition.
+
+
+#### Question 2
+
+\
+
+What is the main purpose of the transcriptome analysis?
+
+\
+
+- [ ]  To write machine learning algorithms using gene expression quantification.
+
+- [ ]  To complete sequencing of the sets of proteins in a cell, and their quantity, for a specific developmental stage or physiological condition.
+
+- [ ] To interpret the functional elements of the genome and reveal the molecular constituents of cells and tissues, and the development and diseases.
+
+- [ ]  To understand the ribosomal molecules in a cell, and their quantity.
+
+
+
+\
+
+\
+
+## Chapter 2: Classification
 
 \
 
