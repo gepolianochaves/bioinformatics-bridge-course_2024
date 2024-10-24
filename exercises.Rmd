@@ -293,6 +293,12 @@ What is a transcriptome?
 
 - [ ]  It is the complete set of ribosomal molecules in a cell, and their quantity, for a specific developmental stage or physiological condition.
 
+\
+
+\
+
+\
+
 
 #### Question 2
 
@@ -310,7 +316,168 @@ What is the main purpose of the transcriptome analysis?
 
 - [ ]  To understand the ribosomal molecules in a cell, and their quantity.
 
+\
 
+\
+
+\
+
+#### Question 3
+
+\
+
+Which technology has been used longer to measure gene expression?
+
+\
+
+- [ ] RNA-Seq
+
+- [ ] Microarrays
+
+- [ ] CRISPR/Cas9.
+
+- [ ] X-ray christalography.
+
+\
+
+\
+
+\
+
+#### Question 4
+
+\
+
+What of the options below are generally not challenges in an RNA sequencing set-up?
+
+\
+
+- [ ] Library construction.
+
+- [ ] Methods to store, retrieve and process large amounts of data.
+
+- [ ] Sequencing coverage and cost.
+
+- [ ] mRNA isolation.
+
+\
+
+\
+
+\
+
+#### Question 5
+
+\
+
+Which alternative depicts an alingment file format?
+
+\
+
+- [ ] Fasta file.
+
+- [ ] SAM file.
+
+- [ ] VCF file.
+
+- [ ] Fastq file.
+
+- [ ] BCF file.
+
+\
+
+\
+
+\
+
+#### Question 6
+
+\
+
+What are the correct steps taken in a RNA-Seq analysis pipeline?
+
+\
+
+- [ ] Wet lab experiment -> Laboratory or Field Experiment -> Bioinformatic Processing -> biological inference.
+
+- [ ] Laboratory or field experiment -> Wet Lab Experiment -> Bioinformatic Processing -> Biological inference.
+
+- [ ] Bioinformatic Processing -> Wet Lab Experiment -> Laboratory or field experiment ->  Biological inference.
+
+- [ ] Biological inference -> Bioinformatic Processing -> Wet Lab Experiment -> Laboratory or field experiment.
+
+
+\
+
+\
+
+\
+
+#### Question 7
+
+\
+
+Which R package did we use to perform the differential expression step in the transcriptome analysis?
+
+\
+
+- [ ] DESeq2.
+
+- [ ] ggplot2.
+
+- [ ] dplyr.
+
+- [ ] pheatmap.
+
+- [ ] clusterProfiler.
+
+\
+
+\
+
+\
+
+#### Question 8
+
+\
+
+Which R package did we use to perform the enrichment analysis step in the transcriptome analysis?
+
+\
+
+- [ ] DESeq2.
+
+- [ ] ggplot2.
+
+- [ ] dplyr.
+
+- [ ] pheatmap.
+
+- [ ] clusterProfiler.
+
+\
+
+\
+
+\
+
+#### Question 9
+
+\
+
+Which alternative contains factors affecting gene expression levels that need to be normalized?
+
+\
+
+- [ ] Sequencing depth only.
+
+- [ ] Gene length only.
+
+- [ ] Only RNA isoform composition.
+
+- [ ] Only sequencing depth and gene length.
+
+- [ ] Sequencing depth, gene length and RNA isoform composition.
 
 \
 
