@@ -408,8 +408,10 @@ Read Counts</h1>
 files</a></li>
 <li><a href="#look-at-geo-metadata-file"
 id="toc-look-at-geo-metadata-file">Look at GEO Metadata File</a></li>
-<li><a href="#download-fastq-and-align"
-id="toc-download-fastq-and-align">Download fastq and align</a></li>
+<li><a href="#download-fastq-file" id="toc-download-fastq-file">Download
+fastq file</a></li>
+<li><a href="#alignment-and-variant-call"
+id="toc-alignment-and-variant-call">Alignment and Variant Call</a></li>
 <li><a href="#extract-counts-with-featurecounts"
 id="toc-extract-counts-with-featurecounts">Extract counts with
 featureCounts</a></li>
@@ -496,18 +498,27 @@ sra_run_table_selected &lt;- sra_run_table_df %&gt;% dplyr::select(Run, BioProje
 <p><br />
 </p>
 <p>Check flowcells and Barcodes</p>
-<pre class="r"><code>library(expss)
-# cross_cases(sra_run_table_selected, flowcell)
+<pre class="r"><code>library(expss)</code></pre>
+<pre><code>## 
+## Use &#39;expss_output_viewer()&#39; to display tables in the RStudio Viewer.
+##  To return to the console output, use &#39;expss_output_default()&#39;.</code></pre>
+<pre class="r"><code># cross_cases(sra_run_table_selected, flowcell)
 # cross_cases(sra_run_table_selected, BioProject)
 # cross_cases(sra_run_table_selected, BARCODE)</code></pre>
 <p><br />
 </p>
 </div>
-<div id="download-fastq-and-align" class="section level2">
-<h2>Download fastq and align</h2>
+<div id="download-fastq-file" class="section level2">
+<h2>Download fastq file</h2>
 <p><br />
-</p>
-<p>This command loads the sratoolkit to the server environment:</p>
+In this part we will analyze data from the Gene Expression Omnibus
+(GEO). This is a link to GEO: <a
+href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi"
+class="uri">https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi</a>.
+Neuroblastoma cell data from Chennakesavalu 2024 can be found in the
+reference ID number GSE212882. we use SRA toolkit to access SRA files in
+the GEO. This command loads the sratoolkit to the server
+environment:</p>
 <pre class="bash"><code>module load sratoolkit/3.0.0</code></pre>
 <p><br />
 </p>
@@ -515,19 +526,50 @@ sra_run_table_selected &lt;- sra_run_table_df %&gt;% dplyr::select(Run, BioProje
 number that in this case is SRR899360:</p>
 <pre class="bash"><code>## Declare human reference genome
 ## REFERENCE=~/references/hg19/GRCh37.p13.genome.fa
-REFERENCE=/home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa
-
-## Download fastq file
-fastq-dump --split-files -X 1000 SRR899360 --split-files SRR899360 \
+REFERENCE=/home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa</code></pre>
+<p><br />
+</p>
+<p>The command below downloads a limited number of reads (1000 reads)
+from fastq file using the SRA ID:</p>
+<pre class="bash"><code>fastq-dump --split-files -X 1000 SRR21471195 --split-files SRR21471195 \
 --outdir /hb/home/gchaves/results/neuroblastoma
 
 ## Specify fastq file
-FastqR1=/hb/home/gchaves/results/neuroblastoma/SRR899360_1.fastq
-    
-## Align
-module load bwa
+FastqR1=/hb/home/gchaves/results/neuroblastoma/fastq/SRR21471195_1.fastq 
+FastqR2=/hb/home/gchaves/results/neuroblastoma/fastq/SRR21471195_2.fastq</code></pre>
+<p><br />
+</p>
+</div>
+<div id="alignment-and-variant-call" class="section level2">
+<h2>Alignment and Variant Call</h2>
+<p><br />
+</p>
+<p>Align fastq file to reference genome using BWA</p>
+<pre class="bash"><code>module load bwa
 #bwa mem -t 4 $REFERENCE $FastqR1 &gt; /hb/home/gchaves/results/neuroblastoma/SRR899360.sam
-bwa mem -t 4 /home/bioinfo/data/references/hg19/GRCh37.p13.genome.fa /home/bioinfo/data/neuroblastoma/SRR899360_1.fastq &gt; /home/bioinfo/data/neuroblastoma/SRR899360.bam</code></pre>
+bwa mem -t 4 /hb/home/gchaves/references/hg19/GRCh37.p13.genome.fa /hb/home/gchaves/results/neuroblastoma/fastq/SRR21471195_1.fastq /hb/home/gchaves/results/neuroblastoma/fastq/SRR21471195_2.fastq &gt; /hb/home/gchaves/results/neuroblastoma/sam/SRR21471195.sam</code></pre>
+<p><br />
+</p>
+<p>Sort SAM file</p>
+<pre class="bash"><code>module load samtools
+samtools sort /hb/home/gchaves/results/neuroblastoma/sam/SRR21471195.sam &gt; \
+/hb/home/gchaves/results/neuroblastoma/sam/SRR21471195_sorted.sam</code></pre>
+<p><br />
+</p>
+<p>Convert SAM to BAM file</p>
+<pre class="bash"><code>module load samtools
+samtools view -S -b /hb/home/gchaves/results/neuroblastoma/sam/SRR21471195_sorted.sam &gt; \
+/hb/home/gchaves/results/neuroblastoma/bam/SRR21471195.bam</code></pre>
+<p><br />
+</p>
+<p>Samtools uses reference FASTA to detect “piles” in the alignment</p>
+<pre class="bash"><code>module load bcftools
+bcftools mpileup -f /hb/home/gchaves/references/hg19/GRCh37.p13.genome.fa /hb/home/gchaves/results/neuroblastoma/bam/SRR21471195.bam &gt; \
+/hb/home/gchaves/results/neuroblastoma/bcf/SRR21471195.bcf</code></pre>
+<p><br />
+</p>
+<p>Bcftools extracts SNPs</p>
+<pre class="bash"><code>bcftools view -v snps /hb/home/gchaves/results/neuroblastoma/bcf/SRR21471195.bcf &gt; /hb/home/gchaves/results/neuroblastoma/snps_vcf/SRR21471195_snps.vcf</code></pre>
 <p><br />
 </p>
 </div>
