@@ -202,6 +202,16 @@ Bcftools extracts SNPs
 bcftools view -v snps /hb/home/gchaves/results/neuroblastoma/bcf/SRR21471195.bcf > /hb/home/gchaves/results/neuroblastoma/snps_vcf/SRR21471195_snps.vcf
 ```
 
+\
+
+Transfer VCF file
+
+```{bash, eval=F}
+scp -r gchaves@hb.ucsc.edu:/hb/home/gchaves/results/neuroblastoma/snps_vcf/SRR21471195_snps.vcf ./
+```
+
+\
+
 
 \
 
