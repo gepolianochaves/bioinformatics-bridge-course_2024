@@ -1,0 +1,12 @@
+name: feedback
+title: feedback
+username: gepoliano-chaves
+account: gepoliano-chaves
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12750669
+bundleId: 9117430
+url: https://gepoliano-chaves.shinyapps.io/feedback/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
